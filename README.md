@@ -1,6 +1,6 @@
 # Portfolio — Alejandro Martínez
 
-Personal portfolio at [konar.es](https://konar.es).
+Personal portfolio at [alexmj.dev](https://alexmj.dev).
 
 Built with [Astro](https://astro.build), TypeScript and a deliberate terminal-flavored aesthetic — sans for headlines, mono for everything else, no JS framework.
 

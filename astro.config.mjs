@@ -2,7 +2,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://konar.es",
+  site: "https://alexmj.dev",
   output: "static",
   trailingSlash: "ignore",
 });

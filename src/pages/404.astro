@@ -1,0 +1,159 @@
+---
+import Base from "../layouts/Base.astro";
+import Link from "../components/Link.astro";
+---
+
+<Base
+  title="404 — Not found · Alejandro Martínez"
+  description="Page not found."
+>
+  <div class="page">
+
+    <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="prompt">
+        <span class="prompt-path">~/portfolio</span>
+        <span class="prompt-sigil">$</span>
+        <span class="prompt-cmd">ls /this-page</span>
+      </div>
+    </header>
+
+    <!-- ── 404 BLOCK ────────────────────────────────────────────────── -->
+    <section class="not-found">
+      <pre class="terminal-output">ls: cannot access '/this-page': No such file or directory</pre>
+
+      <div class="back-link">
+        <Link href="/" class="home-btn">[ ← back home ]</Link>
+      </div>
+
+      <div class="useful-links">
+        <div class="links-label">AVAILABLE ROUTES</div>
+        <div class="links-list">
+          <div class="link-row">
+            <span class="link-path">/</span>
+            <Link href="/" class="route-link">home — alejandro martinez</Link>
+          </div>
+          <div class="link-row">
+            <span class="link-path">/projects</span>
+            <Link href="/projects" class="route-link">all projects grid</Link>
+          </div>
+          <div class="link-row">
+            <span class="link-path">/cases/satstream</span>
+            <Link href="/cases/satstream" class="route-link">satstream case study</Link>
+          </div>
+          <div class="link-row">
+            <span class="link-path">/about</span>
+            <Link href="/about" class="route-link">bio + experience</Link>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding-bottom: 24px;
+  }
+
+  .prompt {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  .prompt-path { color: var(--dim); }
+  .prompt-sigil { color: var(--faint); }
+  .prompt-cmd { color: var(--fg); }
+
+  /* ── 404 BLOCK ── */
+  .not-found {
+    padding-top: 88px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .terminal-output {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--dim);
+    margin: 0 0 40px;
+    background: none;
+    border: none;
+    padding: 0;
+    white-space: pre;
+  }
+
+  .back-link {
+    margin-bottom: 64px;
+  }
+
+  .home-btn {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color 120ms ease;
+  }
+
+  .home-btn:hover {
+    color: var(--accent);
+  }
+
+  /* ── USEFUL LINKS ── */
+  .useful-links {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    max-width: 480px;
+  }
+
+  .links-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .links-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .link-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .link-path {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  .route-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    text-decoration: none;
+  }
+</style>

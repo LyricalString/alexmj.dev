@@ -1,0 +1,523 @@
+---
+import Base from "../../layouts/Base.astro";
+import Link from "../../components/Link.astro";
+import Section from "../../components/Section.astro";
+---
+
+<Base
+  title="Crossflow — TSS/MPC cross-chain protocol | Alejandro Martínez"
+  description="Protocol owner behind Crossflow: a Cosmos SDK L1 with Gennaro-Goldfeder MPC-ECDSA threshold signatures, HTLC Bitcoin scripting, and IBC oracle integration — no trusted multisig."
+>
+  <div class="page">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-name">alejandro martinez</span>
+        <span class="topbar-path">/ work / crossflow</span>
+      </div>
+      <nav class="topbar-nav">
+        <Link href="/">← back</Link>
+        <Link href="/#case-studies">case studies</Link>
+        <Link href="mailto:alex@konar.es">contact</Link>
+      </nav>
+    </header>
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="hero-grid">
+        <div class="hero-tag">CASE STUDY · 03</div>
+        <div class="hero-main">
+          <div class="hero-meta">CROSS-CHAIN PROTOCOL &nbsp;·&nbsp; 2023 — 2024 &nbsp;·&nbsp; PROTOCOL OWNER</div>
+          <h1 class="hero-h1">I built a cross-chain protocol with threshold signatures.</h1>
+          <p class="hero-lead">
+            Crossflow is a decentralised cross-chain loan protocol on a custom Cosmos SDK / CometBFT L1.
+            Borrowers lock collateral on Bitcoin, EVM, or Solana; the chain issues loans without a
+            custodial multisig. The signing key never exists in one place — threshold signatures
+            (Gennaro-Goldfeder 2018 MPC-ECDSA) let a quorum of attesters co-sign outbound transactions
+            without any single node holding the full secret. Built to testnet at Hexmount.
+          </p>
+        </div>
+        <div class="hero-links">
+          <div class="hero-links-label">STATUS</div>
+          <span class="hero-status">testnet · pre-launch</span>
+          <div class="hero-links-label hero-links-label--spaced">NETWORK</div>
+          <span class="hero-status">CFN_testnet-1 · uCFN</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- numbers strip -->
+    <div class="numbers">
+      <div class="numbers-cell">
+        <div class="numbers-key">CHAINS</div>
+        <div class="numbers-val">3</div>
+        <div class="numbers-sub">bitcoin · evm · solana</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">SDK MODULES</div>
+        <div class="numbers-val">7</div>
+        <div class="numbers-sub">loan · tss · oracle · chain · lock · asset · reward</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">TSS CURVES</div>
+        <div class="numbers-val">2</div>
+        <div class="numbers-sub">secp256k1 · ed25519</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">MPC PRIMITIVES</div>
+        <div class="numbers-val">4</div>
+        <div class="numbers-sub">feldman vss · paillier · schnorr/dln zkp · mta</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">DAEMONS</div>
+        <div class="numbers-val">2</div>
+        <div class="numbers-sub">attester · observer</div>
+      </div>
+      <div class="numbers-cell numbers-cell--last">
+        <div class="numbers-key">ORACLE</div>
+        <div class="numbers-val">IBC</div>
+        <div class="numbers-sub">bandchain price feeds</div>
+      </div>
+    </div>
+
+    <!-- the brief -->
+    <Section tag="THE BRIEF" title="Bridges keep getting drained. Threshold signatures fix the root cause.">
+      <p class="body-para">
+        Most cross-chain bridges are trusted multisigs: a small set of operators hold keys, sign
+        withdrawals, and collect $600M into one target every 18 months. The fix is not better
+        key management — it is never assembling the key at all. Threshold signatures let a
+        quorum of validators jointly produce a valid ECDSA or EdDSA signature through a
+        multi-party computation ceremony, so the private key provably never exists in one place.
+        Crossflow ships that primitive on a purpose-built Cosmos SDK chain: borrow against
+        cross-chain collateral with no custodian, no multisig, and no bridge operator to bribe.
+      </p>
+    </Section>
+
+    <!-- architecture -->
+    <Section tag="ARCHITECTURE" title="L1 chain, distributed attester, per-chain observer.">
+      <pre class="arch-diagram">  Cosmos SDK / CometBFT L1  (CFN_testnet-1 · uCFN)
+  ├── x/loan      loan lifecycle · collateral accounting
+  ├── x/tss       keygen · resharing · signing coordination
+  ├── x/lock      per-chain lock records
+  ├── x/asset     supported asset registry
+  ├── x/chain     external chain config
+  ├── x/oracle    IBC price feed consumer
+  └── x/reward    attester incentives
+         │
+         ├──▶ observer daemon  [ go ]
+         │      monitors Bitcoin / EVM / Solana for lock events
+         │      posts observation votes to x/loan on L1
+         │
+         └──▶ attester daemon  [ go ]
+                receives sign requests from L1
+                executes Gennaro-Goldfeder MPC-ECDSA ceremony
+                ├── secp256k1  →  BTC (HTLC scripts + custom sighash)
+                │               EVM (loan · repay · supply txs)
+                └── ed25519    →  Solana
+                         │
+                         ▼
+              outbound signed transaction
+              broadcast to target chain
+
+  BandChain  ──[ IBC ]──▶  x/oracle  →  collateral price feeds
+</pre>
+    </Section>
+
+    <!-- decisions -->
+    <Section tag="DECISIONS" title="Five calls that shaped the protocol.">
+      <div class="decisions-grid">
+        <div class="decision">
+          <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Gennaro-Goldfeder over a simple multisig</div>
+          <p class="decision-body">A t-of-n multisig requires each signer to hold a complete key share that can be extracted under duress. GG18 MPC-ECDSA never produces a full key — signers run a distributed ceremony, so no single compromise breaks the scheme. The security baseline was established quickly by adapting the Kudelski-audited tss-lib rather than implementing the paper from scratch.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Cosmos SDK over an EVM L2</div>
+          <p class="decision-body">EVM L2s inherit Ethereum's account model and consensus — useful for DeFi composability, wrong for a chain that needs native module governance and IBC. Cosmos SDK lets x/tss and x/loan live as first-class state machines with deterministic execution and direct IBC transport to BandChain, without wrapping logic in Solidity contracts.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Attester and observer as separate daemons</div>
+          <p class="decision-body">Signing (attester) and chain monitoring (observer) have completely different failure modes. Separating them means a stalled observer scan doesn't block an in-flight signing ceremony, and each daemon can be upgraded, restarted, or replicated independently without touching the other.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">HTLC scripts for Bitcoin atomicity</div>
+          <p class="decision-body">Bitcoin's UTXO model has no native smart contracts. HTLCs (hash time-locked contracts) encode the lock condition directly in the script with a custom sighash, giving atomic cross-chain settlement guarantees without a bridge operator — if the secret is not revealed within the timelock, funds return to the sender.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">BandChain over a centralised price oracle</div>
+          <p class="decision-body">A centralised price feed is a single point of manipulation — one compromised endpoint can trigger mass liquidations. BandChain is a decentralised oracle chain with its own validator set. Consuming price data over IBC means price updates arrive as verifiable IBC packets, not as trusted HTTP calls.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">secp256k1 + ed25519 dual-curve support</div>
+          <p class="decision-body">Bitcoin and EVM chains sign over secp256k1; Solana signs over ed25519. Supporting both curves in the same attester — rather than running separate attester fleets — keeps operational complexity manageable while reaching all three target ecosystems from a single keygen ceremony per curve.</p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ownership -->
+    <Section tag="OWNERSHIP" title="The modules and services I built.">
+      <div class="ownership">
+        <div class="ownership-header">
+          <span>MODULE / SERVICE</span>
+          <span>STACK</span>
+          <span class="text-right">ROLE</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">Cosmos SDK L1 chain</span>
+          <span class="ownership-dim">go · cosmos sdk · cometbft</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">x/tss module</span>
+          <span class="ownership-dim">go · gennaro-goldfeder tss-lib</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">x/loan module</span>
+          <span class="ownership-dim">go · cosmos sdk</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">attester daemon</span>
+          <span class="ownership-dim">go · secp256k1 · ed25519 · htlc</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">observer daemon</span>
+          <span class="ownership-dim">go · bitcoin rpc · evm rpc · solana rpc</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">x/oracle + BandChain IBC</span>
+          <span class="ownership-dim">go · ibc · bandchain</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">frontend</span>
+          <span class="ownership-dim">react · vite · cosmjs · keplr · wagmi v2 · sats-connect · bitcoinjs-lib</span>
+          <span class="ownership-dim text-right">sole engineer</span>
+        </div>
+      </div>
+    </Section>
+
+    <!-- outcome -->
+    <Section tag="OUTCOME" title="What this proves.">
+      <p class="body-para">
+        Crossflow reached testnet (CFN_testnet-1) with a working keygen, resharing, and
+        per-transaction signing ceremony across Bitcoin, EVM, and Solana. No public TVL — this
+        is a pre-launch protocol, not a production deployment. What the engineering demonstrates
+        is a different thing: implementing Gennaro-Goldfeder MPC-ECDSA (Feldman VSS, Paillier
+        encryption, Schnorr/DLN zero-knowledge proofs, MtA sub-protocol) on a custom L1 chain,
+        integrating HTLC scripts on Bitcoin for atomic settlement, and operating a decentralised
+        oracle over IBC — that is the primitive stack that bridge security and institutional DeFi
+        teams spend years hiring for. I built it as one engineer at Hexmount.
+      </p>
+    </Section>
+
+    <!-- next case -->
+    <div class="next-case">
+      <span class="next-case-label">NEXT CASE STUDY</span>
+      <Link href="/cases/asset-reality" class="next-case-link">
+        04 &nbsp; Asset Reality — government-grade custody at $1B+ scale →
+      </Link>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <span>alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span>alex@konar.es</span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 14px;
+  }
+
+  .topbar-name {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .topbar-path {
+    color: var(--faint);
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 280px;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-h1 {
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 20px 0 0;
+    max-width: 880px;
+    text-wrap: pretty;
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    color: var(--dim);
+    line-height: 1.55;
+    margin-top: 24px;
+    max-width: 680px;
+    text-wrap: pretty;
+  }
+
+  .hero-links {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .hero-links-label {
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .hero-links-label--spaced {
+    margin-top: 20px;
+  }
+
+  .hero-status {
+    display: block;
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  /* ── NUMBERS STRIP ── */
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .numbers-cell {
+    padding: 24px 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  .numbers-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+  }
+
+  .numbers-val {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+
+  .numbers-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-top: 4px;
+  }
+
+  /* ── BODY PARA (brief + outcome) ── */
+  .body-para {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--dim);
+    line-height: 1.65;
+    max-width: 640px;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.85;
+    background: #101216;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    max-width: 760px;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  /* ── DECISIONS ── */
+  .decisions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 56px;
+    max-width: 920px;
+  }
+
+  .decision-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .decision-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-top: 8px;
+    text-wrap: pretty;
+  }
+
+  /* ── OWNERSHIP TABLE ── */
+  .ownership {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    max-width: 820px;
+  }
+
+  .ownership-header {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+
+  .ownership-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1fr;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ownership-repo {
+    color: var(--fg);
+  }
+
+  .ownership-dim {
+    color: var(--dim);
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  /* ── NEXT CASE ── */
+  .next-case {
+    margin-top: 88px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .next-case-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .next-case-link {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 88px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+</style>

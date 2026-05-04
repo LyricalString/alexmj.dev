@@ -1,0 +1,541 @@
+---
+import Base from "../../layouts/Base.astro";
+import Link from "../../components/Link.astro";
+import Section from "../../components/Section.astro";
+---
+
+<Base
+  title="Asset Reality — Government-grade crypto custody | Alejandro Martínez"
+  description="Engineer at Asset Reality (Jul 2022–Mar 2024). Owned the multi-sig governance engine and 12-chain blockchain ingestion platform for a $1B+ government crypto custody platform."
+>
+  <div class="page">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-name">alejandro martinez</span>
+        <span class="topbar-path">/ work / asset reality</span>
+      </div>
+      <nav class="topbar-nav">
+        <Link href="/">← back</Link>
+        <Link href="/#case-studies">case studies</Link>
+        <Link href="mailto:alex@konar.es">contact</Link>
+      </nav>
+    </header>
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="hero-grid">
+        <div class="hero-tag">CASE STUDY · 04</div>
+        <div class="hero-main">
+          <div class="hero-meta">GOVERNMENT-GRADE CRYPTO CUSTODY &nbsp;·&nbsp; 2022 — 2024 &nbsp;·&nbsp; ENGINEER</div>
+          <h1 class="hero-h1">I built the multi-sig engine for a $1B+ custody platform.</h1>
+          <p class="hero-lead">
+            Asset Reality is the end-to-end platform governments use to seize, manage, and dispose of
+            digital and physical assets. During 19 months on the engineering team (Jul 2022 – Mar 2024),
+            I owned two load-bearing systems: the multi-signature governance and escrow engine that
+            controls every custody withdrawal, and the 12-chain blockchain ingestion platform that monitors
+            the network in real time. The platform now handles $1B+ in seized-asset transactions across
+            French, Belgian, US, EU, and Caribbean law enforcement — that figure is platform-attributable,
+            not personal.
+          </p>
+        </div>
+        <div class="hero-links">
+          <div class="hero-links-label">LINKS</div>
+          <Link href="https://www.assetreality.com" class="hero-link">assetreality.com ↗</Link>
+          <Link href="https://www.coindesk.com/business/2023/01/24/crypto-recovery-specialist-asset-reality-raises-491m-to-hire-engineers-expand-ops" class="hero-link">coindesk · $4.91M seed ↗</Link>
+          <Link href="https://www.globenewswire.com/news-release/2025/07/01/3108067/0/en/FCA-Approves-Asset-Reality-to-Offer-Crypto-Custody-Services-in-the-UK.html" class="hero-link">fca vasp registration ↗</Link>
+        </div>
+      </div>
+    </div>
+
+    <!-- numbers strip -->
+    <div class="numbers">
+      <div class="numbers-cell">
+        <div class="numbers-key">TENURE</div>
+        <div class="numbers-val">19 mo</div>
+        <div class="numbers-sub">jul 2022 – mar 2024</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">PLATFORM AUM</div>
+        <div class="numbers-val">$1B+</div>
+        <div class="numbers-sub">platform-attributable, not personal</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">CHAINS INGESTED</div>
+        <div class="numbers-val">12</div>
+        <div class="numbers-sub">real-time blockchain indexing</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">JURISDICTIONS</div>
+        <div class="numbers-val">5+</div>
+        <div class="numbers-sub">fr · be · us · eu · caribbean</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">COMMITS</div>
+        <div class="numbers-val">860</div>
+        <div class="numbers-sub">across 25 repos</div>
+      </div>
+      <div class="numbers-cell numbers-cell--last">
+        <div class="numbers-key">SERVICES OWNED</div>
+        <div class="numbers-val">2</div>
+        <div class="numbers-sub">governance · chain ingestion</div>
+      </div>
+    </div>
+
+    <!-- the brief -->
+    <Section tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
+      <p class="body-para">
+        When governments seize crypto, the asset doesn't sit in an evidence bag — it needs to be
+        transferred into custody, tracked across jurisdictions, approved for disbursement by multiple
+        agencies, and produce an audit trail that will survive courtroom scrutiny. Until recently there
+        was no dedicated infrastructure for any of this. Asset Reality built it: multi-sig governance
+        workflows, escrow state machines, blockchain ingestion across 12 chains, chain-of-custody
+        document trails, and APIs that law enforcement agencies actually integrate with. I joined in
+        July 2022 and owned two of the platform's critical subsystems for the next 19 months.
+      </p>
+    </Section>
+
+    <!-- architecture -->
+    <Section tag="ARCHITECTURE" title="Multi-sig governance + 12-chain ingestion.">
+      <pre class="arch-diagram">  ┌─ blockchain layer (12 chains: ETH · BTC · BCH · LTC · DOGE · XRP · SOL · TRON · MATIC · ARB · ERC-20)
+  │
+  ├──▶ ar-chain-service          [ go workspaces · per-chain monitor modules ]
+  │      ├── eth-monitor          go-ethereum ws client, real-time block subscription
+  │      ├── btc-monitor          RPC + mempool monitoring
+  │      ├── sol-monitor / trx-monitor / xrp-monitor / …
+  │      ├── chain-broker         RabbitMQ AMQP fanout — normalized tx events
+  │      └── tx-history-service   consumer → MongoDB tx records
+  │
+  ├──▶ ar-custodian-service       [ go · Fireblocks REST API ]
+  │      JWT-signed Fireblocks client — vaults, wallet addresses, balances,
+  │      transactions, exchange accounts
+  │
+  └──▶ ar-governance-service  (57% ownership)  [ go · MongoDB · WebSocket · RabbitMQ ]
+         │
+         ├── escrow state machine
+         │     PENDING → AWAITING_APPROVAL → APPROVED / DENIED / EXPIRED
+         │     auto-denial when approval threshold becomes unreachable
+         │
+         ├── multi-sig approval engine
+         │     Group A (mandatory approvers) + Group B (configurable threshold)
+         │     any required approver rejection → immediate denial
+         │     real-time WebSocket push to all pending approvers
+         │
+         ├── Fireblocks webhook handler
+         │     SUBMITTED → PENDING_SIGNATURE → BROADCASTING → CONFIRMED
+         │     status propagated to escrow record + downstream notifiers
+         │
+         └── notification pipeline → RabbitMQ → ar-notification-service → email
+                                                │
+                                                ▼
+                              ┌─ ar-account-service  [ PostgreSQL · GORM · Redis ]
+                              │   orgs · users · escrow accounts · RBAC
+                              │
+                              └─ ar-frontends (React 18 · Ant Design · Turborepo)
+                                    custody app · activity app · escrow app
+                                    seizure wallet flows · portfolio views
+                                    external-ID chain-of-custody system
+</pre>
+    </Section>
+
+    <!-- decisions -->
+    <Section tag="DECISIONS" title="Six calls that shaped the platform.">
+      <div class="decisions-grid">
+        <div class="decision">
+          <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Configurable multi-sig groups over fixed N-of-M</div>
+          <p class="decision-body">Rather than a static N-of-M scheme, ar-governance-service supports named groups (A and B) with per-group mandatory approvers and configurable thresholds. Agencies have different approval hierarchies; the state machine accommodates them without code changes. Mandatory approvers within a group make it impossible to route around specific roles.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Auto-denial when threshold becomes unreachable</div>
+          <p class="decision-body">If enough required approvers have denied that the remaining approvals can never reach the threshold, the escrow record is automatically set to DENIED without waiting for a timeout. Government custody workflows can't have funds hanging in limbo — deterministic denial keeps queues clean and audit trails unambiguous.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Per-chain Go workspace modules for ingestion</div>
+          <p class="decision-body">The 12 chain monitors live as independently deployable Go workspace modules inside ar-chain-service, wired through a chain-broker via RabbitMQ AMQP. Adding a new chain means adding a module, not forking the pipeline. Each monitor has its own health endpoint; failures are isolated. ERC-20 contract monitoring is a separate module from the ETH block monitor.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Fireblocks as the custody layer, not a custom HSM</div>
+          <p class="decision-body">ar-custodian-service wraps the Fireblocks REST API with a JWT-signed client (shopspring/decimal for amounts, gorilla/mux routing). Fireblocks provides MPC key management, policy engine, and regulatory audit logs that would take years to build. The custody integration handles vaults, wallet address generation, transaction submission, and exchange accounts.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">RabbitMQ as the event bus across all services</div>
+          <p class="decision-body">All 20+ microservices communicate via RabbitMQ AMQP — blockchain events, governance state changes, notification triggers. Kafka would have been overengineered for this workload volume. RabbitMQ's per-queue durability and per-message acknowledgement gives the reliability guarantees custody workflows need without operational complexity.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">External-ID system for chain-of-custody traceability</div>
+          <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. Without the external-ID layer, correlating an Asset Reality record to a court filing requires manual lookup — an audit failure in a courtroom context.</p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ownership -->
+    <Section tag="OWNERSHIP" title="Systems and contributions by repo.">
+      <div class="ownership">
+        <div class="ownership-header">
+          <span>SYSTEM / REPO</span>
+          <span>STACK</span>
+          <span class="text-right">ALEX %</span>
+          <span class="text-right">ROLE</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ar-governance-service</span>
+          <span class="ownership-dim">go · mongodb · rabbitmq · websocket</span>
+          <span class="ownership-dim text-right">57%</span>
+          <span class="ownership-dim text-right">primary author</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ar-chain-service (12 monitors)</span>
+          <span class="ownership-dim">go workspaces · go-ethereum · rabbitmq</span>
+          <span class="ownership-dim text-right">30%</span>
+          <span class="ownership-dim text-right">primary author</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ar-frontends (8 React apps)</span>
+          <span class="ownership-dim">react 18 · typescript · ant design · vite · turborepo</span>
+          <span class="ownership-dim text-right">30%</span>
+          <span class="ownership-dim text-right">primary contributor</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">tokenbalancelambda / portfoliovaluelambda</span>
+          <span class="ownership-dim">typescript · aws lambda · ccxt</span>
+          <span class="ownership-dim text-right">93–94%</span>
+          <span class="ownership-dim text-right">sole author</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ar-custodian-service</span>
+          <span class="ownership-dim">go · fireblocks api · postgresql · gorm</span>
+          <span class="ownership-dim text-right">10%</span>
+          <span class="ownership-dim text-right">contributor</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">platform dockerization (15+ services)</span>
+          <span class="ownership-dim">docker · docker compose · air · aws ecs</span>
+          <span class="ownership-dim text-right">led effort</span>
+          <span class="ownership-dim text-right">dec 2023</span>
+        </div>
+      </div>
+    </Section>
+
+    <!-- outcome -->
+    <Section tag="OUTCOME" title="What the platform became.">
+      <p class="body-para">
+        During my tenure (Jul 2022 – Mar 2024) the platform grew from early-stage to supporting
+        seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
+        UK law enforcement, and agencies across North America and the Caribbean. The $4.91M seed round
+        closed in January 2023 explicitly to hire engineers and expand operations. Since I left, Asset
+        Reality has crossed $1B in digital asset transactions managed, earned FCA VASP registration
+        (July 2025), and is actively raising a Series A+. The platform is becoming the de-facto
+        operating system for seized crypto globally.
+      </p>
+      <p class="body-para" style="margin-top: 20px;">
+        What I took from 19 months in a regulated, government-grade codebase: the cost of correctness
+        is not abstract. A bug in the governance engine doesn't break a user flow — it could mis-release
+        seized government funds or stall a criminal prosecution. That changes how you design state
+        machines, how you write tests, and how you think about edge cases. Multi-sig design patterns,
+        Fireblocks integration, and Go microservices at production scale are the portable skills;
+        the disposition toward correctness is harder to name and more valuable.
+      </p>
+    </Section>
+
+    <!-- next case -->
+    <div class="next-case">
+      <span class="next-case-label">NEXT CASE STUDY</span>
+      <Link href="/cases/leyabierta" class="next-case-link">
+        05 &nbsp; Ley Abierta — 190 years of Spanish law as Git →
+      </Link>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <span>alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span>alex@konar.es</span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 14px;
+  }
+
+  .topbar-name {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .topbar-path {
+    color: var(--faint);
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 280px;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-h1 {
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 20px 0 0;
+    max-width: 880px;
+    text-wrap: pretty;
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    color: var(--dim);
+    line-height: 1.55;
+    margin-top: 24px;
+    max-width: 680px;
+    text-wrap: pretty;
+  }
+
+  .hero-links {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .hero-links-label {
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .hero-link {
+    display: block;
+    color: var(--fg);
+  }
+
+  /* ── NUMBERS STRIP ── */
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .numbers-cell {
+    padding: 24px 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  .numbers-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+  }
+
+  .numbers-val {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+
+  .numbers-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-top: 4px;
+  }
+
+  /* ── BODY PARA (brief + outcome) ── */
+  .body-para {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--dim);
+    line-height: 1.65;
+    max-width: 640px;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.85;
+    background: #101216;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    max-width: 760px;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  /* ── DECISIONS ── */
+  .decisions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 56px;
+    max-width: 920px;
+  }
+
+  .decision-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .decision-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-top: 8px;
+    text-wrap: pretty;
+  }
+
+  /* ── OWNERSHIP TABLE ── */
+  .ownership {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    max-width: 820px;
+  }
+
+  .ownership-header {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+
+  .ownership-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ownership-repo {
+    color: var(--fg);
+  }
+
+  .ownership-dim {
+    color: var(--dim);
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  /* ── NEXT CASE ── */
+  .next-case {
+    margin-top: 88px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .next-case-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .next-case-link {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 88px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+</style>

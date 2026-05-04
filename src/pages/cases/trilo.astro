@@ -1,0 +1,521 @@
+---
+import Base from "../../layouts/Base.astro";
+import Link from "../../components/Link.astro";
+import Section from "../../components/Section.astro";
+---
+
+<Base
+  title="Trilo — multi-platform AI workspace | Alejandro Martínez"
+  description="Sole architect behind Trilo: an AI workspace where autonomous coworker AIs participate as teammates. Live at trilo.chat across web, mobile, desktop and a Python voice agent."
+>
+  <div class="page">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-name">alejandro martinez</span>
+        <span class="topbar-path">/ work / trilo</span>
+      </div>
+      <nav class="topbar-nav">
+        <Link href="/">← back</Link>
+        <Link href="/#case-studies">case studies</Link>
+        <Link href="mailto:alex@konar.es">contact</Link>
+      </nav>
+    </header>
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="hero-grid">
+        <div class="hero-tag">CASE STUDY · 01</div>
+        <div class="hero-main">
+          <div class="hero-meta">MULTI-PLATFORM AI WORKSPACE &nbsp;·&nbsp; 2025 — NOW &nbsp;·&nbsp; SOLE ARCHITECT</div>
+          <h1 class="hero-h1">An AI workspace with coworkers, not chatbots.</h1>
+          <p class="hero-lead">
+            Trilo is an AI workspace combining chat, projects, workflows, meetings and a knowledge
+            graph, with autonomous AI coworkers (Luna, Atlas, Nova, Sage) that participate as actual
+            teammates: persistent memory, tool access, a place in the team structure. Shipped from a
+            single monorepo across web (Next.js), backend (Bun + Elysia), mobile (Expo React Native),
+            desktop (Tauri 2) and a Python LiveKit voice agent. One architect, zero contractors.
+            Live at trilo.chat.
+          </p>
+        </div>
+        <div class="hero-links">
+          <div class="hero-links-label">LINKS</div>
+          <Link href="https://trilo.chat" class="hero-link">trilo.chat ↗</Link>
+          <Link href="https://app.trilo.chat" class="hero-link">app.trilo.chat ↗</Link>
+        </div>
+      </div>
+    </div>
+
+    <!-- numbers strip -->
+    <div class="numbers">
+      <div class="numbers-cell">
+        <div class="numbers-key">STATUS</div>
+        <div class="numbers-val">live</div>
+        <div class="numbers-sub">trilo.chat · paid plans</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">CLIENTS SHIPPED</div>
+        <div class="numbers-val">web · mobile · desktop</div>
+        <div class="numbers-sub">ios + android · tauri 2</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">AI COWORKERS</div>
+        <div class="numbers-val">4</div>
+        <div class="numbers-sub">luna · atlas · nova · sage</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">INTEGRATIONS</div>
+        <div class="numbers-val">11</div>
+        <div class="numbers-sub">gmail · github · linear · stripe …</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">WORKFLOWS</div>
+        <div class="numbers-val">DAG</div>
+        <div class="numbers-sub">custom orchestrator · checkpointing</div>
+      </div>
+      <div class="numbers-cell numbers-cell--last">
+        <div class="numbers-key">MODEL ROUTING</div>
+        <div class="numbers-val">2-tier</div>
+        <div class="numbers-sub">fast-path / specialist · opik traced</div>
+      </div>
+    </div>
+
+    <!-- the brief -->
+    <Section tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
+      <p class="body-para">
+        The premise was simple and the execution was not: one product that replaces chat, task
+        management, docs, spreadsheets, video calls, calendar, and social media scheduling —
+        connected by a knowledge graph that remembers context across all of them. The differentiator
+        isn't the feature list; it's the AI layer. Luna, Atlas, Nova, and Sage aren't chatbots behind
+        a slash command — they're coworkers with memory, tool access, and a place in the team
+        structure. Trilo was designed from the first commit to be AI-native rather than AI-sprinkled.
+      </p>
+    </Section>
+
+    <!-- architecture -->
+    <Section tag="ARCHITECTURE" title="Every surface, one backend, one monorepo.">
+      <pre class="arch-diagram">  ┌─ trilo monorepo  (turborepo · bun workspaces · biome)
+  │
+  ├──▶ apps/web              [ next.js 16 · react 19 · tailwind · zustand · yjs ]
+  │      └── lexical rich-text · real-time collab (CRDT) · stripe checkout
+  │
+  ├──▶ apps/backend          [ bun runtime · elysia · drizzle ORM ]
+  │      ├── 325 service files
+  │      ├── 18 background job processors
+  │      ├── websockets + livekit integration
+  │      ├── openrouter (multi-model via openai-compatible client)
+  │      ├── opik LLM observability
+  │      ├── composio toolkit  (gmail · github · linear · shopify · 11 total)
+  │      ├── stripe (subscriptions · metered billing · connect/referrals)
+  │      └── mcp/server.ts  ──▶  14 tool modules exposed to AI agents
+  │
+  ├──▶ apps/mobile           [ expo · react native · ios + android · apple IAP ]
+  │
+  ├──▶ apps/desktop          [ tauri 2 · rust · 33 source files ]
+  │
+  ├──▶ apps/landing-page     [ next.js · vercel ]
+  │
+  └──▶ agent/                [ python · livekit · real-time transcription ]
+  │
+  └─ packages/db             [ postgres via supabase · 55-table schema ]
+                                          │
+            ┌───────────────────────────┐ │ ┌──────────────────────────┐
+            │   fly.io (singapore)      │◀┘ │   vercel (web + landing) │
+            │   redis · docker · ecs    │   └──────────────────────────┘
+            └───────────────────────────┘
+</pre>
+    </Section>
+
+    <!-- decisions -->
+    <Section tag="DECISIONS" title="Six calls that shaped the architecture.">
+      <div class="decisions-grid">
+        <div class="decision">
+          <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Bun + Elysia over Node/Express</div>
+          <p class="decision-body">Chose Bun for native TypeScript execution and significantly lower cold-start overhead. Elysia provides end-to-end type safety from route definition to client — no schema drift, no hand-rolled validators. A deliberate bet on performance and ergonomics over ecosystem safety.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Custom DAG workflow orchestrator</div>
+          <p class="decision-body">Off-the-shelf workflow tools assume human-defined linear sequences. Trilo's workflows are AI-generated multi-step plans with dependencies, parallel branches, checkpoint/resume, token budgets, and review gates. The DAG engine in <code>workflowOrchestrator.ts</code> was written from scratch because nothing in the ecosystem fit the shape.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Dual-tier model routing</div>
+          <p class="decision-body">Simple queries hit a fast, cheap small model. Complex reasoning escalates to a specialist via <code>fastPathService.ts</code> → <code>lunaSpecialistService.ts</code>. Every path is traced with Opik for prompt observability. The result is cost-aware AI dispatch that doesn't sacrifice response quality for common cases.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Supabase + 55-table schema</div>
+          <p class="decision-body">468 migration files represent sustained, iterative schema evolution — not a big-bang design. Drizzle ORM keeps migrations type-safe. The knowledge graph, workspace membership model, versioned pages, and spreadsheet engine all live in the same Postgres cluster, intentionally co-located for join efficiency.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Tauri 2 over Electron</div>
+          <p class="decision-body">Electron was the obvious default. Tauri was the right call: a Rust-native shell with a smaller binary, no bundled Chromium, and a proper OS integration layer. The desktop app shares 100% of the React frontend — the Rust layer only handles OS APIs and window management.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">MCP-first tool architecture (14 modules)</div>
+          <p class="decision-body">Trilo ships its own MCP server exposing all core operations as tool calls — boards, tasks, messages, meetings, knowledge graph, spreadsheets, and more. Any MCP-aware agent (Claude, Cursor, Codex) can operate Trilo natively. This was a distribution decision as much as an architecture one: make Trilo the workspace that AI agents already know how to use.</p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- scope table -->
+    <Section tag="SCOPE" title="Every surface I built and shipped.">
+      <div class="ownership">
+        <div class="ownership-header">
+          <span>PLATFORM</span>
+          <span>STACK</span>
+          <span>SCOPE</span>
+          <span class="text-right">STATE</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">web</span>
+          <span class="ownership-dim">next.js 16 · react 19 · tailwind · zustand · yjs · lexical</span>
+          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim text-right">in production</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">backend</span>
+          <span class="ownership-dim">bun · elysia · supabase · postgres · redis · drizzle</span>
+          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim text-right">in production</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">mobile</span>
+          <span class="ownership-dim">expo · react native · ios + android · apple IAP</span>
+          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim text-right">shipped</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">desktop</span>
+          <span class="ownership-dim">tauri 2 · rust · shared react frontend</span>
+          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim text-right">shipped</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">agent</span>
+          <span class="ownership-dim">python · livekit · real-time transcription pipeline</span>
+          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim text-right">in production</span>
+        </div>
+      </div>
+    </Section>
+
+    <!-- outcome -->
+    <Section tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
+      <p class="body-para">
+        Trilo is what one engineer can build when scope is set by what the product needs rather than
+        by what a team can absorb. A live product at trilo.chat with paid plans, a mobile app on the
+        App Store and Google Play, a Tauri desktop binary, and a Python voice agent on LiveKit, all
+        wired into a single monorepo with a custom DAG workflow orchestrator, dual-tier model routing
+        with LLM observability, and a native MCP server that lets Claude, Cursor and other AI clients
+        drive the product directly. The deploy pipeline posts status updates into Trilo's own chat:
+        the workspace operates itself.
+      </p>
+    </Section>
+
+    <!-- next case -->
+    <div class="next-case">
+      <span class="next-case-label">NEXT CASE STUDY</span>
+      <Link href="/cases/satstream" class="next-case-link">
+        02 &nbsp; Satstream — Bitcoin's data layer →
+      </Link>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <span>alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span>alex@konar.es</span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 14px;
+  }
+
+  .topbar-name {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .topbar-path {
+    color: var(--faint);
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 280px;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-h1 {
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 20px 0 0;
+    max-width: 880px;
+    text-wrap: pretty;
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    color: var(--dim);
+    line-height: 1.55;
+    margin-top: 24px;
+    max-width: 680px;
+    text-wrap: pretty;
+  }
+
+  .hero-links {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .hero-links-label {
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .hero-link {
+    display: block;
+    color: var(--fg);
+  }
+
+  /* ── NUMBERS STRIP ── */
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .numbers-cell {
+    padding: 24px 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  .numbers-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+  }
+
+  .numbers-val {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+
+  .numbers-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-top: 4px;
+  }
+
+  /* ── BODY PARA (brief + outcome) ── */
+  .body-para {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--dim);
+    line-height: 1.65;
+    max-width: 640px;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.85;
+    background: #101216;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    max-width: 760px;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  /* ── DECISIONS ── */
+  .decisions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 56px;
+    max-width: 920px;
+  }
+
+  .decision-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .decision-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-top: 8px;
+    text-wrap: pretty;
+  }
+
+  .decision-body code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg);
+  }
+
+  /* ── SCOPE TABLE ── */
+  .ownership {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    max-width: 920px;
+  }
+
+  .ownership-header {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr 1fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+
+  .ownership-row {
+    display: grid;
+    grid-template-columns: 1fr 2.5fr 1fr 1fr;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ownership-repo {
+    color: var(--fg);
+  }
+
+  .ownership-dim {
+    color: var(--dim);
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  /* ── NEXT CASE ── */
+  .next-case {
+    margin-top: 88px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .next-case-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .next-case-link {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 88px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+</style>

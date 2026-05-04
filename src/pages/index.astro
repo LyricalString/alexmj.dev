@@ -1,0 +1,716 @@
+---
+import Base from "../layouts/Base.astro";
+import Link from "../components/Link.astro";
+import Pulse from "../components/Pulse.astro";
+---
+
+<Base
+  title="Alejandro Martínez — Software Engineer"
+  description="Production systems across AI, Bitcoin infrastructure, DeFi protocols and full-stack SaaS."
+>
+  <div class="page">
+
+    <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="prompt">
+        <span class="prompt-path">~/portfolio</span>
+        <span class="prompt-sigil">$</span>
+        <span class="prompt-cmd">whoami</span>
+      </div>
+      <nav class="nav">
+        <Link href="#work">work</Link>
+        <Link href="#case-studies">case studies</Link>
+        <Link href="#writing">writing</Link>
+        <Link href="#contact">contact</Link>
+      </nav>
+    </header>
+
+    <!-- ── HERO BLOCK ────────────────────────────────────────────────── -->
+    <section class="hero">
+
+      <!-- whoami response line -->
+      <div class="whoami-line">
+        <div class="whoami-left">
+          <span class="chevron">&gt;</span>
+          <span class="name">alejandro martinez</span>
+          <span class="sep">·</span>
+          <span class="role">software engineer</span>
+          <span class="sep">·</span>
+          <span class="city">valencia</span>
+        </div>
+        <Link href="#contact" class="status-link">
+          <span class="status-inner">
+            <Pulse color="var(--accent)" />
+            <span class="status-text">available june 2026</span>
+            <span class="status-arrow">↗</span>
+          </span>
+        </Link>
+      </div>
+
+      <!-- H1 -->
+      <h1 class="hero-h1">
+        Production systems built end-to-end<br>
+        across <span class="dim">AI</span>, <span class="dim">Bitcoin infrastructure</span>,<br>
+        <span class="dim">DeFi protocols</span> and full-stack SaaS.
+      </h1>
+
+      <!-- meta sub-line -->
+      <div class="hero-meta">
+        <span>en · es</span>
+        <span>remote</span>
+        <span>fulltime + select freelance</span>
+      </div>
+
+      <!-- numbers strip -->
+      <div class="stats-strip">
+        <div class="stat">
+          <div class="stat-label">ai workspace</div>
+          <div class="stat-value">trilo</div>
+          <div class="stat-sub">mcp-native · custom dag · knowledge graph</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">bitcoin chain</div>
+          <div class="stat-value">~3 TB</div>
+          <div class="stat-sub">indexed · multi-db cluster</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">laws indexed</div>
+          <div class="stat-value">12,255</div>
+          <div class="stat-sub">leyabierta.es · since 1835</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">custody platform</div>
+          <div class="stat-value">$200M+</div>
+          <div class="stat-sub">asset reality · aum during tenure</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">discord users</div>
+          <div class="stat-value">2M</div>
+          <div class="stat-sub">oss bot · 22k servers</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SELECTED WORK ─────────────────────────────────────────────── -->
+    <section id="work" class="work-section">
+      <div class="work-label">
+        SELECTED WORK<br>
+        <span>2022 — 2026</span>
+      </div>
+      <div class="work-rows">
+
+        <a href="/cases/trilo" class="work-row">
+          <div class="row-idx">01</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Trilo</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              An AI workspace where autonomous coworkers participate as teammates, with persistent
+              memory, a queryable knowledge graph and a native MCP server. Custom DAG workflow
+              orchestrator and dual-tier model routing inside. Live at trilo.chat across web, mobile
+              and a Python voice agent.
+            </p>
+            <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp;&nbsp;Rust&nbsp;&nbsp;·&nbsp;&nbsp;Python&nbsp;&nbsp;·&nbsp;&nbsp;Bun · Elysia&nbsp;&nbsp;·&nbsp;&nbsp;Supabase&nbsp;&nbsp;·&nbsp;&nbsp;Tauri&nbsp;&nbsp;·&nbsp;&nbsp;MCP</div>
+          </div>
+          <div class="row-year">2025 — now</div>
+        </a>
+
+        <a href="/cases/satstream" class="work-row">
+          <div class="row-idx">02</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Satstream</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              Bitcoin's data layer. Sole engineer across 9 repos: 4 indexers, 5-language SDK, MCP server,
+              block explorer, AWS CDK. Indexes the full Bitcoin chain (~3 TB) into a MongoDB + ScyllaDB +
+              Postgres + Redis cluster for sub-second queries.
+            </p>
+            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp;&nbsp;Go&nbsp;&nbsp;·&nbsp;&nbsp;Python&nbsp;&nbsp;·&nbsp;&nbsp;ScyllaDB&nbsp;&nbsp;·&nbsp;&nbsp;MongoDB&nbsp;&nbsp;·&nbsp;&nbsp;gRPC&nbsp;&nbsp;·&nbsp;&nbsp;AWS CDK</div>
+          </div>
+          <div class="row-year">2024 — now</div>
+        </a>
+
+        <a href="/cases/leyabierta" class="work-row">
+          <div class="row-idx">03</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Ley Abierta</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              190 years of Spanish legislation as a Git repository — 12,255 laws, 42,866 commits dated
+              to their official publication. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C
+              kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s
+              to sub-second. Live at leyabierta.es.
+            </p>
+            <div class="row-stack">TypeScript · Bun&nbsp;&nbsp;·&nbsp;&nbsp;SQLite + FTS5&nbsp;&nbsp;·&nbsp;&nbsp;C SIMD&nbsp;&nbsp;·&nbsp;&nbsp;Qwen self-host&nbsp;&nbsp;·&nbsp;&nbsp;AGPL-3.0</div>
+          </div>
+          <div class="row-year">2026</div>
+        </a>
+
+        <a href="/cases/asset-reality" class="work-row">
+          <div class="row-idx">04</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Asset Reality</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              19 months as engineer at a government-grade crypto custody startup. Owned the multi-sig
+              governance/escrow engine and the 12-chain ingestion platform. Platform now handles $1B+ in
+              seizures across French, Belgian, US, EU and Caribbean law enforcement.
+            </p>
+            <div class="row-stack">Go&nbsp;&nbsp;·&nbsp;&nbsp;TypeScript&nbsp;&nbsp;·&nbsp;&nbsp;MongoDB&nbsp;&nbsp;·&nbsp;&nbsp;Postgres&nbsp;&nbsp;·&nbsp;&nbsp;RabbitMQ&nbsp;&nbsp;·&nbsp;&nbsp;AWS · Terraform&nbsp;&nbsp;·&nbsp;&nbsp;Fireblocks</div>
+          </div>
+          <div class="row-year">2022 — 2024</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ── OTHER PROJECTS ────────────────────────────────────────────── -->
+    <section class="other-section">
+      <div class="other-header">
+        <span class="other-label">OTHER PROJECTS · 6</span>
+        <Link href="#" class="other-view-all">view all →</Link>
+      </div>
+      <div class="other-grid">
+
+        <div class="other-row">
+          <div class="other-idx">05</div>
+          <div>
+            <div class="other-name">Compound Fox + Autowealth</div>
+            <div class="other-blurb">algo trading + distribution platform · live public performance dashboard</div>
+          </div>
+        </div>
+
+        <div class="other-row">
+          <div class="other-idx">06</div>
+          <div>
+            <div class="other-name">Chatvue</div>
+            <div class="other-blurb">ai persona on fanvue · whale-judge llm, autonomous PPV decisions, non-custodial USDT wallets</div>
+          </div>
+        </div>
+
+        <a href="/cases/crossflow" class="other-row">
+          <div class="other-idx">07</div>
+          <div>
+            <div class="other-name">Crossflow <span class="case-badge">CASE STUDY ↗</span></div>
+            <div class="other-blurb">defi cross-chain protocol · cosmos sdk + tss/mpc-ecdsa (gennaro-goldfeder)</div>
+          </div>
+        </a>
+
+        <div class="other-row">
+          <div class="other-idx">08</div>
+          <div>
+            <div class="other-name">Tecpar</div>
+            <div class="other-blurb">b2b saas for an electronics-repair shop · sole engineer · internal admin, client portal, e-commerce, public site</div>
+          </div>
+        </div>
+
+        <div class="other-row">
+          <div class="other-idx">09</div>
+          <div>
+            <div class="other-name">LEB</div>
+            <div class="other-blurb">expo rn + next admin · events & membership platform for expats in bali · partner discounts, mapbox</div>
+          </div>
+        </div>
+
+        <div class="other-row">
+          <div class="other-idx">10</div>
+          <div>
+            <div class="other-name">Node-Discord-Bot</div>
+            <div class="other-blurb">oss bot · 2M users, 22k servers, 140★, 92 forks</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── CONTACT ───────────────────────────────────────────────────── -->
+    <section id="contact" class="contact-section">
+      <div class="contact-grid">
+        <div class="contact-label">CONTACT</div>
+        <div class="contact-body">
+          <p class="contact-lead">
+            Open to fulltime roles and select freelance from June 2026.<br>
+            Best reached by email — I read every message.
+          </p>
+          <Link href="mailto:alex@konar.es" class="contact-email">alex@konar.es →</Link>
+          <div class="contact-channels">
+            <Link href="https://github.com/lyricalstring" class="contact-channel">
+              <span class="channel-key">github</span>
+              <span class="channel-handle">github.com/lyricalstring</span>
+              <span class="channel-arrow">↗</span>
+            </Link>
+            <Link href="https://www.linkedin.com/in/lyricalstring/" class="contact-channel">
+              <span class="channel-key">linkedin</span>
+              <span class="channel-handle">linkedin.com/in/lyricalstring</span>
+              <span class="channel-arrow">↗</span>
+            </Link>
+            <Link href="https://x.com/lyricalstring" class="contact-channel">
+              <span class="channel-key">x</span>
+              <span class="channel-handle">@lyricalstring</span>
+              <span class="channel-arrow">↗</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="footer">
+      <span class="footer-left">alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span class="footer-links">
+        <Link href="/about">about</Link>
+        <Link href="/cv">cv</Link>
+        <Link href="/projects">projects</Link>
+        <Link href="/oss">oss</Link>
+      </span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  /* ── PAGE WRAPPER ─────────────────────────────────────────────────── */
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+  }
+
+  /* ── TOP BAR ──────────────────────────────────────────────────────── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding-bottom: 24px;
+  }
+
+  .prompt {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  .prompt-path { color: var(--dim); }
+  .prompt-sigil { color: var(--faint); }
+  .prompt-cmd { color: var(--fg); }
+
+  .nav {
+    display: flex;
+    gap: 28px;
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* ── HERO BLOCK ───────────────────────────────────────────────────── */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 64px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* whoami response line */
+  .whoami-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .whoami-left {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .chevron { color: var(--faint); }
+  .name { color: var(--fg); font-weight: 500; }
+  .role { color: var(--dim); }
+  .city { color: var(--dim); }
+  .sep { color: var(--faint); }
+
+  /* status pill */
+  .status-link {
+    color: var(--fg);
+    text-decoration: none;
+    transition: opacity 120ms ease;
+    padding: 4px 0;
+  }
+
+  .status-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg);
+  }
+
+  .status-text {
+    color: var(--fg);
+  }
+
+  .status-arrow {
+    color: var(--accent);
+    transition: transform 120ms ease;
+  }
+
+  .status-link:hover .status-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .status-link:hover {
+    color: var(--fg);
+  }
+
+  /* H1 */
+  .hero-h1 {
+    font-family: var(--font-sans);
+    font-size: 56px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 36px 0 0;
+    max-width: 920px;
+  }
+
+  .dim { color: var(--dim); }
+
+  /* meta sub-line */
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    margin-top: 28px;
+  }
+
+  /* numbers strip */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+  }
+
+  .stat-value {
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    margin-top: 4px;
+  }
+
+  .stat-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    margin-top: 4px;
+  }
+
+  /* ── SELECTED WORK ────────────────────────────────────────────────── */
+  .work-section {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+    padding-top: 16px;
+  }
+
+  .work-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  .work-label span {
+    color: var(--faint);
+  }
+
+  .work-rows {
+    /* right column */
+  }
+
+  .work-row {
+    display: grid;
+    grid-template-columns: 44px 1fr 80px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+    color: inherit;
+    text-decoration: none;
+    transition: background 120ms ease;
+  }
+
+  .work-row:hover {
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .work-row:hover .row-name { color: var(--accent); }
+  .work-row:hover .case-badge { color: var(--accent); border-color: var(--dim); }
+
+  .row-idx {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  .row-title-line {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .row-name {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .case-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+    border: 1px solid var(--rule);
+    padding: 2px 6px;
+  }
+
+  .row-blurb {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+    margin: 8px 0 0;
+    max-width: 640px;
+    line-height: 1.55;
+  }
+
+  .row-stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .row-year {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    text-align: right;
+  }
+
+  /* ── OTHER PROJECTS ───────────────────────────────────────────────── */
+  .other-section {
+    margin-top: 88px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .other-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 28px;
+  }
+
+  .other-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .other-view-all {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .other-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 56px;
+  }
+
+  .other-row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+    color: inherit;
+    text-decoration: none;
+    transition: background 120ms ease;
+  }
+
+  a.other-row:hover {
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  a.other-row:hover .other-name { color: var(--accent); }
+
+  .other-idx {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  .other-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .other-blurb {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
+  /* ── CONTACT ──────────────────────────────────────────────────────── */
+  .contact-section {
+    margin-top: 96px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 24px;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+  }
+
+  .contact-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .contact-body {
+    max-width: 720px;
+  }
+
+  .contact-lead {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+    color: var(--fg);
+    margin: 0 0 28px;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: opacity 120ms ease;
+  }
+
+  .contact-email:hover {
+    opacity: 0.7;
+  }
+
+  .contact-channels {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-channel {
+    display: grid;
+    grid-template-columns: 110px 1fr 24px;
+    gap: 16px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 120ms ease;
+  }
+
+  .contact-channel:hover {
+    color: var(--fg);
+  }
+
+  .channel-key {
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+
+  .channel-handle {
+    color: var(--fg);
+  }
+
+  .channel-arrow {
+    color: var(--accent);
+    text-align: right;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────────────────── */
+  .footer {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  .footer-left {
+    color: var(--faint);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    color: var(--dim);
+  }
+</style>

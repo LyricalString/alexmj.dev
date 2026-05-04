@@ -1,0 +1,458 @@
+---
+import Base from "../layouts/Base.astro";
+import Link from "../components/Link.astro";
+---
+
+<Base
+  title="CV — Alejandro Martínez"
+  description="CV for Alejandro Martínez — software engineer based in Valencia."
+>
+  <div class="page">
+
+    <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="prompt">
+        <span class="prompt-path">~/portfolio</span>
+        <span class="prompt-sigil">$</span>
+        <span class="prompt-cmd">cat cv.md</span>
+      </div>
+      <nav class="nav">
+        <Link href="/">home</Link>
+        <Link href="/projects">projects</Link>
+        <Link href="/about">about</Link>
+        <Link href="/oss">oss</Link>
+      </nav>
+    </header>
+
+    <!-- ── HERO ────────────────────────────────────────────────────── -->
+    <section class="hero">
+      <div class="hero-tag">CV</div>
+      <h1 class="hero-h1">Alejandro Martínez</h1>
+      <div class="hero-sub">Software engineer · Valencia · <Link href="mailto:alex@konar.es" class="email-link">alex@konar.es</Link></div>
+      <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
+    </section>
+
+    <!-- ── SELECTED WORK ─────────────────────────────────────────────── -->
+    <section class="cv-section">
+      <div class="section-label">SELECTED WORK</div>
+      <div class="work-grid">
+
+        <div class="work-item">
+          <div class="work-name">
+            <Link href="/cases/trilo" class="work-link">Trilo ↗</Link>
+          </div>
+          <div class="work-desc">AI workspace with autonomous coworker AIs, persistent memory and a queryable knowledge graph. Web, backend, mobile, desktop, Python LiveKit voice agent. Custom DAG workflow orchestrator, dual-tier model routing, MCP-native. Live at trilo.chat. 2025–now.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">
+            <Link href="/cases/satstream" class="work-link">Satstream ↗</Link>
+          </div>
+          <div class="work-desc">Bitcoin data layer. Sole engineer, 9 repos, 4 indexers, 5-language SDK, MCP server. Indexes full chain (~3 TB) into 4-database cluster. 2024–now.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">
+            <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
+          </div>
+          <div class="work-desc">190 years of Spanish law as Git. 12,255 laws, 42,866 commits. Custom int8 SIMD C kernel for hybrid BM25 + RAG retrieval — Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. AGPL-3.0. 2026.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">
+            <Link href="/about#asset-reality" class="work-link">Asset Reality ↗</Link>
+          </div>
+          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Mar 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM $200–300M during tenure ($1B+ now).</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">Chatvue</div>
+          <div class="work-desc">AI persona orchestration on Fanvue. 6-stage subscriber state machine, two-tier compliance routing, autonomous PPV tool calls, whale-judge LLM, non-custodial USDT wallets via HD derivation, Opik observability. 2026.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">Compound Fox + Autowealth</div>
+          <div class="work-desc">Algo strategy with a live, public performance dashboard. Distribution SaaS platform. Turborepo: backend, Telegram bot, dashboards, React Native, AWS CDK.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">Tecpar</div>
+          <div class="work-desc">B2B SaaS for an electronics-repair shop, built solo. Internal admin for technicians, client portal, online shop, and public site — 4 Next.js apps, blue/green self-hosted deploys. Live at tecpar.es.</div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-name">
+            <Link href="/cases/crossflow" class="work-link">Crossflow Network ↗</Link>
+          </div>
+          <div class="work-desc">L1 Cosmos SDK + TSS/MPC-ECDSA implementation. Gennaro-Goldfeder CCS 2018 (Feldman VSS, Paillier, ZK proofs). Cross-chain HTLC scripts, BandChain oracle via IBC.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── EXPERIENCE ───────────────────────────────────────────────── -->
+    <section class="cv-section">
+      <div class="section-label">EXPERIENCE</div>
+
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-company">Trilo / Hexmount</div>
+            <div class="exp-role">Sole architect</div>
+            <div class="exp-dates">2025 — present</div>
+          </div>
+          <p class="exp-desc">Designed and shipped Trilo: an AI workspace where autonomous coworker AIs participate as teammates, with persistent memory, a queryable knowledge graph and an MCP-native tool surface. Web (Next.js 16), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit voice agent. Custom DAG workflow orchestrator with checkpointing and dual-tier model routing with LLM observability. Live in production at trilo.chat.</p>
+          <div class="exp-stack">TypeScript · Rust · Python · Bun · Elysia · Supabase · Tauri · MCP · LiveKit</div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-company">Satstream</div>
+            <div class="exp-role">Sole engineer</div>
+            <div class="exp-dates">2024 — present</div>
+          </div>
+          <p class="exp-desc">Built and operate Bitcoin's data infrastructure. 350+ commits across 9 repos. 4 indexers covering UTXOs, inscriptions, BRC-20, Runes, Ordinals charms. 5 OpenAPI-generated SDKs. MCP server (ss-mcp) for AI agent integration. Block explorer. AWS CDK infra. ScyllaDB migration from MongoDB for write throughput. gRPC microservice for Runestone decoding.</p>
+          <div class="exp-stack">Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK</div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-company">Asset Reality</div>
+            <div class="exp-role">Software engineer</div>
+            <div class="exp-dates">Jul 2022 — Mar 2024</div>
+          </div>
+          <p class="exp-desc">860 commits across 25 repos over 20 months. Primary owner of: (1) Governance/Escrow Engine — multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform — 12 chain monitors (ETH, BTC, BCH, LTC, DOGE, XRP, Solana, Tron, Polygon, Arbitrum, ERC-20) as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM $200–300M during tenure; $1B+ now.</p>
+          <div class="exp-stack">Go · TypeScript · React · Ant Design · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks</div>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-meta">
+            <div class="exp-company">Tecpar (via Konar Technologies)</div>
+            <div class="exp-role">Sole engineer</div>
+            <div class="exp-dates">2021 — present</div>
+          </div>
+          <p class="exp-desc">Sole engineer behind Tecpar S.L.'s full platform — a B2B SaaS operating a real electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle (emails, repairs, shipping, invoicing). Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking select freelance engineering work.</p>
+          <div class="exp-stack">TypeScript · Next.js · Prisma · Rust · Bun · Docker · Traefik</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── SKILLS ────────────────────────────────────────────────────── -->
+    <section class="cv-section">
+      <div class="section-label">SKILLS</div>
+
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-label">LANGUAGES</div>
+          <div class="skill-items">TypeScript · Go · Rust · Python · Solidity · SQL · C (SIMD)</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">BACKEND</div>
+          <div class="skill-items">Bun · Elysia · Express · Go Chi · Fiber · gRPC · RabbitMQ · WebSocket · tRPC</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">FRONTEND</div>
+          <div class="skill-items">Next.js · React · Astro · Tauri · Expo RN · Ant Design · Tailwind · shadcn/ui</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">DATABASES</div>
+          <div class="skill-items">PostgreSQL · MongoDB · ScyllaDB · Redis · SQLite · Supabase · Drizzle · Prisma</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">INFRA</div>
+          <div class="skill-items">AWS (ECS · Lambda · CDK · CloudWatch) · Terraform · Docker · Traefik · GitHub Actions · GitLab CI</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">OTHER</div>
+          <div class="skill-items">MCP · OpenAPI · Fireblocks · LiveKit · Cosmos SDK · CosmWasm · Hardhat · OpenZeppelin</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LANGUAGES ─────────────────────────────────────────────────── -->
+    <section class="cv-section">
+      <div class="section-label">LANGUAGES</div>
+      <div class="lang-row">
+        <div class="lang-item">
+          <span class="lang-name">Spanish</span>
+          <span class="lang-level">native</span>
+        </div>
+        <div class="lang-item">
+          <span class="lang-name">English</span>
+          <span class="lang-level">professional</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="footer">
+      <span class="footer-left">alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span class="footer-links">
+        <Link href="https://github.com/lyricalstring">github</Link>
+        <Link href="https://www.linkedin.com/in/lyricalstring/">linkedin</Link>
+        <Link href="https://x.com/lyricalstring">x</Link>
+        <Link href="mailto:alex@konar.es">email →</Link>
+      </span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding-bottom: 24px;
+  }
+
+  .prompt {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  .prompt-path { color: var(--dim); }
+  .prompt-sigil { color: var(--faint); }
+  .prompt-cmd { color: var(--fg); }
+
+  .nav {
+    display: flex;
+    gap: 28px;
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 64px;
+    padding-bottom: 48px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .hero-h1 {
+    font-family: var(--font-sans);
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin: 0 0 8px;
+  }
+
+  .hero-sub {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--dim);
+    margin-bottom: 24px;
+  }
+
+  .email-link {
+    color: var(--dim);
+  }
+
+  .pdf-btn {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg);
+    border: 1px solid var(--rule);
+    padding: 6px 14px;
+    text-decoration: none;
+    transition: border-color 120ms ease, color 120ms ease;
+  }
+
+  .pdf-btn:hover {
+    border-color: var(--dim);
+    color: var(--accent);
+  }
+
+  /* ── CV SECTIONS ── */
+  .cv-section {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+
+  /* ── SELECTED WORK ── */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 56px;
+  }
+
+  .work-item {
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .work-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 6px;
+  }
+
+  .work-link {
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .work-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.55;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-item {
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .exp-meta {
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    gap: 0 16px;
+    margin-bottom: 12px;
+    align-items: baseline;
+  }
+
+  .exp-company {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .exp-role {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+  }
+
+  .exp-dates {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    text-align: right;
+  }
+
+  .exp-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.65;
+    margin: 0 0 10px;
+    max-width: 760px;
+  }
+
+  .exp-stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 56px;
+  }
+
+  .skill-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .skill-items {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-row {
+    display: flex;
+    gap: 48px;
+  }
+
+  .lang-item {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .lang-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg);
+  }
+
+  .lang-level {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  .footer-left { color: var(--faint); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    color: var(--dim);
+  }
+</style>

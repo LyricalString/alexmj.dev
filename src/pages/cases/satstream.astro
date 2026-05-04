@@ -1,0 +1,530 @@
+---
+import Base from "../../layouts/Base.astro";
+import Link from "../../components/Link.astro";
+import Section from "../../components/Section.astro";
+---
+
+<Base
+  title="Satstream — Bitcoin's data layer | Alejandro Martínez"
+  description="Solo engineer behind Satstream: a multi-protocol Bitcoin indexer indexing the full chain into a 4-database cluster, with 5 SDKs and an MCP server."
+>
+  <div class="page">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-name">alejandro martinez</span>
+        <span class="topbar-path">/ work / satstream</span>
+      </div>
+      <nav class="topbar-nav">
+        <Link href="/">← back</Link>
+        <Link href="/#case-studies">case studies</Link>
+        <Link href="mailto:alex@konar.es">contact</Link>
+      </nav>
+    </header>
+
+    <!-- hero -->
+    <div class="hero">
+      <div class="hero-grid">
+        <div class="hero-tag">CASE STUDY · 02</div>
+        <div class="hero-main">
+          <div class="hero-meta">BITCOIN DATA INFRASTRUCTURE &nbsp;·&nbsp; 2024 — NOW &nbsp;·&nbsp; SOLE ENGINEER</div>
+          <h1 class="hero-h1">I built Bitcoin's data layer.</h1>
+          <p class="hero-lead">
+            Satstream is a multi-protocol Bitcoin indexer and API. One engineer, nine repositories,
+            five SDKs, an MCP server and a block explorer. It indexes the full Bitcoin chain — UTXOs,
+            inscriptions, BRC-20 ops, Runes etchings, Ordinals charms — into a multi-database cluster
+            for sub-second queries.
+          </p>
+        </div>
+        <div class="hero-links">
+          <div class="hero-links-label">LINKS</div>
+          <Link href="https://satstream.io" class="hero-link">satstream.io ↗</Link>
+          <Link href="https://github.com/satstream" class="hero-link">github.com/satstream ↗</Link>
+          <Link href="https://docs.satstream.io" class="hero-link">docs · openapi spec ↗</Link>
+          <Link href="https://www.npmjs.com/package/ss-mcp" class="hero-link">mcp server (npm) ↗</Link>
+        </div>
+      </div>
+    </div>
+
+    <!-- numbers strip -->
+    <div class="numbers">
+      <div class="numbers-cell">
+        <div class="numbers-key">REPOS</div>
+        <div class="numbers-val">9</div>
+        <div class="numbers-sub">github.com/satstream</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">COMMITS</div>
+        <div class="numbers-val">~350</div>
+        <div class="numbers-sub">sole consistent committer</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">CHAIN INDEXED</div>
+        <div class="numbers-val">~3 TB</div>
+        <div class="numbers-sub">utxos · inscriptions</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">SDK LANGUAGES</div>
+        <div class="numbers-val">5</div>
+        <div class="numbers-sub">go · js · python · rust · ts</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">DATABASES</div>
+        <div class="numbers-val">4</div>
+        <div class="numbers-sub">mongo · scylla · pg · redis</div>
+      </div>
+      <div class="numbers-cell numbers-cell--last">
+        <div class="numbers-key">PROTOCOLS</div>
+        <div class="numbers-val">3</div>
+        <div class="numbers-sub">brc-20 · runes · ord.</div>
+      </div>
+    </div>
+
+    <!-- the brief -->
+    <Section tag="THE BRIEF" title="Make Bitcoin queryable like a database.">
+      <p class="body-para">
+        Bitcoin's RPC is fine for nodes and miserable for applications. Anyone shipping a wallet,
+        explorer or DeFi product against BRC-20, Runes or Ordinals ends up writing the same indexer
+        twice — once badly, once again with the lessons. Satstream is that indexer, written once,
+        operated as infrastructure, exposed as a clean REST API and as an MCP server for AI agents.
+      </p>
+    </Section>
+
+    <!-- architecture -->
+    <Section tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
+      <pre class="arch-diagram">  ┌─ bitcoin node (full archival, ~3 tb)
+  │
+  ├──▶ ss-indexer            [ go · mongo · grpc ]   core blocks · runic / non-runic split
+  │      └──▶ runestone-decoding  [ grpc microservice ]
+  │
+  ├──▶ satstream-brc20-indexer    [ rust · mongo ]   brc-20 ops + runes etchings/mints
+  │
+  ├──▶ satstream-delta-indexer    [ rust · scylladb ]   per-address sat deltas
+  │      (migrated from mongo for write throughput)
+  │
+  └──▶ charms-extractor           [ python · cassandra ]   ordinals charm attributes
+                                              │
+                                              ▼
+                              ┌─ ss-api  [ go · fiber ] ──┐
+                              │   14 endpoint categories  │
+                              │   mongo · scylla · redis  │
+                              │   stripe metering         │
+                              └────────────┬──────────────┘
+                                           │
+       ┌───────────┬───────────┬───────────┼────────────┬────────────┐
+       ▼           ▼           ▼           ▼            ▼            ▼
+   sdk · go    sdk · js    sdk · py    sdk · rust    sdk · ts    ss-mcp (bun)
+       (5 sdks generated from one openapi spec)               llm-native surface
+</pre>
+    </Section>
+
+    <!-- decisions -->
+    <Section tag="DECISIONS" title="Five calls that earned their complexity.">
+      <div class="decisions-grid">
+        <div class="decision">
+          <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Migrate deltas to ScyllaDB</div>
+          <p class="decision-body">MongoDB couldn't keep up with per-address UTXO write throughput. ScyllaDB's wide-column model + tunable consistency was the right shape for append-heavy workloads. Migration was deliberate, not reactive.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">gRPC microservice for Runestone decoding</div>
+          <p class="decision-body">Pulled Runes protocol parsing into its own gRPC service consumed by the Go indexer. Clean protocol boundary; ScyllaDB writers don't ship with a Bitcoin script interpreter compiled in.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">OpenAPI as the single source of truth</div>
+          <p class="decision-body">Five SDKs (Go, JS, Python, Rust, TypeScript) generated from one OpenAPI spec. Type-safe clients across every ecosystem developers actually use. Zero drift between languages.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">MCP server as a distribution channel</div>
+          <p class="decision-body">Shipped ss-mcp alongside the SDKs. The full API surface is natively callable by Claude, Cursor and every MCP-aware agent — no custom integration required. New onramp, same backend.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Adaptive concurrency in the indexer</div>
+          <p class="decision-body">adaptative_concurrency.go tunes worker pools at runtime instead of hard-coding thread counts. Indexer throughput tracks node IO instead of getting wedged at the configured ceiling.</p>
+        </div>
+        <div class="decision">
+          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">HA Ord server config</div>
+          <p class="decision-body">Primary + backup Ord servers configured directly in ss-api (OrdMainServer, OrdBackupServers) — inscription queries survive ord-server restarts without an external load balancer.</p>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ownership -->
+    <Section tag="OWNERSHIP" title="The nine repositories I shipped.">
+      <div class="ownership">
+        <div class="ownership-header">
+          <span>REPO</span>
+          <span>STACK</span>
+          <span class="text-right">ALEX / TOTAL</span>
+          <span class="text-right">ROLE</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ss-api</span>
+          <span class="ownership-dim">go · fiber · mongo · scylla · redis · stripe</span>
+          <span class="ownership-dim text-right">127 / 132</span>
+          <span class="ownership-dim text-right">owner</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">satstream-brc20-indexer</span>
+          <span class="ownership-dim">rust · mongo</span>
+          <span class="ownership-dim text-right">107 / 107</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ss-core</span>
+          <span class="ownership-dim">go · postgres · stripe</span>
+          <span class="ownership-dim text-right">31 / 31</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">satstream-delta-indexer</span>
+          <span class="ownership-dim">rust · scylladb · prometheus</span>
+          <span class="ownership-dim text-right">29 / 29</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ss-indexer</span>
+          <span class="ownership-dim">go · mongo · grpc</span>
+          <span class="ownership-dim text-right">21 / 23</span>
+          <span class="ownership-dim text-right">owner</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">satstream-delta-indexer-go</span>
+          <span class="ownership-dim">go · cassandra</span>
+          <span class="ownership-dim text-right">19 / 19</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">charms-extractor</span>
+          <span class="ownership-dim">python · cassandra · prometheus</span>
+          <span class="ownership-dim text-right">13 / 13</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">ss-mcp</span>
+          <span class="ownership-dim">typescript · bun</span>
+          <span class="ownership-dim text-right">—</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">hex-cdk-infra</span>
+          <span class="ownership-dim">go · aws cdk · ecs · alb</span>
+          <span class="ownership-dim text-right">—</span>
+          <span class="ownership-dim text-right">owner</span>
+        </div>
+      </div>
+    </Section>
+
+    <!-- outcome -->
+    <Section tag="OUTCOME" title="What this proves.">
+      <p class="body-para">
+        Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec,
+        Runestone format, inscription model) and production distributed systems engineering
+        (ScyllaDB write throughput, gRPC service boundaries, Prometheus instrumentation, AWS CDK).
+        I was not a contributor — I was the engineering team. The MCP server is the differentiating
+        hook: it makes the entire data layer natively consumable by AI agents, the new default
+        consumer of API surface area.
+      </p>
+    </Section>
+
+    <!-- next case -->
+    <div class="next-case">
+      <span class="next-case-label">NEXT CASE STUDY</span>
+      <Link href="/cases/ley-abierta" class="next-case-link">
+        03 &nbsp; Ley Abierta — 190 years of Spanish law as Git →
+      </Link>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <span>alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span>alex@konar.es</span>
+    </footer>
+
+  </div>
+</Base>
+
+<style>
+  .page {
+    max-width: 1280px;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topbar-left {
+    display: flex;
+    gap: 14px;
+  }
+
+  .topbar-name {
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .topbar-path {
+    color: var(--faint);
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 28px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 280px;
+    gap: 32px;
+    align-items: baseline;
+  }
+
+  .hero-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.04em;
+  }
+
+  .hero-h1 {
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 20px 0 0;
+    max-width: 880px;
+    text-wrap: pretty;
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    color: var(--dim);
+    line-height: 1.55;
+    margin-top: 24px;
+    max-width: 680px;
+    text-wrap: pretty;
+  }
+
+  .hero-links {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.7;
+  }
+
+  .hero-links-label {
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .hero-link {
+    display: block;
+    color: var(--fg);
+  }
+
+  /* ── NUMBERS STRIP ── */
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .numbers-cell {
+    padding: 24px 16px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  .numbers-key {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.1em;
+  }
+
+  .numbers-val {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-top: 6px;
+  }
+
+  .numbers-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-top: 4px;
+  }
+
+  /* ── BODY PARA (brief + outcome) ── */
+  .body-para {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--dim);
+    line-height: 1.65;
+    max-width: 640px;
+    text-wrap: pretty;
+    margin: 0;
+  }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-diagram {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    line-height: 1.85;
+    background: #101216;
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    max-width: 760px;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  /* ── DECISIONS ── */
+  .decisions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 56px;
+    max-width: 920px;
+  }
+
+  .decision-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .decision-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  .decision-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-top: 8px;
+    text-wrap: pretty;
+  }
+
+  /* ── OWNERSHIP TABLE ── */
+  .ownership {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+    max-width: 820px;
+  }
+
+  .ownership-header {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--faint);
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+
+  .ownership-row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ownership-repo {
+    color: var(--fg);
+  }
+
+  .ownership-dim {
+    color: var(--dim);
+  }
+
+  .text-right {
+    text-align: right;
+  }
+
+  /* ── NEXT CASE ── */
+  .next-case {
+    margin-top: 88px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .next-case-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .next-case-link {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 88px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+</style>

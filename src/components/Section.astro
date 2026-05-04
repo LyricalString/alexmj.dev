@@ -1,0 +1,48 @@
+---
+interface Props {
+  tag: string;
+  title: string;
+}
+
+const { tag, title } = Astro.props;
+---
+
+<section class="section">
+  <div class="section-grid">
+    <div class="section-tag">{tag}</div>
+    <div class="section-content">
+      <h2 class="section-title">{title}</h2>
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-top: 64px;
+    padding-bottom: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+    color: var(--fg);
+  }
+</style>

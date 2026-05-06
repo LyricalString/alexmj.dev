@@ -19,8 +19,6 @@ import Pulse from "../components/Pulse.astro";
       </div>
       <nav class="nav">
         <Link href="#work">work</Link>
-        <Link href="#case-studies">case studies</Link>
-        <Link href="#writing">writing</Link>
         <Link href="#contact">contact</Link>
       </nav>
     </header>
@@ -169,35 +167,54 @@ import Pulse from "../components/Pulse.astro";
           <div class="row-year">2022 — 2024</div>
         </a>
 
+        <a href="/cases/copy-trader" class="work-row">
+          <div class="row-idx">05</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Copy Trader</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              Multi-exchange copy trading engine in Rust: copies trades from a master Bybit account to
+              follower accounts on Bybit, Binance and Hyperliquid via WebSocket. Position-based quantity
+              math with BigDecimal precision, idempotent execution and smart reduction fallback.
+            </p>
+            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp;&nbsp;Axum&nbsp;&nbsp;·&nbsp;&nbsp;PostgreSQL&nbsp;&nbsp;·&nbsp;&nbsp;AWS CDK&nbsp;&nbsp;·&nbsp;&nbsp;Telegram Bot&nbsp;&nbsp;·&nbsp;&nbsp;Twilio</div>
+          </div>
+          <div class="row-year">2024 — 2025</div>
+        </a>
+
+        <a href="/cases/autowealth" class="work-row">
+          <div class="row-idx">06</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Autowealth + CompoundFox</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              Algorithmic trading platform with a live, public performance dashboard. CompoundFox is the
+              flagship strategy — full equity curve, Sharpe and drawdown updated in real time. Autowealth is
+              the SaaS distribution layer: Turborepo monorepo with backend, Telegram bot, Next dashboards,
+              React Native, and AWS CDK.
+            </p>
+            <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp;&nbsp;Bun&nbsp;&nbsp;·&nbsp;&nbsp;Python&nbsp;&nbsp;·&nbsp;&nbsp;Jesse&nbsp;&nbsp;·&nbsp;&nbsp;Bybit API&nbsp;&nbsp;·&nbsp;&nbsp;AWS CDK</div>
+          </div>
+          <div class="row-year">2024 — now</div>
+        </a>
+
       </div>
     </section>
 
     <!-- ── OTHER PROJECTS ────────────────────────────────────────────── -->
     <section class="other-section">
       <div class="other-header">
-        <span class="other-label">OTHER PROJECTS · 6</span>
+        <span class="other-label">OTHER PROJECTS · 4</span>
         <Link href="#" class="other-view-all">view all →</Link>
       </div>
       <div class="other-grid">
 
-        <div class="other-row">
-          <div class="other-idx">05</div>
-          <div>
-            <div class="other-name">Compound Fox + Autowealth</div>
-            <div class="other-blurb">algo trading + distribution platform · live public performance dashboard</div>
-          </div>
-        </div>
-
-        <div class="other-row">
-          <div class="other-idx">06</div>
-          <div>
-            <div class="other-name">Chatvue</div>
-            <div class="other-blurb">ai persona on fanvue · whale-judge llm, autonomous PPV decisions, non-custodial USDT wallets</div>
-          </div>
-        </div>
-
         <a href="/cases/crossflow" class="other-row">
-          <div class="other-idx">07</div>
+          <div class="other-idx">05</div>
           <div>
             <div class="other-name">Crossflow <span class="case-badge">CASE STUDY ↗</span></div>
             <div class="other-blurb">defi cross-chain protocol · cosmos sdk + tss/mpc-ecdsa (gennaro-goldfeder)</div>
@@ -205,7 +222,7 @@ import Pulse from "../components/Pulse.astro";
         </a>
 
         <div class="other-row">
-          <div class="other-idx">08</div>
+          <div class="other-idx">06</div>
           <div>
             <div class="other-name">Tecpar</div>
             <div class="other-blurb">b2b saas for an electronics-repair shop · sole engineer · internal admin, client portal, e-commerce, public site</div>
@@ -213,7 +230,7 @@ import Pulse from "../components/Pulse.astro";
         </div>
 
         <div class="other-row">
-          <div class="other-idx">09</div>
+          <div class="other-idx">07</div>
           <div>
             <div class="other-name">LEB</div>
             <div class="other-blurb">expo rn + next admin · events & membership platform for expats in bali · partner discounts, mapbox</div>
@@ -221,7 +238,7 @@ import Pulse from "../components/Pulse.astro";
         </div>
 
         <div class="other-row">
-          <div class="other-idx">10</div>
+          <div class="other-idx">08</div>
           <div>
             <div class="other-name">Node-Discord-Bot</div>
             <div class="other-blurb">oss bot · 2M users, 22k servers, 140★, 92 forks</div>

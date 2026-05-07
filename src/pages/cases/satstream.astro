@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Satstream — Bitcoin's data layer | Alejandro Martínez"
   description="Solo engineer behind Satstream: a multi-protocol Bitcoin indexer indexing the full chain into a 4-database cluster, with 5 SDKs and an MCP server."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -80,17 +80,20 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="Make Bitcoin queryable like a database.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="Make Bitcoin queryable like a database.">
       <p class="body-para">
         Bitcoin's RPC is fine for nodes and miserable for applications. Anyone shipping a wallet,
         explorer or DeFi product against BRC-20, Runes or Ordinals ends up writing the same indexer
         twice — once badly, once again with the lessons. Satstream is that indexer, written once,
         operated as infrastructure, exposed as a clean REST API and as an MCP server for AI agents.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
       <pre class="arch-diagram">  ┌─ bitcoin node (full archival, ~3 tb)
   │
   ├──▶ ss-indexer            [ go · mongo · grpc ]   core blocks · runic / non-runic split
@@ -115,46 +118,50 @@ import Brand from "../../components/Brand.astro";
    sdk · go    sdk · js    sdk · py    sdk · rust    sdk · ts    ss-mcp (bun)
        (5 sdks generated from one openapi spec)               llm-native surface
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Five calls that earned their complexity.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Five calls that earned their complexity.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Migrate deltas to ScyllaDB</div>
           <p class="decision-body">MongoDB couldn't keep up with per-address UTXO write throughput. ScyllaDB's wide-column model + tunable consistency was the right shape for append-heavy workloads. Migration was deliberate, not reactive.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">gRPC microservice for Runestone decoding</div>
           <p class="decision-body">Pulled Runes protocol parsing into its own gRPC service consumed by the Go indexer. Clean protocol boundary; ScyllaDB writers don't ship with a Bitcoin script interpreter compiled in.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">OpenAPI as the single source of truth</div>
           <p class="decision-body">Five SDKs (Go, JS, Python, Rust, TypeScript) generated from one OpenAPI spec. Type-safe clients across every ecosystem developers actually use. Zero drift between languages.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">MCP server as a distribution channel</div>
           <p class="decision-body">Shipped ss-mcp alongside the SDKs. The full API surface is natively callable by Claude, Cursor and every MCP-aware agent — no custom integration required. New onramp, same backend.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Adaptive concurrency in the indexer</div>
           <p class="decision-body">adaptative_concurrency.go tunes worker pools at runtime instead of hard-coding thread counts. Indexer throughput tracks node IO instead of getting wedged at the configured ceiling.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">HA Ord server config</div>
           <p class="decision-body">Primary + backup Ord servers configured directly in ss-api (OrdMainServer, OrdBackupServers) — inscription queries survive ord-server restarts without an external load balancer.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- ownership -->
-    <Section tag="OWNERSHIP" title="The nine repositories I shipped.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OWNERSHIP" title="The nine repositories I shipped.">
       <div class="ownership">
         <div class="ownership-header">
           <span>REPO</span>
@@ -217,10 +224,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">owner</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="What this proves.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="What this proves.">
       <p class="body-para">
         Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec,
         Runestone format, inscription model) and production distributed systems engineering
@@ -229,7 +238,8 @@ import Brand from "../../components/Brand.astro";
         hook: it makes the entire data layer natively consumable by AI agents, the new default
         consumer of API surface area.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -246,9 +256,16 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
 
+
 <style>
+  /* - REVEAL SECTIONS - */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
   .page {
     max-width: 1280px;
     padding: 28px 32px 56px;

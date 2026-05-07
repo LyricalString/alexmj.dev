@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Autowealth + CompoundFox — Algo trading platform with live dashboard | Alejandro Martínez"
   description="Built CompoundFox algorithmic trading strategy with a live, public performance dashboard. Full equity curve, Sharpe and drawdown updated in real time. Autowealth is the SaaS distribution layer: Turborepo monorepo with backend, Telegram bot, Next dashboards, React Native, and AWS CDK."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -78,7 +78,8 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="A trading strategy with proof.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="A trading strategy with proof.">
       <p class="body-para">
         The core challenge was transparency: traders need to see real performance before committing
         capital. Autowealth solves this with a live, public dashboard that shows the full equity curve,
@@ -86,10 +87,12 @@ import Brand from "../../components/Brand.astro";
         a single strategy: it's a distribution layer that can host multiple algorithms (CompoundFox,
         AlgoAI, Forex), each with its own performance tracking and follower management.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="Turborepo monorepo: backend, bot, dashboards, mobile.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bot, dashboards, mobile.">
       <pre class="arch-diagram">  ┌─ Turborepo monorepo
   │
   ├── apps/
@@ -109,36 +112,40 @@ import Brand from "../../components/Brand.astro";
        └── aws-cdk             [ TypeScript · ECS · CloudWatch · RDS ]
               auto-scaling · monitoring · blue/green deploys
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Four calls that define the platform.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Four calls that define the platform.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Live public dashboard as trust signal</div>
           <p class="decision-body">Instead of periodic performance reports, the dashboard shows real-time equity curves, Sharpe ratio and drawdown. This is the primary trust signal for potential followers — they can verify the strategy's performance before committing any capital. The metrics update continuously from the live trading engine.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Turborepo monorepo over separate repos</div>
           <p class="decision-body">The backend, Telegram bot, dashboard and mobile app share code (performance calculations, API clients, types). Turborepo provides shared dependencies, incremental builds and a single deployment pipeline. This keeps the platform consistent and reduces maintenance overhead across four apps that need to stay in sync.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Strategy-agnostic distribution layer</div>
           <p class="decision-body">Autowealth is designed as a distribution platform, not a single-strategy product. CompoundFox is the first strategy, but the architecture supports adding new algorithms (AlgoAI, Forex) without changing the platform. Each strategy has its own performance tracking, risk metrics and follower management, while sharing the same distribution infrastructure.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bybit as primary exchange</div>
           <p class="decision-body">Bybit provides the most reliable API for the trading strategies used, with deep liquidity and competitive fees. The platform uses Bybit's WebSocket API for real-time market data and REST API for trade execution. This choice simplifies the architecture by focusing on one exchange first, with plans to support additional exchanges in the future.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- ownership -->
-    <Section tag="OWNERSHIP" title="The full stack: backend, bot, dashboards, mobile, infra.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OWNERSHIP" title="The full stack: backend, bot, dashboards, mobile, infra.">
       <div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -176,10 +183,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="A production trading platform with real-time transparency.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="A production trading platform with real-time transparency.">
       <p class="body-para">
         Autowealth is a production trading platform that combines a live algorithmic strategy with
         transparent performance tracking. The public dashboard provides real-time equity curves,
@@ -187,7 +196,8 @@ import Brand from "../../components/Brand.astro";
         monorepo architecture keeps the backend, bot, dashboards and mobile app in sync, while the
         strategy-agnostic design allows new algorithms to be added without platform changes.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -204,10 +214,25 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
+
 
 <style>
   .page {
+    max-width: 1280px;
+    padding: 28px 32px 56px;
+    box-sizing: border-box;
+    margin: 0 auto;
+  }
+
+  /* ── REVEAL SECTIONS ── */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
     max-width: 1280px;
     padding: 28px 32px 56px;
     box-sizing: border-box;

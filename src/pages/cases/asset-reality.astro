@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Asset Reality — Government-grade crypto custody | Alejandro Martínez"
   description="Engineer at Asset Reality (Jul 2022–Feb 2024). Owned the multi-sig governance engine and 12-chain blockchain ingestion platform for a government-grade crypto custody platform that grew from $200M to $500M AUM during my tenure ($1B+ now post-tenure)."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -83,7 +83,8 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
       <p class="body-para">
         When governments seize crypto, the asset doesn't sit in an evidence bag — it needs to be
         transferred into custody, tracked across jurisdictions, approved for disbursement by multiple
@@ -93,10 +94,12 @@ import Brand from "../../components/Brand.astro";
         document trails, and APIs that law enforcement agencies actually integrate with. I joined in
         July 2022 and owned two of the platform's critical subsystems for the next 19 months.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="Multi-sig governance + 12-chain ingestion.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Multi-sig governance + 12-chain ingestion.">
       <pre class="arch-diagram">  ┌─ blockchain layer (12 chains: ETH · BTC · BCH · LTC · DOGE · XRP · SOL · TRON · MATIC · ARB · ERC-20)
   │
   ├──▶ ar-chain-service          [ go workspaces · per-chain monitor modules ]
@@ -136,46 +139,50 @@ import Brand from "../../components/Brand.astro";
                                     seizure wallet flows · portfolio views
                                     external-ID chain-of-custody system
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Six calls that shaped the platform.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that shaped the platform.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Configurable multi-sig groups over fixed N-of-M</div>
           <p class="decision-body">Rather than a static N-of-M scheme, ar-governance-service supports named groups (A and B) with per-group mandatory approvers and configurable thresholds. Agencies have different approval hierarchies; the state machine accommodates them without code changes. Mandatory approvers within a group make it impossible to route around specific roles.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Auto-denial when threshold becomes unreachable</div>
           <p class="decision-body">If enough required approvers have denied that the remaining approvals can never reach the threshold, the escrow record is automatically set to DENIED without waiting for a timeout. Government custody workflows can't have funds hanging in limbo — deterministic denial keeps queues clean and audit trails unambiguous.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Per-chain Go workspace modules for ingestion</div>
           <p class="decision-body">The 12 chain monitors live as independently deployable Go workspace modules inside ar-chain-service, wired through a chain-broker via RabbitMQ AMQP. Adding a new chain means adding a module, not forking the pipeline. Each monitor has its own health endpoint; failures are isolated. ERC-20 contract monitoring is a separate module from the ETH block monitor.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Fireblocks as the custody layer, not a custom HSM</div>
           <p class="decision-body">ar-custodian-service wraps the Fireblocks REST API with a JWT-signed client (shopspring/decimal for amounts, gorilla/mux routing). Fireblocks provides MPC key management, policy engine, and regulatory audit logs that would take years to build. The custody integration handles vaults, wallet address generation, transaction submission, and exchange accounts.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">RabbitMQ as the event bus across all services</div>
           <p class="decision-body">All 20+ microservices communicate via RabbitMQ AMQP — blockchain events, governance state changes, notification triggers. Kafka would have been overengineered for this workload volume. RabbitMQ's per-queue durability and per-message acknowledgement gives the reliability guarantees custody workflows need without operational complexity.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">External-ID system for chain-of-custody traceability</div>
           <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. Without the external-ID layer, correlating an Asset Reality record to a court filing requires manual lookup — an audit failure in a courtroom context.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- ownership -->
-    <Section tag="OWNERSHIP" title="Systems and contributions by repo.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OWNERSHIP" title="Systems and contributions by repo.">
       <div class="ownership">
         <div class="ownership-header">
           <span>SYSTEM / REPO</span>
@@ -220,10 +227,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">dec 2023</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="What the platform became.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="What the platform became.">
       <p class="body-para">
         During my tenure (Jul 2022 – Feb 2024) the platform grew from $200–300M AUM to $500M, supporting
         seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
@@ -241,7 +250,8 @@ import Brand from "../../components/Brand.astro";
         Fireblocks integration, and Go microservices at production scale are the portable skills;
         the disposition toward correctness is harder to name and more valuable.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -258,9 +268,16 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
 
+
 <style>
+  /* - REVEAL SECTIONS - */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
   .page {
     max-width: 1280px;
     padding: 28px 32px 56px;

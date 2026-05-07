@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Trilo — multi-platform AI workspace | Alejandro Martínez"
   description="Sole architect behind Trilo: an AI workspace where autonomous coworker AIs participate as teammates. Live at trilo.chat across web, mobile, desktop and a Python voice agent."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -80,7 +80,8 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
       <p class="body-para">
         The premise was simple and the execution was not: one product that replaces chat, task
         management, docs, spreadsheets, video calls, calendar, and social media scheduling —
@@ -89,10 +90,12 @@ import Brand from "../../components/Brand.astro";
         a slash command — they're coworkers with memory, tool access, and a place in the team
         structure. Trilo was designed from the first commit to be AI-native rather than AI-sprinkled.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="Every surface, one backend, one monorepo.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Every surface, one backend, one monorepo.">
       <pre class="arch-diagram">  ┌─ trilo monorepo  (turborepo · bun workspaces · biome)
   │
   ├──▶ apps/web              [ next.js 16 · react 19 · tailwind · zustand · yjs ]
@@ -123,46 +126,50 @@ import Brand from "../../components/Brand.astro";
             │   redis · docker · ecs    │   └──────────────────────────┘
             └───────────────────────────┘
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Six calls that shaped the architecture.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that shaped the architecture.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bun + Elysia over Node/Express</div>
           <p class="decision-body">Chose Bun for native TypeScript execution and significantly lower cold-start overhead. Elysia provides end-to-end type safety from route definition to client — no schema drift, no hand-rolled validators. A deliberate bet on performance and ergonomics over ecosystem safety.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom DAG workflow orchestrator</div>
           <p class="decision-body">Off-the-shelf workflow tools assume human-defined linear sequences. Trilo's workflows are AI-generated multi-step plans with dependencies, parallel branches, checkpoint/resume, token budgets, and review gates. The DAG engine in <code>workflowOrchestrator.ts</code> was written from scratch because nothing in the ecosystem fit the shape.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Dual-tier model routing</div>
           <p class="decision-body">Simple queries hit a fast, cheap small model. Complex reasoning escalates to a specialist via <code>fastPathService.ts</code> → <code>lunaSpecialistService.ts</code>. Every path is traced with Opik for prompt observability. The result is cost-aware AI dispatch that doesn't sacrifice response quality for common cases.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Supabase + 55-table schema</div>
           <p class="decision-body">468 migration files represent sustained, iterative schema evolution — not a big-bang design. Drizzle ORM keeps migrations type-safe. The knowledge graph, workspace membership model, versioned pages, and spreadsheet engine all live in the same Postgres cluster, intentionally co-located for join efficiency.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Tauri 2 over Electron</div>
           <p class="decision-body">Electron was the obvious default. Tauri was the right call: a Rust-native shell with a smaller binary, no bundled Chromium, and a proper OS integration layer. The desktop app shares 100% of the React frontend — the Rust layer only handles OS APIs and window management.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">MCP-first tool architecture (14 modules)</div>
           <p class="decision-body">Trilo ships its own MCP server exposing all core operations as tool calls — boards, tasks, messages, meetings, knowledge graph, spreadsheets, and more. Any MCP-aware agent (Claude, Cursor, Codex) can operate Trilo natively. This was a distribution decision as much as an architecture one: make Trilo the workspace that AI agents already know how to use.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- scope table -->
-    <Section tag="SCOPE" title="Every surface I built and shipped.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="SCOPE" title="Every surface I built and shipped.">
       <div class="ownership">
         <div class="ownership-header">
           <span>PLATFORM</span>
@@ -201,10 +208,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">in production</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
       <p class="body-para">
         Trilo is what one engineer can build when scope is set by what the product needs rather than
         by what a team can absorb. A live product at trilo.chat with paid plans, a mobile app on the
@@ -214,7 +223,8 @@ import Brand from "../../components/Brand.astro";
         drive the product directly. The deploy pipeline posts status updates into Trilo's own chat:
         the workspace operates itself.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -231,9 +241,16 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
 
+
 <style>
+  /* - REVEAL SECTIONS - */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
   .page {
     max-width: 1280px;
     padding: 28px 32px 56px;

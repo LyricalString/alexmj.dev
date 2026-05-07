@@ -4,14 +4,17 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "bun run cv && astro build",
+    "cv": "bash cv/build.sh",
     "preview": "astro preview",
     "lint": "biome check .",
     "format": "biome format --write .",
     "typecheck": "bunx tsgo --noEmit"
   },
   "dependencies": {
-    "astro": "6.1.9"
+    "@studio-freight/lenis": "^1.0.42",
+    "astro": "6.1.9",
+    "gsap": "^3.15.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Copy Trader — Multi-exchange copy trading engine | Alejandro Martínez"
   description="Built a multi-exchange copy trading system in Rust: copies trades from a master Bybit account to follower accounts on Bybit, Binance, and Hyperliquid in real-time via WebSocket streams. Position-based math, BigDecimal precision, idempotent execution."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -77,7 +77,8 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
       <p class="body-para">
         Copy trading sounds simple: master opens a position, followers open the same position.
         The reality is much harder. Each follower has a different margin, different leverage, and
@@ -87,10 +88,12 @@ import Brand from "../../components/Brand.astro";
         not from a fixed ratio. The result is proportional exposure that survives partial closes,
         leverage changes, and exchange-specific lot size constraints.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="Master → WebSocket → position cache → parallel follower execution.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Master → WebSocket → position cache → parallel follower execution.">
       <pre class="arch-diagram">  ┌─ master account (Bybit only)
   │      WebSocket stream → position events
   │
@@ -111,46 +114,50 @@ import Brand from "../../components/Brand.astro";
   │
   └──▶ notification_pipeline    [ telegram bot · twilio sms · dashboard push ]
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Six calls that define the system.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the system.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Position-based math over ratio-based</div>
           <p class="decision-body">A fixed ratio (follower_margin / master_margin) breaks on partial closes and leverage changes. Position-based math calculates each follower's quantity from their current position relative to the master's, so exposure stays proportional regardless of partial closes, leverage adjustments, or margin changes. The formula: follower_qty = master_qty × (follower_margin / master_position_im).</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">BigDecimal for all financial calculations</div>
           <p class="decision-body">Floating-point arithmetic introduces rounding errors that compound across trades. Every financial calculation uses BigDecimal — never f64. This eliminates the class of bugs where a follower ends up with 0.0001 BTC more or less than expected, which on high-frequency copy trading can mean the difference between profit and loss.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bybit as master-only, Binance/Hyperliquid follower-only</div>
           <p class="decision-body">Bybit's WebSocket API and REST endpoints are the most reliable for master account monitoring. Binance and Hyperliquid are follower-only (they receive copies but never act as masters). This asymmetry simplifies the architecture: one master stream, multiple follower execution paths, each with exchange-specific order mapping and precision rules.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Idempotent execution via database</div>
           <p class="decision-body">Network retries and WebSocket reconnections can cause duplicate trade events. Every execution is checked against a database idempotency key before placing an order. This prevents double-trading when a follower receives the same position event twice due to a reconnection or race condition.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Smart reduction fallback</div>
           <p class="decision-body">If a follower's order fails (insufficient margin, exchange rejection, precision mismatch), the system doesn't abort the entire copy operation. Instead, it attempts a reduced quantity that satisfies the exchange's constraints. This keeps followers partially exposed rather than completely missing the trade.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Rust over Python/Node for the core engine</div>
           <p class="decision-body">Copy trading is latency-sensitive and correctness-critical. Rust's compile-time guarantees eliminate entire classes of bugs (null pointer, data races) and its performance means WebSocket events are processed in microseconds, not milliseconds. The Next.js dashboard handles the UI, but the core copy pipeline is pure Rust with Axum for the API layer.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- ownership -->
-    <Section tag="OWNERSHIP" title="The full stack: Rust backend, Next.js dashboard, AWS CDK infra.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OWNERSHIP" title="The full stack: Rust backend, Next.js dashboard, AWS CDK infra.">
       <div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -188,10 +195,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="A production copy trading engine that handles real money.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="A production copy trading engine that handles real money.">
       <p class="body-para">
         Copy Trader is the engine that makes Autowealth's CompoundFox strategy accessible to
         followers. It handles the complex math of proportional position sizing across three
@@ -202,7 +211,8 @@ import Brand from "../../components/Brand.astro";
         and smart reduction fallback keep the system resilient to network failures and exchange
         rejections.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -219,9 +229,16 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
 
+
 <style>
+  /* - REVEAL SECTIONS - */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
   .page {
     max-width: 1280px;
     padding: 28px 32px 56px;

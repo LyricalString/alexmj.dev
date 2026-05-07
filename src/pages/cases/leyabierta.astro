@@ -9,7 +9,7 @@ import Brand from "../../components/Brand.astro";
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
   description="Solo engineer behind Ley Abierta: 12,260 Spanish laws reconstructed as 42,866 Git commits, searchable via a hybrid BM25 + RAG engine with a custom int8 SIMD C kernel. Recall@5 from 2% to 66% on real citizen queries; median latency from ~120s to sub-second. Live at leyabierta.es."
 >
-  <div class="page">
+  <div class="page"> 
 
     <!-- top bar -->
     <header class="topbar">
@@ -80,7 +80,8 @@ import Brand from "../../components/Brand.astro";
     </div>
 
     <!-- the brief -->
-    <Section tag="THE BRIEF" title="Public law that's practically inaccessible.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="THE BRIEF" title="Public law that's practically inaccessible.">
       <p class="body-para">
         Spanish legislation is nominally public: the BOE publishes every law as a PDF. But
         there's no API, no diff between versions, no way to ask "what changed in labor law
@@ -89,10 +90,12 @@ import Brand from "../../components/Brand.astro";
         reform is a commit, each jurisdiction a folder, each version a checkable diff. The
         result is 190 years of legislation that's queryable, diffable, and free.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- architecture -->
-    <Section tag="ARCHITECTURE" title="BOE to queryable repository in four stages.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="ARCHITECTURE" title="BOE to queryable repository in four stages.">
       <pre class="arch-diagram">  BOE open data API  (XML/JSON · no auth required)
           │
           ▼
@@ -134,46 +137,50 @@ import Brand from "../../components/Brand.astro";
   Infrastructure: self-hosted Docker · Watchtower · GitHub Actions cron
                   (daily BOE ingestion) · Resend (email alerts)
 </pre>
-    </Section>
+    </section>
+    </div>
 
     <!-- decisions -->
-    <Section tag="DECISIONS" title="Six calls that define the project.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the project.">
       <div class="decisions-grid">
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Git as the storage layer</div>
           <p class="decision-body">Laws are versioned documents. Git is the right shape — not a relational DB, not a document store. <code>git log -- Codigo_Penal.md</code> is a meaningful civic tool. <code>git diff</code> between two commits is a legislative audit trail. The repo is the product, not just a backend artifact.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom SIMD C kernel</div>
           <p class="decision-body">Off-the-shelf vector libraries were too slow at 483k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics cut the index from 5.95 GB to 1.49 GB (-75%) and made per-query latency acceptable without a GPU or a cloud vector DB. <code>SharedArrayBuffer</code> worker pool sharing eliminated re-initialization overhead between requests.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">BM25 + RAG hybrid retrieval</div>
           <p class="decision-body">BM25 alone on legal prose returned exact-term matches that missed citizen-language queries ("no me devuelven la fianza"). Semantic alone drifted on multi-article laws. RRF fusion of FTS5 BM25 + semantic retrieval took Recall@5 on 50 real citizen queries from 2% to 66% across three sprints, while median latency dropped from ~120s to sub-second after the int8 quantization pass.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Gemini embeddings via OpenRouter</div>
           <p class="decision-body">The 483k embedding vectors are generated via Gemini through OpenRouter — a pragmatic call for cost at this scale. The SIMD kernel handles retrieval on-prem; only the embedding generation hits an external API. Future direction is a fully self-hosted inference server (Qwen) to close that dependency.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AGPL-3.0</div>
           <p class="decision-body">Public legal infrastructure shouldn't be capturable by a SaaS. AGPL guarantees that any deployment that serves Ley Abierta over a network must publish its modifications. The license matches the project's politics: if public law is a commons, so is the engine that makes it searchable.</p>
         </div>
-        <div class="decision">
+        <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bun + SQLite + FTS5 on one VM</div>
           <p class="decision-body">A single self-hosted VM with Elysia, SQLite, FTS5 and a Docker-managed SIMD process beats the obvious cloud-native option at this scale. No managed vector DB, no separate search service, no Kubernetes. Watchtower handles container updates; GitHub Actions handles daily ingestion. The stack is boring in the right ways.</p>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- ownership -->
-    <Section tag="OWNERSHIP" title="One monorepo, four packages, sole author.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OWNERSHIP" title="One monorepo, four packages, sole author.">
       <div class="ownership">
         <div class="ownership-header">
           <span>PACKAGE</span>
@@ -212,10 +219,12 @@ import Brand from "../../components/Brand.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div>
-    </Section>
+    </section>
+    </div>
 
     <!-- outcome -->
-    <Section tag="OUTCOME" title="190 years of law, queryable in real time.">
+    <div class="reveal-section">
+    <section class="section" data-section-tag="OUTCOME" title="190 years of law, queryable in real time.">
       <p class="body-para">
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
@@ -224,7 +233,8 @@ import Brand from "../../components/Brand.astro";
         single self-hosted VM without a managed vector DB or a GPU. The whole stack is AGPL-3.0
         and live at leyabierta.es: a working piece of public legal infrastructure, built solo.
       </p>
-    </Section>
+    </section>
+    </div>
 
     <!-- next case -->
     <div class="next-case">
@@ -241,9 +251,16 @@ import Brand from "../../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
 
+
 <style>
+  /* - REVEAL SECTIONS - */
+  .reveal-section {
+    margin-block: 48px;
+  }
+
   .page {
     max-width: 1280px;
     padding: 28px 32px 56px;

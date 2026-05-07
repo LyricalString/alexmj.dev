@@ -57,28 +57,28 @@ import Brand from "../components/Brand.astro";
       </div>
 
       <!-- numbers strip -->
-      <div class="stats-strip">
-        <div class="stat">
+      <div class="stats-strip reveal-section">
+        <div class="stat reveal-item">
           <div class="stat-label">bitcoin chain</div>
           <div class="stat-value">~3 TB</div>
           <div class="stat-sub">indexed solo · 9 repos · 5 sdks</div>
         </div>
-        <div class="stat">
+        <div class="stat reveal-item">
           <div class="stat-label">laws indexed</div>
           <div class="stat-value">12,260</div>
           <div class="stat-sub">190 years · 42,866 git commits</div>
         </div>
-        <div class="stat">
+        <div class="stat reveal-item">
           <div class="stat-label">sharpe (live)</div>
           <div class="stat-value">5.26</div>
           <div class="stat-sub">+56% roi · 137 days · public dashboard</div>
         </div>
-        <div class="stat">
+        <div class="stat reveal-item">
           <div class="stat-label">discord users</div>
           <div class="stat-value">3M</div>
           <div class="stat-sub">28k servers · 140★ · 92 forks</div>
         </div>
-        <div class="stat">
+        <div class="stat reveal-item">
           <div class="stat-label">custody aum</div>
           <div class="stat-value">$200M → $500M</div>
           <div class="stat-sub">grew 2× in 19 months · sole owner of 2 modules</div>
@@ -299,7 +299,9 @@ import Brand from "../components/Brand.astro";
     </footer>
 
   </div>
+
 </Base>
+
 
 <style>
   /* ── PAGE WRAPPER ─────────────────────────────────────────────────── */
@@ -727,5 +729,14 @@ import Brand from "../components/Brand.astro";
     display: flex;
     gap: 24px;
     color: var(--dim);
+  }
+
+  /* ── REVEAL ANIMATIONS ──────────────────────────────────────────── */
+  .reveal-section {
+    overflow: hidden;
+  }
+
+  .reveal-item {
+    opacity: 0;
   }
 </style>

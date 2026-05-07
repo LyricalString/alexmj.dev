@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
+import Brand from "../components/Brand.astro";
 ---
 
 <Base
@@ -12,11 +13,7 @@ import Pulse from "../components/Pulse.astro";
 
     <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
     <header class="topbar">
-      <div class="prompt">
-        <span class="prompt-path">~/portfolio</span>
-        <span class="prompt-sigil">$</span>
-        <span class="prompt-cmd">whoami</span>
-      </div>
+      <Brand />
       <nav class="nav">
         <Link href="#work">work</Link>
         <Link href="#contact">contact</Link>
@@ -39,7 +36,7 @@ import Pulse from "../components/Pulse.astro";
         <Link href="#contact" class="status-link">
           <span class="status-inner">
             <Pulse color="var(--accent)" />
-            <span class="status-text">available june 2026</span>
+            <span class="status-text">available now</span>
             <span class="status-arrow">↗</span>
           </span>
         </Link>
@@ -47,9 +44,9 @@ import Pulse from "../components/Pulse.astro";
 
       <!-- H1 -->
       <h1 class="hero-h1">
-        Production systems built end-to-end<br>
+        End-to-end production systems<br>
         across <span class="dim">AI</span>, <span class="dim">Bitcoin infrastructure</span>,<br>
-        <span class="dim">DeFi protocols</span> and full-stack SaaS.
+        <span class="dim">DeFi</span> and full-stack SaaS.
       </h1>
 
       <!-- meta sub-line -->
@@ -62,29 +59,29 @@ import Pulse from "../components/Pulse.astro";
       <!-- numbers strip -->
       <div class="stats-strip">
         <div class="stat">
-          <div class="stat-label">ai workspace</div>
-          <div class="stat-value">trilo</div>
-          <div class="stat-sub">mcp-native · custom dag · knowledge graph</div>
-        </div>
-        <div class="stat">
           <div class="stat-label">bitcoin chain</div>
           <div class="stat-value">~3 TB</div>
-          <div class="stat-sub">indexed · multi-db cluster</div>
+          <div class="stat-sub">indexed solo · 9 repos · 5 sdks</div>
         </div>
         <div class="stat">
           <div class="stat-label">laws indexed</div>
-          <div class="stat-value">12,255</div>
-          <div class="stat-sub">leyabierta.es · since 1835</div>
+          <div class="stat-value">12,260</div>
+          <div class="stat-sub">190 years · 42,866 git commits</div>
         </div>
         <div class="stat">
-          <div class="stat-label">custody platform</div>
-          <div class="stat-value">$200M+</div>
-          <div class="stat-sub">asset reality · aum during tenure</div>
+          <div class="stat-label">sharpe (live)</div>
+          <div class="stat-value">5.26</div>
+          <div class="stat-sub">+56% roi · 137 days · public dashboard</div>
         </div>
         <div class="stat">
           <div class="stat-label">discord users</div>
-          <div class="stat-value">2M</div>
-          <div class="stat-sub">oss bot · 22k servers</div>
+          <div class="stat-value">3M</div>
+          <div class="stat-sub">28k servers · 140★ · 92 forks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">custody aum</div>
+          <div class="stat-value">$200M → $500M</div>
+          <div class="stat-sub">grew 2× in 19 months · sole owner of 2 modules</div>
         </div>
       </div>
     </section>
@@ -132,15 +129,33 @@ import Pulse from "../components/Pulse.astro";
           <div class="row-year">2024 — now</div>
         </a>
 
-        <a href="/cases/leyabierta" class="work-row">
+        <a href="/cases/crossflow" class="work-row">
           <div class="row-idx">03</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Crossflow Network</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              Decentralised cross-chain loan protocol on a custom Cosmos SDK / CometBFT L1. Threshold
+              signatures (Gennaro-Goldfeder MPC-ECDSA) replace the trusted multisig: a quorum of attesters
+              co-sign Bitcoin, EVM and Solana outbound transactions without any single node holding the
+              full key. Sole engineer at Hexmount.
+            </p>
+            <div class="row-stack">Go&nbsp;&nbsp;·&nbsp;&nbsp;Cosmos SDK&nbsp;&nbsp;·&nbsp;&nbsp;CometBFT&nbsp;&nbsp;·&nbsp;&nbsp;TSS/MPC-ECDSA&nbsp;&nbsp;·&nbsp;&nbsp;secp256k1 + ed25519&nbsp;&nbsp;·&nbsp;&nbsp;IBC</div>
+          </div>
+          <div class="row-year">2023 — 2024</div>
+        </a>
+
+        <a href="/cases/leyabierta" class="work-row">
+          <div class="row-idx">04</div>
           <div class="row-body">
             <div class="row-title-line">
               <span class="row-name">Ley Abierta</span>
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              190 years of Spanish legislation as a Git repository — 12,255 laws, 42,866 commits dated
+              190 years of Spanish legislation as a Git repository — 12,260 laws, 42,866 commits dated
               to their official publication. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C
               kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s
               to sub-second. Live at leyabierta.es.
@@ -151,7 +166,7 @@ import Pulse from "../components/Pulse.astro";
         </a>
 
         <a href="/cases/asset-reality" class="work-row">
-          <div class="row-idx">04</div>
+          <div class="row-idx">05</div>
           <div class="row-body">
             <div class="row-title-line">
               <span class="row-name">Asset Reality</span>
@@ -159,29 +174,13 @@ import Pulse from "../components/Pulse.astro";
             </div>
             <p class="row-blurb">
               19 months as engineer at a government-grade crypto custody startup. Owned the multi-sig
-              governance/escrow engine and the 12-chain ingestion platform. Platform now handles $1B+ in
-              seizures across French, Belgian, US, EU and Caribbean law enforcement.
+              governance/escrow engine and the 12-chain ingestion platform. Platform AUM grew from
+              $200–300M to $500M during my tenure ($1B+ now post-tenure), with seizure workflows live
+              across French, Belgian, US, EU and Caribbean law enforcement.
             </p>
             <div class="row-stack">Go&nbsp;&nbsp;·&nbsp;&nbsp;TypeScript&nbsp;&nbsp;·&nbsp;&nbsp;MongoDB&nbsp;&nbsp;·&nbsp;&nbsp;Postgres&nbsp;&nbsp;·&nbsp;&nbsp;RabbitMQ&nbsp;&nbsp;·&nbsp;&nbsp;AWS · Terraform&nbsp;&nbsp;·&nbsp;&nbsp;Fireblocks</div>
           </div>
           <div class="row-year">2022 — 2024</div>
-        </a>
-
-        <a href="/cases/copy-trader" class="work-row">
-          <div class="row-idx">05</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Copy Trader</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              Multi-exchange copy trading engine in Rust: copies trades from a master Bybit account to
-              follower accounts on Bybit, Binance and Hyperliquid via WebSocket. Position-based quantity
-              math with BigDecimal precision, idempotent execution and smart reduction fallback.
-            </p>
-            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp;&nbsp;Axum&nbsp;&nbsp;·&nbsp;&nbsp;PostgreSQL&nbsp;&nbsp;·&nbsp;&nbsp;AWS CDK&nbsp;&nbsp;·&nbsp;&nbsp;Telegram Bot&nbsp;&nbsp;·&nbsp;&nbsp;Twilio</div>
-          </div>
-          <div class="row-year">2024 — 2025</div>
         </a>
 
         <a href="/cases/autowealth" class="work-row">
@@ -202,35 +201,44 @@ import Pulse from "../components/Pulse.astro";
           <div class="row-year">2024 — now</div>
         </a>
 
+        <a href="/cases/copy-trader" class="work-row">
+          <div class="row-idx">07</div>
+          <div class="row-body">
+            <div class="row-title-line">
+              <span class="row-name">Copy Trader</span>
+              <span class="case-badge">CASE STUDY ↗</span>
+            </div>
+            <p class="row-blurb">
+              Multi-exchange copy trading engine in Rust: copies trades from a master Bybit account to
+              follower accounts on Bybit, Binance and Hyperliquid via WebSocket. Position-based quantity
+              math with BigDecimal precision, idempotent execution and smart reduction fallback.
+            </p>
+            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp;&nbsp;Axum&nbsp;&nbsp;·&nbsp;&nbsp;PostgreSQL&nbsp;&nbsp;·&nbsp;&nbsp;AWS CDK&nbsp;&nbsp;·&nbsp;&nbsp;Telegram Bot&nbsp;&nbsp;·&nbsp;&nbsp;Twilio</div>
+          </div>
+          <div class="row-year">2024 — 2025</div>
+        </a>
+
       </div>
     </section>
 
     <!-- ── OTHER PROJECTS ────────────────────────────────────────────── -->
     <section class="other-section">
       <div class="other-header">
-        <span class="other-label">OTHER PROJECTS · 4</span>
-        <Link href="#" class="other-view-all">view all →</Link>
+        <span class="other-label">OTHER PROJECTS · 3</span>
+        <Link href="/projects" class="other-view-all">view all →</Link>
       </div>
       <div class="other-grid">
 
-        <a href="/cases/crossflow" class="other-row">
-          <div class="other-idx">05</div>
-          <div>
-            <div class="other-name">Crossflow <span class="case-badge">CASE STUDY ↗</span></div>
-            <div class="other-blurb">defi cross-chain protocol · cosmos sdk + tss/mpc-ecdsa (gennaro-goldfeder)</div>
-          </div>
-        </a>
-
         <div class="other-row">
-          <div class="other-idx">06</div>
+          <div class="other-idx">08</div>
           <div>
             <div class="other-name">Tecpar</div>
-            <div class="other-blurb">b2b saas for an electronics-repair shop · sole engineer · internal admin, client portal, e-commerce, public site</div>
+            <div class="other-blurb">b2b saas for an industrial electronics repair workshop (elevator boards) · sole engineer · internal admin, client portal, e-commerce, public site</div>
           </div>
         </div>
 
         <div class="other-row">
-          <div class="other-idx">07</div>
+          <div class="other-idx">09</div>
           <div>
             <div class="other-name">LEB</div>
             <div class="other-blurb">expo rn + next admin · events & membership platform for expats in bali · partner discounts, mapbox</div>
@@ -238,10 +246,10 @@ import Pulse from "../components/Pulse.astro";
         </div>
 
         <div class="other-row">
-          <div class="other-idx">08</div>
+          <div class="other-idx">10</div>
           <div>
             <div class="other-name">Node-Discord-Bot</div>
-            <div class="other-blurb">oss bot · 2M users, 22k servers, 140★, 92 forks</div>
+            <div class="other-blurb">oss bot · 3M users, 28k servers, 140★, 92 forks</div>
           </div>
         </div>
 
@@ -254,7 +262,7 @@ import Pulse from "../components/Pulse.astro";
         <div class="contact-label">CONTACT</div>
         <div class="contact-body">
           <p class="contact-lead">
-            Open to fulltime roles and select freelance from June 2026.<br>
+            Open to fulltime roles and select freelance now.<br>
             Best reached by email — I read every message.
           </p>
           <Link href="mailto:alex@konar.es" class="contact-email">alex@konar.es →</Link>
@@ -311,16 +319,6 @@ import Pulse from "../components/Pulse.astro";
     font-size: 12px;
     padding-bottom: 24px;
   }
-
-  .prompt {
-    display: flex;
-    gap: 6px;
-    align-items: baseline;
-  }
-
-  .prompt-path { color: var(--dim); }
-  .prompt-sigil { color: var(--faint); }
-  .prompt-cmd { color: var(--fg); }
 
   .nav {
     display: flex;

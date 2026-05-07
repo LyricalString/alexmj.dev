@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
@@ -12,10 +13,7 @@ import Section from "../../components/Section.astro";
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / crossflow</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -210,21 +208,20 @@ import Section from "../../components/Section.astro";
     <Section tag="OUTCOME" title="What this proves.">
       <p class="body-para">
         Crossflow reached testnet (CFN_testnet-1) with a working keygen, resharing, and
-        per-transaction signing ceremony across Bitcoin, EVM, and Solana. No public TVL — this
-        is a pre-launch protocol, not a production deployment. What the engineering demonstrates
-        is a different thing: implementing Gennaro-Goldfeder MPC-ECDSA (Feldman VSS, Paillier
+        per-transaction signing ceremony across Bitcoin, EVM, and Solana. The engineering
+        demonstrates implementing Gennaro-Goldfeder MPC-ECDSA (Feldman VSS, Paillier
         encryption, Schnorr/DLN zero-knowledge proofs, MtA sub-protocol) on a custom L1 chain,
         integrating HTLC scripts on Bitcoin for atomic settlement, and operating a decentralised
         oracle over IBC — that is the primitive stack that bridge security and institutional DeFi
-        teams spend years hiring for. I built it as one engineer at Hexmount.
+        teams spend years hiring for. Built as one engineer at Hexmount.
       </p>
     </Section>
 
     <!-- next case -->
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
-      <Link href="/cases/asset-reality" class="next-case-link">
-        04 &nbsp; Asset Reality — government-grade custody at $1B+ scale →
+      <Link href="/cases/leyabierta" class="next-case-link">
+        04 &nbsp; Ley Abierta — 190 years of Spanish law as Git →
       </Link>
     </div>
 
@@ -261,15 +258,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

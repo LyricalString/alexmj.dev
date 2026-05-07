@@ -2,20 +2,18 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
-  description="Solo engineer behind Ley Abierta: 12,255 Spanish laws reconstructed as 42,866 Git commits, searchable via a hybrid BM25 + RAG engine with a custom int8 SIMD C kernel. Recall@5 from 2% to 66% on real citizen queries; median latency from ~120s to sub-second. Live at leyabierta.es."
+  description="Solo engineer behind Ley Abierta: 12,260 Spanish laws reconstructed as 42,866 Git commits, searchable via a hybrid BM25 + RAG engine with a custom int8 SIMD C kernel. Recall@5 from 2% to 66% on real citizen queries; median latency from ~120s to sub-second. Live at leyabierta.es."
 >
   <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / ley abierta</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -32,7 +30,7 @@ import Section from "../../components/Section.astro";
           <h1 class="hero-h1">190 years of Spanish law as a Git repository.</h1>
           <p class="hero-lead">
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
-            Git commit dated to its official BOE publication — 12,255 laws, 42,866 commits,
+            Git commit dated to its official BOE publication — 12,260 laws, 42,866 commits,
             18 jurisdictions. On top of the repository lives a hybrid BM25 + RAG retrieval engine
             with a hand-rolled int8 SIMD C kernel: Recall@5 went from 2% to 66% on real citizen
             queries, and median latency dropped from ~120s to sub-second over three sprints.
@@ -51,7 +49,7 @@ import Section from "../../components/Section.astro";
     <div class="numbers">
       <div class="numbers-cell">
         <div class="numbers-key">LAWS</div>
-        <div class="numbers-val">12,255</div>
+        <div class="numbers-val">12,260</div>
         <div class="numbers-sub">scraped from BOE since 1835</div>
       </div>
       <div class="numbers-cell">
@@ -232,7 +230,7 @@ import Section from "../../components/Section.astro";
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
       <Link href="/cases/asset-reality" class="next-case-link">
-        05 &nbsp; Asset Reality — government-grade custody at $1B+ scale →
+        05 &nbsp; Asset Reality — multi-sig engine for a custody platform that 2× AUM →
       </Link>
     </div>
 
@@ -269,15 +267,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Link from "../components/Link.astro";
+import Brand from "../components/Brand.astro";
 ---
 
 <Base
@@ -11,11 +12,7 @@ import Link from "../components/Link.astro";
 
     <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
     <header class="topbar">
-      <div class="prompt">
-        <span class="prompt-path">~/portfolio</span>
-        <span class="prompt-sigil">$</span>
-        <span class="prompt-cmd">ls oss</span>
-      </div>
+      <Brand />
       <nav class="nav">
         <Link href="/">home</Link>
         <Link href="/projects">projects</Link>
@@ -87,7 +84,7 @@ import Link from "../components/Link.astro";
           </div>
         </div>
         <p class="oss-desc">
-          190 years of Spanish legislation as a public Git repository — 12,255 laws, 42,866 commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
+          190 years of Spanish legislation as a public Git repository — 12,260 laws, 42,866 commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
         </p>
       </div>
 
@@ -103,7 +100,7 @@ import Link from "../components/Link.astro";
             <div class="oss-badges">
               <span class="badge">MIT</span>
               <span class="badge">TypeScript</span>
-              <span class="badge">140 ★ · 92 forks</span>
+              <span class="badge">140 ★ · 92 forks · 3M users · 28k servers</span>
             </div>
           </div>
           <div class="oss-links">
@@ -111,7 +108,7 @@ import Link from "../components/Link.astro";
           </div>
         </div>
         <p class="oss-desc">
-          OSS Discord bot framework and template. Reached 2M users across 22,000+ servers. One of the more-starred Discord bot starters in TypeScript — the community found it useful enough to keep maintaining it.
+          OSS Discord bot framework and template. Reached 3M users across 28,000+ servers. One of the more-starred Discord bot starters in TypeScript — still in active community use.
         </p>
         <div class="oss-install">
           <div class="install-label">INSTALL</div>
@@ -177,16 +174,6 @@ import Link from "../components/Link.astro";
     font-size: 12px;
     padding-bottom: 24px;
   }
-
-  .prompt {
-    display: flex;
-    gap: 6px;
-    align-items: baseline;
-  }
-
-  .prompt-path { color: var(--dim); }
-  .prompt-sigil { color: var(--faint); }
-  .prompt-cmd { color: var(--fg); }
 
   .nav {
     display: flex;

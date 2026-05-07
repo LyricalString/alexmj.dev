@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
@@ -12,10 +13,7 @@ import Section from "../../components/Section.astro";
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / trilo</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -259,15 +257,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

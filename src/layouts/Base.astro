@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = "Alejandro Martinez — software engineer building reliable backend systems.",
+  description = "Alejandro Martínez — software engineer building reliable backend systems.",
 } = Astro.props;
 ---
 
@@ -19,6 +19,16 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <!-- OG / Twitter -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alexmj.dev" />
+    <meta property="og:image" content="https://alexmj.dev/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
 
     <!-- Geist + Geist Mono via Google Fonts — weights 400 & 500 only -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

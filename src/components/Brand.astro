@@ -1,0 +1,31 @@
+---
+// Konar wordmark — visual brand wrapper above Alejandro.
+// Lives in the topbar of every page, replacing the terminal prompt.
+---
+
+<div class="brand">
+  <span class="brand-mark">konar</span>
+  <span class="brand-est">est. 2026</span>
+</div>
+
+<style>
+  .brand {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-mono);
+    line-height: 1.2;
+  }
+
+  .brand-mark {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg);
+    letter-spacing: 0.02em;
+  }
+
+  .brand-est {
+    font-size: 11px;
+    color: var(--faint);
+    margin-top: 2px;
+  }
+</style>

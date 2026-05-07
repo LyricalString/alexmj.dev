@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Link from "../components/Link.astro";
+import Brand from "../components/Brand.astro";
 ---
 
 <Base
@@ -11,11 +12,7 @@ import Link from "../components/Link.astro";
 
     <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
     <header class="topbar">
-      <div class="prompt">
-        <span class="prompt-path">~/portfolio</span>
-        <span class="prompt-sigil">$</span>
-        <span class="prompt-cmd">ls /this-page</span>
-      </div>
+      <Brand />
     </header>
 
     <!-- ── 404 BLOCK ────────────────────────────────────────────────── -->
@@ -71,15 +68,13 @@ import Link from "../components/Link.astro";
     padding-bottom: 24px;
   }
 
-  .prompt {
+  .nav {
     display: flex;
-    gap: 6px;
-    align-items: baseline;
+    gap: 28px;
+    color: var(--dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
   }
-
-  .prompt-path { color: var(--dim); }
-  .prompt-sigil { color: var(--faint); }
-  .prompt-cmd { color: var(--fg); }
 
   /* ── 404 BLOCK ── */
   .not-found {

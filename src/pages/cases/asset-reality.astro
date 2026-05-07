@@ -2,20 +2,18 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
   title="Asset Reality — Government-grade crypto custody | Alejandro Martínez"
-  description="Engineer at Asset Reality (Jul 2022–Mar 2024). Owned the multi-sig governance engine and 12-chain blockchain ingestion platform for a $1B+ government crypto custody platform."
+  description="Engineer at Asset Reality (Jul 2022–Feb 2024). Owned the multi-sig governance engine and 12-chain blockchain ingestion platform for a government-grade crypto custody platform that grew from $200M to $500M AUM during my tenure ($1B+ now post-tenure)."
 >
   <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / asset reality</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -26,18 +24,19 @@ import Section from "../../components/Section.astro";
     <!-- hero -->
     <div class="hero">
       <div class="hero-grid">
-        <div class="hero-tag">CASE STUDY · 04</div>
+        <div class="hero-tag">CASE STUDY · 05</div>
         <div class="hero-main">
           <div class="hero-meta">GOVERNMENT-GRADE CRYPTO CUSTODY &nbsp;·&nbsp; 2022 — 2024 &nbsp;·&nbsp; ENGINEER</div>
-          <h1 class="hero-h1">I built the multi-sig engine for a $1B+ custody platform.</h1>
+          <h1 class="hero-h1">I built the multi-sig engine for a custody platform that 2× AUM.</h1>
           <p class="hero-lead">
             Asset Reality is the end-to-end platform governments use to seize, manage, and dispose of
-            digital and physical assets. During 19 months on the engineering team (Jul 2022 – Mar 2024),
+            digital and physical assets. During 19 months on the engineering team (Jul 2022 – Feb 2024),
             I owned two load-bearing systems: the multi-signature governance and escrow engine that
             controls every custody withdrawal, and the 12-chain blockchain ingestion platform that monitors
-            the network in real time. The platform now handles $1B+ in seized-asset transactions across
-            French, Belgian, US, EU, and Caribbean law enforcement — that figure is platform-attributable,
-            not personal.
+            the network in real time. Platform AUM grew from $200–300M when I joined to $500M by the time
+            I left, with seizure workflows live across French, Belgian, US, EU, and Caribbean law
+            enforcement. AUM figures are platform-attributable, not personal — but the systems that
+            sustained that growth are mine.
           </p>
         </div>
         <div class="hero-links">
@@ -54,12 +53,12 @@ import Section from "../../components/Section.astro";
       <div class="numbers-cell">
         <div class="numbers-key">TENURE</div>
         <div class="numbers-val">19 mo</div>
-        <div class="numbers-sub">jul 2022 – mar 2024</div>
+        <div class="numbers-sub">jul 2022 – feb 2024</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">PLATFORM AUM</div>
-        <div class="numbers-val">$1B+</div>
-        <div class="numbers-sub">platform-attributable, not personal</div>
+        <div class="numbers-key">AUM GROWTH</div>
+        <div class="numbers-val">$200M → $500M</div>
+        <div class="numbers-sub">during tenure · $1B+ now post-tenure</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">CHAINS INGESTED</div>
@@ -181,7 +180,7 @@ import Section from "../../components/Section.astro";
         <div class="ownership-header">
           <span>SYSTEM / REPO</span>
           <span>STACK</span>
-          <span class="text-right">ALEX %</span>
+          <span class="text-right">OWNED %</span>
           <span class="text-right">ROLE</span>
         </div>
         <div class="ownership-row">
@@ -226,7 +225,7 @@ import Section from "../../components/Section.astro";
     <!-- outcome -->
     <Section tag="OUTCOME" title="What the platform became.">
       <p class="body-para">
-        During my tenure (Jul 2022 – Mar 2024) the platform grew from early-stage to supporting
+        During my tenure (Jul 2022 – Feb 2024) the platform grew from $200–300M AUM to $500M, supporting
         seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
         UK law enforcement, and agencies across North America and the Caribbean. The $4.91M seed round
         closed in January 2023 explicitly to hire engineers and expand operations. Since I left, Asset
@@ -247,8 +246,8 @@ import Section from "../../components/Section.astro";
     <!-- next case -->
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
-      <Link href="/cases/leyabierta" class="next-case-link">
-        05 &nbsp; Ley Abierta — 190 years of Spanish law as Git →
+      <Link href="/cases/autowealth" class="next-case-link">
+        06 &nbsp; Autowealth + CompoundFox — Algo trading with a live public dashboard →
       </Link>
     </div>
 
@@ -285,15 +284,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

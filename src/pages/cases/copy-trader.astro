@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
@@ -12,10 +13,7 @@ import Section from "../../components/Section.astro";
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / copy trader</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -26,7 +24,7 @@ import Section from "../../components/Section.astro";
     <!-- hero -->
     <div class="hero">
       <div class="hero-grid">
-        <div class="hero-tag">CASE STUDY · 06</div>
+        <div class="hero-tag">CASE STUDY · 07</div>
         <div class="hero-main">
           <div class="hero-meta">COPY TRADING INFRASTRUCTURE &nbsp;·&nbsp; 2024 — 2025 &nbsp;·&nbsp; SOLE ENGINEER</div>
           <h1 class="hero-h1">A multi-exchange copy trading engine built in Rust.</h1>
@@ -247,15 +245,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

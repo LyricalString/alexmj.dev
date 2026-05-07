@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Link from "../components/Link.astro";
+import Brand from "../components/Brand.astro";
 ---
 
 <Base
@@ -11,11 +12,7 @@ import Link from "../components/Link.astro";
 
     <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
     <header class="topbar">
-      <div class="prompt">
-        <span class="prompt-path">~/portfolio</span>
-        <span class="prompt-sigil">$</span>
-        <span class="prompt-cmd">cat cv.md</span>
-      </div>
+      <Brand />
       <nav class="nav">
         <Link href="/">home</Link>
         <Link href="/projects">projects</Link>
@@ -29,6 +26,7 @@ import Link from "../components/Link.astro";
       <div class="hero-tag">CV</div>
       <h1 class="hero-h1">Alejandro Martínez</h1>
       <div class="hero-sub">Software engineer · Valencia · <Link href="mailto:alex@konar.es" class="email-link">alex@konar.es</Link></div>
+      <p class="hero-summary">Full-stack engineer working across AI systems, Bitcoin infrastructure, DeFi protocols and government-grade custody platforms. Sole engineer behind Satstream (Bitcoin data layer), Ley Abierta (190 years of Spanish law as Git), and Trilo (multi-platform AI workspace).</p>
       <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
     </section>
 
@@ -55,14 +53,14 @@ import Link from "../components/Link.astro";
           <div class="work-name">
             <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
           </div>
-          <div class="work-desc">190 years of Spanish law as Git. 12,255 laws, 42,866 commits. Custom int8 SIMD C kernel for hybrid BM25 + RAG retrieval — Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. AGPL-3.0. 2026.</div>
+          <div class="work-desc">190 years of Spanish law as Git. 12,260 laws, 42,866 commits. Custom int8 SIMD C kernel for hybrid BM25 + RAG retrieval — Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. AGPL-3.0. 2026.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
-            <Link href="/about#asset-reality" class="work-link">Asset Reality ↗</Link>
+            <Link href="/cases/asset-reality" class="work-link">Asset Reality ↗</Link>
           </div>
-          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Mar 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM $200–300M during tenure ($1B+ now).</div>
+          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Feb 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM grew from $200–300M to $500M during my 19-month tenure ($1B+ now post-tenure).</div>
         </div>
 
         <div class="work-item">
@@ -71,7 +69,7 @@ import Link from "../components/Link.astro";
         </div>
 
         <div class="work-item">
-          <div class="work-name">Compound Fox + Autowealth</div>
+          <div class="work-name">CompoundFox + Autowealth</div>
           <div class="work-desc">Algo strategy with a live, public performance dashboard. Distribution SaaS platform. Turborepo: backend, Telegram bot, dashboards, React Native, AWS CDK.</div>
         </div>
 
@@ -120,9 +118,9 @@ import Link from "../components/Link.astro";
           <div class="exp-meta">
             <div class="exp-company">Asset Reality</div>
             <div class="exp-role">Software engineer</div>
-            <div class="exp-dates">Jul 2022 — Mar 2024</div>
+            <div class="exp-dates">Jul 2022 — Feb 2024</div>
           </div>
-          <p class="exp-desc">860 commits across 25 repos over 20 months. Primary owner of: (1) Governance/Escrow Engine — multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform — 12 chain monitors (ETH, BTC, BCH, LTC, DOGE, XRP, Solana, Tron, Polygon, Arbitrum, ERC-20) as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM $200–300M during tenure; $1B+ now.</p>
+          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary owner of: (1) Governance/Escrow Engine — multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform — 12 chain monitors (ETH, BTC, BCH, LTC, DOGE, XRP, Solana, Tron, Polygon, Arbitrum, ERC-20) as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200–300M to $500M during my tenure; $1B+ now post-tenure.</p>
           <div class="exp-stack">Go · TypeScript · React · Ant Design · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks</div>
         </div>
 
@@ -167,6 +165,25 @@ import Link from "../components/Link.astro";
         <div class="skill-group">
           <div class="skill-label">OTHER</div>
           <div class="skill-items">MCP · OpenAPI · Fireblocks · LiveKit · Cosmos SDK · CosmWasm · Hardhat · OpenZeppelin</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── OPEN SOURCE ──────────────────────────────────────────────── -->
+    <section class="cv-section">
+      <div class="section-label">OPEN SOURCE</div>
+      <div class="oss-listing">
+        <div class="oss-item">
+          <div class="oss-name">Lovely-Logs</div>
+          <div class="oss-desc">Type-safe logging library — Node.js, browser, Lambda. Zero dependencies. MIT.</div>
+        </div>
+        <div class="oss-item">
+          <div class="oss-name">Node-Discord-Bot</div>
+          <div class="oss-desc">Discord bot framework &amp; template. 140★, 92 forks, 3M users across 28k servers. MIT.</div>
+        </div>
+        <div class="oss-item">
+          <div class="oss-name">Ley Abierta engine</div>
+          <div class="oss-desc">Hybrid BM25 + RAG retrieval with custom int8 SIMD C kernel. 12,260 laws, 42,866 commits. AGPL-3.0.</div>
         </div>
       </div>
     </section>
@@ -218,16 +235,6 @@ import Link from "../components/Link.astro";
     padding-bottom: 24px;
   }
 
-  .prompt {
-    display: flex;
-    gap: 6px;
-    align-items: baseline;
-  }
-
-  .prompt-path { color: var(--dim); }
-  .prompt-sigil { color: var(--faint); }
-  .prompt-cmd { color: var(--fg); }
-
   .nav {
     display: flex;
     gap: 28px;
@@ -269,6 +276,15 @@ import Link from "../components/Link.astro";
 
   .email-link {
     color: var(--dim);
+  }
+
+  .hero-summary {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin: 0 0 20px;
+    max-width: 720px;
   }
 
   .pdf-btn {
@@ -408,6 +424,33 @@ import Link from "../components/Link.astro";
     font-size: 12px;
     color: var(--dim);
     line-height: 1.6;
+  }
+
+  /* ── OPEN SOURCE ── */
+  .oss-listing {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .oss-item {
+    padding: 12px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .oss-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+
+  .oss-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--dim);
+    line-height: 1.55;
   }
 
   /* ── LANGUAGES ── */

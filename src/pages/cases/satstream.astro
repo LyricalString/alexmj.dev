@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
+import Brand from "../../components/Brand.astro";
 ---
 
 <Base
@@ -12,10 +13,7 @@ import Section from "../../components/Section.astro";
 
     <!-- top bar -->
     <header class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-name">alejandro martinez</span>
-        <span class="topbar-path">/ work / satstream</span>
-      </div>
+      <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
@@ -161,7 +159,7 @@ import Section from "../../components/Section.astro";
         <div class="ownership-header">
           <span>REPO</span>
           <span>STACK</span>
-          <span class="text-right">ALEX / TOTAL</span>
+          <span class="text-right">OWNED / TOTAL</span>
           <span class="text-right">ROLE</span>
         </div>
         <div class="ownership-row">
@@ -236,8 +234,8 @@ import Section from "../../components/Section.astro";
     <!-- next case -->
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
-      <Link href="/cases/ley-abierta" class="next-case-link">
-        03 &nbsp; Ley Abierta — 190 years of Spanish law as Git →
+      <Link href="/cases/crossflow" class="next-case-link">
+        03 &nbsp; Crossflow Network — TSS/MPC cross-chain protocol →
       </Link>
     </div>
 
@@ -274,15 +272,6 @@ import Section from "../../components/Section.astro";
   .topbar-left {
     display: flex;
     gap: 14px;
-  }
-
-  .topbar-name {
-    color: var(--fg);
-    font-weight: 500;
-  }
-
-  .topbar-path {
-    color: var(--faint);
   }
 
   .topbar-nav {

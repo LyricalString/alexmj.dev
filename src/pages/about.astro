@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
+import Brand from "../components/Brand.astro";
 ---
 
 <Base
@@ -12,11 +13,7 @@ import Pulse from "../components/Pulse.astro";
 
     <!-- ── TOP BAR ──────────────────────────────────────────────────── -->
     <header class="topbar">
-      <div class="prompt">
-        <span class="prompt-path">~/portfolio</span>
-        <span class="prompt-sigil">$</span>
-        <span class="prompt-cmd">whoami --verbose</span>
-      </div>
+      <Brand />
       <nav class="nav">
         <Link href="/">home</Link>
         <Link href="/projects">projects</Link>
@@ -33,7 +30,7 @@ import Pulse from "../components/Pulse.astro";
       <div class="status-row">
         <span class="status-inner">
           <Pulse color="var(--accent)" />
-          <span class="status-text">available june 2026</span>
+          <span class="status-text">available now</span>
         </span>
       </div>
 
@@ -88,7 +85,7 @@ import Pulse from "../components/Pulse.astro";
           <div class="tl-role">Software engineer</div>
           <div class="tl-company">Asset Reality</div>
           <div class="tl-what">
-            19 months at a government-grade crypto custody platform. Owned the multi-sig governance/escrow engine (configurable approval groups, mandatory approvers, WebSocket events, Fireblocks webhooks) and the 12-chain blockchain ingestion platform (ETH, BTC, Solana, Tron, XRP, Polygon, Arbitrum, others) wired via RabbitMQ. Also: Fireblocks vault integration, platform containerization (15+ microservices), custody UI. Platform AUM $200–300M during tenure ($1B+ now). Stack: Go, TypeScript/React, MongoDB, Postgres, RabbitMQ, AWS, Terraform.
+            19 months at a government-grade crypto custody platform. Owned the multi-sig governance/escrow engine (configurable approval groups, mandatory approvers, WebSocket events, Fireblocks webhooks) and the 12-chain blockchain ingestion platform (ETH, BTC, Solana, Tron, XRP, Polygon, Arbitrum, others) wired via RabbitMQ. Also: Fireblocks vault integration, platform containerization (15+ microservices), custody UI. Platform AUM grew from $200–300M to $500M during my tenure ($1B+ now post-tenure). Stack: Go, TypeScript/React, MongoDB, Postgres, RabbitMQ, AWS, Terraform.
           </div>
         </div>
 
@@ -111,7 +108,7 @@ import Pulse from "../components/Pulse.astro";
       <div class="principles-grid">
         <div class="principle">
           <div class="principle-label">SHIPPING OVER PERFORMING</div>
-          <p class="principle-body">A working system in production beats a perfect one in a PR. I optimise for delivery first, then correctness, then elegance. Most complexity in the real world comes from shipping fast and fixing honestly — not from planning perfectly.</p>
+          <p class="principle-body">A working system in production beats a perfect one in a PR. I optimise for shipping the right thing the right way: delivery first, correctness as a hard floor, elegance as a habit. Most complexity in the real world comes from shipping fast and fixing honestly — not from planning perfectly.</p>
         </div>
         <div class="principle">
           <div class="principle-label">SOVEREIGNTY OVER CONVENIENCE</div>
@@ -119,7 +116,7 @@ import Pulse from "../components/Pulse.astro";
         </div>
         <div class="principle">
           <div class="principle-label">HONEST NUMBERS</div>
-          <p class="principle-body">Compound Fox publishes its live performance on a public dashboard. Asset Reality AUM figures come with caveats about platform vs personal attribution. Where I claim ownership, I can show the commits. Portfolio claims should survive a code review.</p>
+          <p class="principle-body">CompoundFox publishes its live performance on a public dashboard. Asset Reality AUM figures come with caveats about platform vs personal attribution. Where I claim ownership, I can show the commits. Portfolio claims should survive a code review.</p>
         </div>
       </div>
     </section>
@@ -155,16 +152,6 @@ import Pulse from "../components/Pulse.astro";
     font-size: 12px;
     padding-bottom: 24px;
   }
-
-  .prompt {
-    display: flex;
-    gap: 6px;
-    align-items: baseline;
-  }
-
-  .prompt-path { color: var(--dim); }
-  .prompt-sigil { color: var(--faint); }
-  .prompt-cmd { color: var(--fg); }
 
   .nav {
     display: flex;

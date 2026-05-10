@@ -7,9 +7,9 @@ import Base from "../../layouts/Base.astro";
 
 <Base
   title="Satstream — Bitcoin's data layer | Alejandro Martínez"
-  description="Solo engineer behind Satstream: a multi-protocol Bitcoin indexer indexing the full chain into a 4-database cluster, with 5 SDKs and an MCP server."
+  description="Sole engineer behind Satstream: a multi-protocol Bitcoin indexer covering Ordinals, BRC-20, Runes, and Charms across 9 repos and 376 commits, with a 4-database cluster, 5 SDKs, and an MCP server for AI-native access."
 >
-  <div class="page"> 
+  <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
@@ -27,12 +27,13 @@ import Base from "../../layouts/Base.astro";
         <div class="hero-tag">CASE STUDY · 02</div>
         <div class="hero-main">
           <div class="hero-meta">BITCOIN DATA INFRASTRUCTURE &nbsp;·&nbsp; 2024 — NOW &nbsp;·&nbsp; SOLE ENGINEER</div>
-          <h1 class="hero-h1">I built Bitcoin's data layer.</h1>
+          <h1 class="hero-h1">Nine repositories. Four protocols. One engineer.</h1>
           <p class="hero-lead">
             Satstream is a multi-protocol Bitcoin indexer and API. One engineer, nine repositories,
-            five SDKs, an MCP server and a block explorer. It indexes the full Bitcoin chain — UTXOs,
-            inscriptions, BRC-20 ops, Runes etchings, Ordinals charms — into a multi-database cluster
-            for sub-second queries.
+            five SDKs, an MCP server, and a block explorer. It indexes the full Bitcoin chain — UTXOs,
+            inscriptions, BRC-20 ops, Runes etchings, Ordinals charms — into a 4-database cluster
+            for sub-second queries. The BRC-20 indexer handles the cursed-inscription edge case that
+            most competing indexers get wrong.
           </p>
         </div>
         <div class="hero-links">
@@ -48,24 +49,19 @@ import Base from "../../layouts/Base.astro";
     <!-- numbers strip -->
     <div class="numbers">
       <div class="numbers-cell">
-        <div class="numbers-key">REPOS</div>
-        <div class="numbers-val">9</div>
-        <div class="numbers-sub">github.com/satstream</div>
-      </div>
-      <div class="numbers-cell">
         <div class="numbers-key">COMMITS</div>
-        <div class="numbers-val">~350</div>
-        <div class="numbers-sub">sole consistent committer</div>
+        <div class="numbers-val">376</div>
+        <div class="numbers-sub">sole committer on 7 of 8 production repos</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">CHAIN INDEXED</div>
-        <div class="numbers-val">~3 TB</div>
-        <div class="numbers-sub">utxos · inscriptions</div>
+        <div class="numbers-key">PROTOCOLS</div>
+        <div class="numbers-val">4</div>
+        <div class="numbers-sub">brc-20 · runes · ord · charms</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">SDK LANGUAGES</div>
-        <div class="numbers-val">5</div>
-        <div class="numbers-sub">go · js · python · rust · ts</div>
+        <div class="numbers-key">API SURFACE</div>
+        <div class="numbers-val">14 categories</div>
+        <div class="numbers-sub">49K LOC · go · fiber</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">DATABASES</div>
@@ -73,9 +69,9 @@ import Base from "../../layouts/Base.astro";
         <div class="numbers-sub">mongo · scylla · pg · redis</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">PROTOCOLS</div>
-        <div class="numbers-val">3</div>
-        <div class="numbers-sub">brc-20 · runes · ord.</div>
+        <div class="numbers-key">SDKs</div>
+        <div class="numbers-val">5</div>
+        <div class="numbers-sub">go · js · python · rust · ts</div>
       </div>
     </div>
 
@@ -94,66 +90,67 @@ import Base from "../../layouts/Base.astro";
     <!-- architecture -->
     <div class="reveal-section">
     <section class="section" data-section-tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
-      <pre class="arch-diagram">  ┌─ bitcoin node (full archival, ~3 tb)
+      <pre class="arch-diagram">  ┌─ bitcoin node (full archival)
   │
   ├──▶ ss-indexer            [ go · mongo · grpc ]   core blocks · runic / non-runic split
-  │      └──▶ runestone-decoding  [ grpc microservice ]
+  │      └──▶ runestone-decoding  [ grpc microservice · LEB128/big.Int decoder ]
   │
-  ├──▶ satstream-brc20-indexer    [ rust · mongo ]   brc-20 ops + runes etchings/mints
+  ├──▶ satstream-brc20-indexer    [ rust · mongo ]   brc-20 ops · cursed-inscription edge case
+  │      (15,831 LOC · sole committer)
   │
-  ├──▶ satstream-delta-indexer    [ rust · scylladb ]   per-address sat deltas
-  │      (migrated from mongo for write throughput)
+  ├──▶ satstream-delta-indexer    [ rust · scylladb · prometheus ]   per-address sat deltas
+  │      gap scan + block continuity verification across 800K+ blocks
   │
   └──▶ charms-extractor           [ python · cassandra ]   ordinals charm attributes
-                                              │
-                                              ▼
-                              ┌─ ss-api  [ go · fiber ] ──┐
-                              │   14 endpoint categories  │
-                              │   mongo · scylla · redis  │
-                              │   stripe metering         │
-                              └────────────┬──────────────┘
-                                           │
-       ┌───────────┬───────────┬───────────┼────────────┬────────────┐
-       ▼           ▼           ▼           ▼            ▼            ▼
-   sdk · go    sdk · js    sdk · py    sdk · rust    sdk · ts    ss-mcp (bun)
-       (5 sdks generated from one openapi spec)               llm-native surface
+                                             │
+                                             ▼
+                             ┌─ ss-api  [ go · fiber ] ──┐
+                             │   14 endpoint categories  │
+                             │   mongo · scylla · redis  │
+                             │   stripe metering         │
+                             └────────────┬──────────────┘
+                                          │
+      ┌───────────┬───────────┬───────────┼────────────┬────────────┐
+      ▼           ▼           ▼           ▼            ▼            ▼
+  sdk · go    sdk · js    sdk · py    sdk · rust    sdk · ts    ss-mcp (bun)
+      (5 sdks generated from one openapi spec)               llm-native surface
 </pre>
     </section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Five calls that earned their complexity.">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that earned their complexity.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Migrate deltas to ScyllaDB</div>
-          <p class="decision-body">MongoDB couldn't keep up with per-address UTXO write throughput. ScyllaDB's wide-column model and tunable consistency fits append-heavy, high-cardinality writes; the migration happened before the bottleneck became a production incident.</p>
+          <div class="decision-title">Cursed-inscription edge case in BRC-20</div>
+          <p class="decision-body">Most indexers treat a transaction with a cursed inscription as dead — no BRC-20 op processed. The BRC-20 spec says otherwise: a cursed inscription still carries a valid <code>transfer</code> of an existing active inscribe-transfer. The Rust indexer (<code>indexer.rs</code>) tracks this per-transaction with an <code>all_inscriptions_cursed</code> flag (line 292), loads a <code>HashSet</code> of known cursed TXIDs at startup, and continues to dispatch transfer operations when all inscriptions in a TX are cursed. Getting this wrong produces divergent user balances. UniSat, Hiro, and OKX have all shipped different interpretations of the same spec.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">gRPC microservice for Runestone decoding</div>
-          <p class="decision-body">Pulled Runes protocol parsing into its own gRPC service consumed by the Go indexer. Clean protocol boundary; ScyllaDB writers don't ship with a Bitcoin script interpreter compiled in.</p>
+          <div class="decision-title">LEB128/big.Int Runestone decoder with dual-path parser</div>
+          <p class="decision-body">The Runes protocol encodes amounts as little-endian base-128 varints (LEB128) with values up to 2^128. The Go decoder in <code>runestone.go</code> (522 LOC) uses <code>big.Int</code> throughout, not uint64, because the UNCOMMONGOODS cap is <code>340282366920938463463374607431768211455</code>. It also handles dual-path input: Bitcoin Core returns either raw hex (<code>6a5d...</code>) or asm-tokenized (<code>OP_RETURN 13 &lt;hex&gt;</code>) depending on node version and verbosity level, and the parser falls back to hex when asm decoding fails. The UNCOMMONGOODS genesis rune is hard-coded at block 840,000 with exact cap, height range, turbo, and spacers — if that initialization is wrong, every downstream Runes balance is wrong.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">OpenAPI as the canonical spec</div>
-          <p class="decision-body">Five SDKs (Go, JS, Python, Rust, TypeScript) generated from one OpenAPI spec. Type-safe clients across every ecosystem developers actually use. Zero drift between languages.</p>
+          <div class="decision-title">Adaptive concurrency tied to MongoDB shard load</div>
+          <p class="decision-body"><code>adaptative_concurrency.go</code> (321 LOC) implements a live-adjusting semaphore. Every 10 seconds it queries MongoDB's <code>serverStatus</code> across all shard clients, computes connection load ratio and average commit latency in microseconds, then increments or decrements the worker pool capacity (bounded [1, 100]) via a <code>sync.Cond</code>-based <code>CountingSemaphore</code>. Hard-coded thread counts get wedged when the database is slow. This controller backs off the indexer in proportion to actual DB saturation rather than guessing a ceiling at deploy time.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">MCP server for AI agent access</div>
-          <p class="decision-body">Shipped ss-mcp alongside the SDKs. The full API surface is natively callable by Claude, Cursor and every MCP-aware agent — no custom integration required. New onramp, same backend.</p>
+          <div class="decision-title">Full partial-block rollback on sync resumption</div>
+          <p class="decision-body">The BRC-20 indexer does not resume by simply appending. On startup it detects the last completed block height, then deletes every record at or above that height across 6 collections (deploys, mints, transfers, invalids, tickers, user balance entries), resets <code>total_minted</code> for affected tickers, and rebuilds user balances from the remaining entries. The delta indexer adds a gap scan: <code>verify_block_continuity()</code> walks every height from 0 to max as a <code>BTreeSet</code> and re-processes any missing blocks before the live tail starts. Without this, an interrupted sync leaves gaps that silently produce wrong UTXO balances.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Adaptive concurrency in the indexer</div>
-          <p class="decision-body">adaptative_concurrency.go tunes worker pools at runtime instead of hard-coding thread counts. Indexer throughput tracks node IO instead of getting wedged at the configured ceiling.</p>
+          <div class="decision-title">Ord server HA without an external load balancer</div>
+          <p class="decision-body"><code>ord_server/manager/manager.go</code> in ss-api maintains a pool of Ord clients — one main, N backups — each with its own HTTP connection pool. A background goroutine health-checks each server on a configurable interval and marks failed nodes. <code>getClient()</code> returns the first healthy client, falling back to backups in round-robin. Inscription queries survive ord-server restarts with no ELB or ALB in front and no manual intervention. Failure state is consistent even under concurrent request load because the URL manager is shared across all clients.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">HA Ord server config</div>
-          <p class="decision-body">Primary + backup Ord servers configured directly in ss-api (OrdMainServer, OrdBackupServers) — inscription queries survive ord-server restarts without an external load balancer.</p>
+          <div class="decision-title">MCP server exposes the full API surface to AI agents</div>
+          <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms — previously only accessible via REST — are now a native tool call. New onramp, same backend, zero additional indexing work.</p>
         </div>
       </div>
     </section>
@@ -231,12 +228,13 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="Bitcoin infrastructure, built solo.">
       <p class="body-para">
-        Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec,
-        Runestone format, inscription model) and production distributed systems engineering
-        (ScyllaDB write throughput, gRPC service boundaries, Prometheus instrumentation, AWS CDK).
-        Nine repositories, sole committer on seven of them. The MCP server extends the data layer
-        to AI agents — the same Bitcoin data that was previously only queryable via REST is now
-        natively callable by any MCP client.
+        Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec
+        including the cursed-inscription edge case, Runestone LEB128 encoding, inscription model) and
+        production distributed systems (ScyllaDB write throughput, gRPC service boundaries, Prometheus
+        instrumentation, AWS CDK). Nine repositories, sole committer on seven of them. The adaptive
+        concurrency controller in ss-indexer reads live MongoDB shard load to tune its own worker pool
+        in real time. The MCP server extends the data layer to AI agents — the same Bitcoin data
+        previously only queryable via REST is now a native tool call for any MCP client.
       </p>
     </section>
     </div>
@@ -267,5 +265,22 @@ import Base from "../../layouts/Base.astro";
   .ownership-header,
   .ownership-row {
     grid-template-columns: 2fr 2fr 1fr 1fr;
+  }
+
+  /* ── NUMBERS STRIP: satstream has 5 cells (overrides shared 6-col) ── */
+  @media (min-width: 768px) {
+    .numbers {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  /* ── SATSTREAM-SPECIFIC: inline code style in decision-body ── */
+  .decision-body code {
+    background: #101216;
+    padding: 1px 5px;
+    border-radius: 3px;
   }
 </style>

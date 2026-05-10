@@ -1,17 +1,40 @@
 /* Design system tokens — alexmj.dev */
+/*
+ * Mobile-first strategy. Base styles target 320px (smallest design target).
+ * Gate 3 agents: add layout overrides in ascending breakpoint order using
+ * hard-coded px values directly in @media queries — e.g. @media (min-width: 768px).
+ * IMPORTANT GOTCHA: CSS custom properties do NOT work inside @media conditions.
+ * `@media (min-width: var(--bp-md))` is invalid and silently ignored by browsers.
+ * Use the numeric values directly: 480px, 768px, 1024px, 1280px.
+ * The --bp-* tokens below are for JS, container queries, and future CSS use only.
+ */
 
 :root {
   /* Palette */
-  --bg: #15171a;       /* warm-ink dark */
+  --bg: #15171a; /* warm-ink dark */
   --fg: #e8e8e6;
   --dim: #a09e98;
   --faint: #75756f;
   --rule: #262830;
-  --accent: #86b27a;   /* sage green — pulse + interactive hover ONLY */
+  --accent: #86b27a; /* sage green — pulse + interactive hover ONLY */
 
   /* Typography */
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Breakpoints (for JS / container queries / future CSS — NOT for @media, see note above) */
+  --bp-sm: 480px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* Type scale (fluid) — calibrated so 1440px renders at current desktop sizes */
+  --text-hero-home: clamp(1.75rem, 4.5vw + 0.5rem, 3.5rem); /* home h1 */
+  --text-hero-case: clamp(1.5rem, 4vw + 0.5rem, 3rem); /* case study h1 */
+  --text-h2: clamp(1.125rem, 1.5vw + 0.75rem, 1.5rem);
+  --text-body: clamp(0.9375rem, 0.4vw + 0.875rem, 1rem);
+  --text-mono-sm: clamp(0.75rem, 0.2vw + 0.7rem, 0.8125rem); /* mono labels */
+  --text-mono-xs: clamp(0.6875rem, 0.15vw + 0.65rem, 0.75rem); /* micro mono details */
 }
 
 /* Global reset */
@@ -25,6 +48,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 html {
@@ -53,4 +77,23 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 320px;
+}
+
+/* Global responsive guards */
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+pre,
+code {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  overflow-x: auto;
+  max-width: 100%;
 }

@@ -139,7 +139,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Idempotent execution via database</div>
-          <p class="decision-body">Network retries and WebSocket reconnections can cause duplicate trade events. Every execution is checked against a database idempotency key before placing an order. This prevents double-trading when a follower receives the same position event twice due to a reconnection or race condition.</p>
+          <p class="decision-body">WebSocket reconnections emit duplicate position events. Without idempotency, a reconnection during an open trade means the follower places the same order twice. Every execution is checked against a database key before hitting the exchange — the record either exists or it doesn't.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -202,14 +202,12 @@ import Brand from "../../components/Brand.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="A production copy trading engine that handles real money.">
       <p class="body-para">
-        Copy Trader is the engine that makes Autowealth's CompoundFox strategy accessible to
-        followers. It handles the complex math of proportional position sizing across three
-        different exchanges, each with their own precision requirements and order formats. The
-        position-based approach ensures followers stay proportionally exposed regardless of their
-        margin size, leverage, or partial close history. BigDecimal precision eliminates rounding
-        errors that would otherwise accumulate across hundreds of trades. Idempotent execution
-        and smart reduction fallback keep the system resilient to network failures and exchange
-        rejections.
+        Copy trading is a coordination problem disguised as a math problem. The math is
+        position-based quantity calculation with BigDecimal precision — tractable once you've
+        thought it through. The coordination is harder: three exchanges with different precision
+        rules, WebSocket streams that drop and reconnect, followers with different margin sizes,
+        and trades that need to survive partial closes without accumulating residuals. That's the
+        engine running under Autowealth's CompoundFox subscribers.
       </p>
     </section>
     </div>

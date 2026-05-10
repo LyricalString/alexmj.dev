@@ -7,7 +7,7 @@ import Brand from "../../components/Brand.astro";
 
 <Base
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
-  description="Solo engineer behind Ley Abierta: 12,260 Spanish laws reconstructed as 42,866 Git commits, searchable via a hybrid BM25 + RAG engine with a custom int8 SIMD C kernel. Recall@5 from 2% to 66% on real citizen queries; median latency from ~120s to sub-second. Live at leyabierta.es."
+  description="Solo engineer behind Ley Abierta: 12,260 Spanish laws reconstructed as 42,866 Git commits, searchable via a hybrid BM25 + RAG engine with a custom int8 SIMD C kernel. Retrieval R@1 from 50% to 80% after a full Qwen migration; median latency from ~120s to sub-second. Live at leyabierta.es."
 >
   <div class="page"> 
 
@@ -31,10 +31,11 @@ import Brand from "../../components/Brand.astro";
           <p class="hero-lead">
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
             Git commit dated to its official BOE publication — 12,260 laws, 42,866 commits,
-            18 jurisdictions. On top of the repository lives a hybrid BM25 + RAG retrieval engine
-            with a hand-rolled int8 SIMD C kernel: Recall@5 went from 2% to 66% on real citizen
-            queries, and median latency dropped from ~120s to sub-second over three sprints.
-            AGPL-3.0. Live at leyabierta.es.
+            17 jurisdictions. On top of the repository lives a hybrid BM25 + RAG retrieval engine
+            with a hand-rolled int8 SIMD C kernel and a 100% Qwen stack: R@1 went from 50% to 80%
+            after six A/B phases migrating every component — embeddings, query analyzer, reranker,
+            and synthesis — from Gemini/Cohere to Qwen running on a private inference server.
+            $0/month in API costs. AGPL-3.0. Live at leyabierta.es.
           </p>
         </div>
         <div class="hero-links">
@@ -63,9 +64,9 @@ import Brand from "../../components/Brand.astro";
         <div class="numbers-sub">of Spanish legislation</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">RECALL@5</div>
-        <div class="numbers-val">2% → 66%</div>
-        <div class="numbers-sub">50 real citizen queries</div>
+        <div class="numbers-key">RETRIEVAL R@1</div>
+        <div class="numbers-val">50% → 80%</div>
+        <div class="numbers-sub">Gemini → full Qwen stack · 50 citizen queries</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">LATENCY (P50)</div>
@@ -122,9 +123,9 @@ import Brand from "../../components/Brand.astro";
   │   │  SharedArrayBuffer worker pool      │                          │
   │   └────────────────────────────────────┘                          │
   │         +                                                         │
-  │   RRF fusion  →  Recall@5: 2% → 66%  ·  P50 latency: ~120s → &lt;1s │
+  │   RRF fusion  →  R@1: 50% → 80%  ·  P50 latency: ~120s → &lt;1s    │
   │                                                                    │
-  │   Embeddings: Gemini via OpenRouter                               │
+  │   Stack: Qwen (embed + analyzer + rerank + synthesis) · $0/mo     │
   └───────────────────────────────────────────────────────────────────┘
           │
           ▼
@@ -147,7 +148,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Git as the storage layer</div>
-          <p class="decision-body">Laws are versioned documents. Git is the right shape — not a relational DB, not a document store. <code>git log -- Codigo_Penal.md</code> is a meaningful civic tool. <code>git diff</code> between two commits is a legislative audit trail. The repo is the product, not just a backend artifact.</p>
+          <p class="decision-body">Laws are versioned documents. Git is the right tool — <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. A relational DB or document store gives you queryability; Git gives you history that's human-readable by default. The repo is the product, not just a backend artifact.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
@@ -157,12 +158,12 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">BM25 + RAG hybrid retrieval</div>
-          <p class="decision-body">BM25 alone on legal prose returned exact-term matches that missed citizen-language queries ("no me devuelven la fianza"). Semantic alone drifted on multi-article laws. RRF fusion of FTS5 BM25 + semantic retrieval took Recall@5 on 50 real citizen queries from 2% to 66% across three sprints, while median latency dropped from ~120s to sub-second after the int8 quantization pass.</p>
+          <p class="decision-body">BM25 alone on legal prose returned exact-term matches that missed citizen-language queries ("no me devuelven la fianza"). Semantic alone drifted on multi-article laws. RRF fusion of FTS5 BM25 + semantic retrieval got the stack to a working baseline, while median latency dropped from ~120s to sub-second after the int8 quantization pass. Six subsequent A/B phases — benchmarking every component against alternatives — pushed R@1 from 50% to 80% on 50 real citizen queries across a 9,700-law haystack.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Gemini embeddings via OpenRouter</div>
-          <p class="decision-body">The 483k embedding vectors are generated via Gemini through OpenRouter — a pragmatic call for cost at this scale. The SIMD kernel handles retrieval on-prem; only the embedding generation hits an external API. Future direction is a fully self-hosted inference server (Qwen) to close that dependency.</p>
+          <div class="decision-title">Full Qwen stack over Gemini + Cohere</div>
+          <p class="decision-body">The initial stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro — three external APIs, ~$9/month. A/B evaluation across six phases replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis (judge score 8.82 vs 7.17 on a 1–10 scale). Combined result: +30 pp R@1, citation precision from 97.1% to 99.6%, $0/month, no external dependencies in the main path.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -172,7 +173,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bun + SQLite + FTS5 on one VM</div>
-          <p class="decision-body">A single self-hosted VM with Elysia, SQLite, FTS5 and a Docker-managed SIMD process beats the obvious cloud-native option at this scale. No managed vector DB, no separate search service, no Kubernetes. Watchtower handles container updates; GitHub Actions handles daily ingestion. The stack is boring in the right ways.</p>
+          <p class="decision-body">A single self-hosted VM with Elysia, SQLite, FTS5 and a Docker-managed SIMD process handles 483k vectors without a managed vector DB, a separate search service, or Kubernetes. Watchtower handles container updates; GitHub Actions handles daily ingestion. The complexity budget was spent on the retrieval algorithm, not the infrastructure.</p>
         </div>
       </div>
     </section>
@@ -196,7 +197,7 @@ import Brand from "../../components/Brand.astro";
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">api</span>
-          <span class="ownership-dim">elysia · sqlite · fts5 · c simd · openrouter</span>
+          <span class="ownership-dim">elysia · sqlite · fts5 · c simd · qwen nan</span>
           <span class="ownership-dim text-right">—</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
@@ -228,10 +229,13 @@ import Brand from "../../components/Brand.astro";
       <p class="body-para">
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
-        citizen language. Recall@5 went from 2% to 66% on a 50-query benchmark of the kind
-        of questions people actually ask. Median latency dropped from ~120s to sub-second on a
-        single self-hosted VM without a managed vector DB or a GPU. The whole stack is AGPL-3.0
-        and live at leyabierta.es: a working piece of public legal infrastructure, built solo.
+        citizen language. Retrieval R@1 went from 50% to 80% after six A/B phases that
+        replaced every Gemini and Cohere component with Qwen on a private inference server —
+        embeddings, query analyzer, reranker, and synthesis — each measured in isolation before
+        being promoted. Median latency dropped from ~120s to sub-second on a single self-hosted
+        VM without a managed vector DB or a GPU. $0/month in inference costs.
+        The whole stack is AGPL-3.0 and live at leyabierta.es: a working piece of public legal
+        infrastructure, built and evaluated solo.
       </p>
     </section>
     </div>

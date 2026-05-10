@@ -128,7 +128,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Migrate deltas to ScyllaDB</div>
-          <p class="decision-body">MongoDB couldn't keep up with per-address UTXO write throughput. ScyllaDB's wide-column model + tunable consistency was the right shape for append-heavy workloads. Migration was deliberate, not reactive.</p>
+          <p class="decision-body">MongoDB couldn't keep up with per-address UTXO write throughput. ScyllaDB's wide-column model and tunable consistency fits append-heavy, high-cardinality writes; the migration happened before the bottleneck became a production incident.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
@@ -137,12 +137,12 @@ import Brand from "../../components/Brand.astro";
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">OpenAPI as the single source of truth</div>
+          <div class="decision-title">OpenAPI as the canonical spec</div>
           <p class="decision-body">Five SDKs (Go, JS, Python, Rust, TypeScript) generated from one OpenAPI spec. Type-safe clients across every ecosystem developers actually use. Zero drift between languages.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">MCP server as a distribution channel</div>
+          <div class="decision-title">MCP server for AI agent access</div>
           <p class="decision-body">Shipped ss-mcp alongside the SDKs. The full API surface is natively callable by Claude, Cursor and every MCP-aware agent — no custom integration required. New onramp, same backend.</p>
         </div>
         <div class="decision reveal-item">
@@ -229,14 +229,14 @@ import Brand from "../../components/Brand.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="What this proves.">
+    <section class="section" data-section-tag="OUTCOME" title="Bitcoin infrastructure, built solo.">
       <p class="body-para">
         Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec,
         Runestone format, inscription model) and production distributed systems engineering
         (ScyllaDB write throughput, gRPC service boundaries, Prometheus instrumentation, AWS CDK).
-        I was not a contributor — I was the engineering team. The MCP server is the differentiating
-        hook: it makes the entire data layer natively consumable by AI agents, the new default
-        consumer of API surface area.
+        Nine repositories, sole committer on seven of them. The MCP server extends the data layer
+        to AI agents — the same Bitcoin data that was previously only queryable via REST is now
+        natively callable by any MCP client.
       </p>
     </section>
     </div>

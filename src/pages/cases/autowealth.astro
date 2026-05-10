@@ -81,11 +81,10 @@ import Brand from "../../components/Brand.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="THE BRIEF" title="A trading strategy with proof.">
       <p class="body-para">
-        The core challenge was transparency: traders need to see real performance before committing
-        capital. Autowealth solves this with a live, public dashboard that shows the full equity curve,
-        Sharpe ratio and drawdown for CompoundFox — updated in real time. The platform extends beyond
-        a single strategy: it's a distribution layer that can host multiple algorithms (CompoundFox,
-        AlgoAI, Forex), each with its own performance tracking and follower management.
+        Most algo strategies are sold on backtests. Autowealth publishes live performance: full equity
+        curve, Sharpe and drawdown, updated in real time, publicly accessible before anyone commits
+        capital. CompoundFox is the flagship — running live on Bybit since 2024. The platform is
+        built as a distribution layer for multiple strategies, not a single-strategy product.
       </p>
     </section>
     </div>
@@ -121,23 +120,23 @@ import Brand from "../../components/Brand.astro";
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Live public dashboard as trust signal</div>
-          <p class="decision-body">Instead of periodic performance reports, the dashboard shows real-time equity curves, Sharpe ratio and drawdown. This is the primary trust signal for potential followers — they can verify the strategy's performance before committing any capital. The metrics update continuously from the live trading engine.</p>
+          <div class="decision-title">Live public dashboard over periodic reports</div>
+          <p class="decision-body">No email reports, no cherry-picked screenshots. The dashboard is a live feed: equity curve, Sharpe, drawdown, all pulled from the running engine. Anyone can check it before subscribing. Publishing in real time removes the option of curating what gets shown.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Turborepo monorepo over separate repos</div>
-          <p class="decision-body">The backend, Telegram bot, dashboard and mobile app share code (performance calculations, API clients, types). Turborepo provides shared dependencies, incremental builds and a single deployment pipeline. This keeps the platform consistent and reduces maintenance overhead across four apps that need to stay in sync.</p>
+          <p class="decision-body">The backend, Telegram bot, dashboard and mobile app share performance calculations, API client types and constants. With four apps that must agree on what a "trade" or "drawdown" means, a monorepo isn't a preference — it's the only way to keep them from drifting. Turborepo handles incremental builds and the shared deployment pipeline.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Strategy-agnostic distribution layer</div>
-          <p class="decision-body">Autowealth is designed as a distribution platform, not a single-strategy product. CompoundFox is the first strategy, but the architecture supports adding new algorithms (AlgoAI, Forex) without changing the platform. Each strategy has its own performance tracking, risk metrics and follower management, while sharing the same distribution infrastructure.</p>
+          <p class="decision-body">CompoundFox is the first strategy, but the platform is not built around it. Each strategy gets its own performance tracking, risk metrics and follower management — the distribution infrastructure is shared. Adding AlgoAI or Forex doesn't touch the platform; it adds a config and a data source.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bybit as primary exchange</div>
-          <p class="decision-body">Bybit provides the most reliable API for the trading strategies used, with deep liquidity and competitive fees. The platform uses Bybit's WebSocket API for real-time market data and REST API for trade execution. This choice simplifies the architecture by focusing on one exchange first, with plans to support additional exchanges in the future.</p>
+          <p class="decision-body">Bybit's WebSocket API is stable enough to build a copy trading system on top of, and its REST endpoints handle trade execution without the rate-limit issues that make Binance harder to use as a master. Copy Trader (the engine behind Autowealth) also handles Binance and Hyperliquid as follower exchanges — but the master feed is Bybit only.</p>
         </div>
       </div>
     </section>
@@ -190,11 +189,11 @@ import Brand from "../../components/Brand.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="A production trading platform with real-time transparency.">
       <p class="body-para">
-        Autowealth is a production trading platform that combines a live algorithmic strategy with
-        transparent performance tracking. The public dashboard provides real-time equity curves,
-        Sharpe ratio and drawdown — the primary trust signals for potential followers. The Turborepo
-        monorepo architecture keeps the backend, bot, dashboards and mobile app in sync, while the
-        strategy-agnostic design allows new algorithms to be added without platform changes.
+        CompoundFox has been running live since 2024 with a Sharpe of 5.26 and +56% ROI over 137
+        days on a public dashboard anyone can verify. That's the point: the performance is either
+        defensible or it isn't. Autowealth as the distribution layer is working — the harder part
+        was building a copy trading engine (Copy Trader) that handles three exchanges, per-follower
+        position math, and real-money idempotency without a margin for error.
       </p>
     </section>
     </div>

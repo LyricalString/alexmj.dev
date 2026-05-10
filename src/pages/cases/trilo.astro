@@ -83,12 +83,12 @@ import Brand from "../../components/Brand.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
       <p class="body-para">
-        The premise was simple and the execution was not: one product that replaces chat, task
-        management, docs, spreadsheets, video calls, calendar, and social media scheduling —
-        connected by a knowledge graph that remembers context across all of them. The differentiator
-        isn't the feature list; it's the AI layer. Luna, Atlas, Nova, and Sage aren't chatbots behind
-        a slash command — they're coworkers with memory, tool access, and a place in the team
-        structure. Trilo was designed from the first commit to be AI-native rather than AI-sprinkled.
+        One product that replaces chat, task management, docs, spreadsheets, video calls, calendar,
+        and social media scheduling — connected by a knowledge graph that remembers context across
+        all of them. The differentiator isn't the feature list; it's the AI layer. Luna, Atlas, Nova,
+        and Sage aren't chatbots behind a slash command — they're coworkers with memory, tool access,
+        and a place in the team structure. Trilo was designed from the first commit to be AI-native
+        rather than AI-sprinkled.
       </p>
     </section>
     </div>
@@ -136,7 +136,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bun + Elysia over Node/Express</div>
-          <p class="decision-body">Chose Bun for native TypeScript execution and significantly lower cold-start overhead. Elysia provides end-to-end type safety from route definition to client — no schema drift, no hand-rolled validators. A deliberate bet on performance and ergonomics over ecosystem safety.</p>
+          <p class="decision-body">Chose Bun for native TypeScript execution and significantly lower cold-start overhead. Elysia provides end-to-end type safety from route definition to client — no schema drift, no hand-rolled validators. A bet on performance and developer experience over ecosystem maturity.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
@@ -161,7 +161,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">MCP-first tool architecture (14 modules)</div>
-          <p class="decision-body">Trilo ships its own MCP server exposing all core operations as tool calls — boards, tasks, messages, meetings, knowledge graph, spreadsheets, and more. Any MCP-aware agent (Claude, Cursor, Codex) can operate Trilo natively. This was a distribution decision as much as an architecture one: make Trilo the workspace that AI agents already know how to use.</p>
+          <p class="decision-body">Trilo ships its own MCP server exposing all core operations as tool calls — boards, tasks, messages, meetings, knowledge graph, spreadsheets, and more. Any MCP-aware agent (Claude, Cursor, Codex) can operate Trilo natively. It's as much a distribution move as an architecture one: make Trilo the workspace that AI agents already know how to use.</p>
         </div>
       </div>
     </section>
@@ -215,13 +215,12 @@ import Brand from "../../components/Brand.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
       <p class="body-para">
-        Trilo is what one engineer can build when scope is set by what the product needs rather than
-        by what a team can absorb. A live product at trilo.chat with paid plans, a mobile app on the
-        App Store and Google Play, a Tauri desktop binary, and a Python voice agent on LiveKit, all
-        wired into a single monorepo with a custom DAG workflow orchestrator, dual-tier model routing
-        with LLM observability, and a native MCP server that lets Claude, Cursor and other AI clients
-        drive the product directly. The deploy pipeline posts status updates into Trilo's own chat:
-        the workspace operates itself.
+        Trilo is live at trilo.chat with paid plans, on the App Store and Google Play, and as a Tauri
+        desktop binary — all from a single monorepo, one architect. The technical decisions that made
+        this possible: a custom DAG orchestrator instead of a workflow tool that assumed linear steps,
+        dual-tier model routing that keeps costs manageable without sacrificing response quality, and
+        an MCP server that means AI agents can operate Trilo without a custom integration. The deploy
+        pipeline posts its own status updates into Trilo's chat. The workspace runs itself.
       </p>
     </section>
     </div>

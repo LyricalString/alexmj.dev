@@ -158,7 +158,7 @@ import Brand from "../../components/Brand.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">secp256k1 + ed25519 dual-curve support</div>
-          <p class="decision-body">Bitcoin and EVM chains sign over secp256k1; Solana signs over ed25519. Supporting both curves in the same attester — rather than running separate attester fleets — keeps operational complexity manageable while reaching all three target ecosystems from a single keygen ceremony per curve.</p>
+          <p class="decision-body">Bitcoin and EVM chains sign over secp256k1; Solana signs over ed25519. One attester fleet handles both curves from a single keygen ceremony per curve. Two separate fleets would double the operational surface: upgrades, monitoring, and key ceremonies run twice for no security benefit.</p>
         </div>
       </div>
     </section>
@@ -214,7 +214,7 @@ import Brand from "../../components/Brand.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="What this proves.">
+    <section class="section" data-section-tag="OUTCOME" title="Threshold signatures on a custom L1, built solo.">
       <p class="body-para">
         Crossflow reached testnet (CFN_testnet-1) with a working keygen, resharing, and
         per-transaction signing ceremony across Bitcoin, EVM, and Solana. The engineering

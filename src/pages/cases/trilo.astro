@@ -7,7 +7,7 @@ import Base from "../../layouts/Base.astro";
 
 <Base
   title="Trilo — multi-platform AI workspace | Alejandro Martínez"
-  description="Sole architect behind Trilo: an AI workspace where autonomous coworker AIs participate as teammates. Live at trilo.chat across web, mobile, desktop and a Python voice agent."
+  description="Sole architect behind Trilo: an AI workspace where AI coworkers join every doc as live Yjs peers, an AI-planned DAG agent runtime executes work, and a 77-tool MCP server lets external agents operate it natively. Live at trilo.chat across web, iOS, Android and desktop."
 >
   <div class="page"> 
 
@@ -30,11 +30,9 @@ import Base from "../../layouts/Base.astro";
           <h1 class="hero-h1">An AI workspace with coworkers, not chatbots.</h1>
           <p class="hero-lead">
             Trilo is an AI workspace combining chat, projects, workflows, meetings and a knowledge
-            graph, with autonomous AI coworkers (Luna, Atlas, Nova, Sage) that participate as actual
-            teammates: persistent memory, tool access, a place in the team structure. Shipped from a
-            single monorepo across web (Next.js), backend (Bun + Elysia), mobile (Expo React Native),
-            desktop (Tauri 2) and a Python LiveKit voice agent. One architect, zero contractors.
-            Live at trilo.chat.
+            graph, with autonomous AI coworkers (Luna, Atlas, Nova, Sage) that join every doc as live
+            peers — not chatbots behind a slash command. Shipped from a single monorepo across web,
+            iOS, Android and desktop, with a Python real-time transcription agent. Live at trilo.chat.
           </p>
         </div>
         <div class="hero-links">
@@ -53,29 +51,24 @@ import Base from "../../layouts/Base.astro";
         <div class="numbers-sub">trilo.chat · paid plans</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">CLIENTS SHIPPED</div>
-        <div class="numbers-val">web · mobile · desktop</div>
-        <div class="numbers-sub">ios + android · tauri 2</div>
+        <div class="numbers-key">CLIENTS</div>
+        <div class="numbers-val">4 surfaces</div>
+        <div class="numbers-sub">web · ios · android · desktop</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">AI COWORKERS</div>
-        <div class="numbers-val">4</div>
-        <div class="numbers-sub">luna · atlas · nova · sage</div>
+        <div class="numbers-key">BACKEND</div>
+        <div class="numbers-val">325 services · 18 jobs</div>
+        <div class="numbers-sub">bun · elysia · drizzle · postgres</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">INTEGRATIONS</div>
-        <div class="numbers-val">11</div>
-        <div class="numbers-sub">gmail · github · linear · stripe …</div>
-      </div>
-      <div class="numbers-cell">
-        <div class="numbers-key">WORKFLOWS</div>
-        <div class="numbers-val">DAG</div>
-        <div class="numbers-sub">custom orchestrator · checkpointing</div>
+        <div class="numbers-key">AGENT RUNTIME</div>
+        <div class="numbers-val">AI-planned DAG</div>
+        <div class="numbers-sub">3-way review gates · 200K token cap</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">MODEL ROUTING</div>
-        <div class="numbers-val">2-tier</div>
-        <div class="numbers-sub">fast-path / specialist · opik traced</div>
+        <div class="numbers-key">MCP</div>
+        <div class="numbers-val">77 tools</div>
+        <div class="numbers-sub">14 modules · in anthropic registry</div>
       </div>
     </div>
 
@@ -108,8 +101,8 @@ import Base from "../../layouts/Base.astro";
   │      ├── openrouter (multi-model via openai-compatible client)
   │      ├── opik LLM observability
   │      ├── composio toolkit  (gmail · github · linear · shopify · 11 total)
-  │      ├── stripe (subscriptions · metered billing · connect/referrals)
-  │      └── mcp/server.ts  ──▶  14 tool modules exposed to AI agents
+  │      ├── billing — stripe (subs · metered · connect) + apple iap
+  │      └── mcp/server.ts  ──▶  77 tools across 14 modules · in anthropic registry
   │
   ├──▶ apps/mobile           [ expo · react native · ios + android · apple IAP ]
   │
@@ -119,7 +112,7 @@ import Base from "../../layouts/Base.astro";
   │
   └──▶ agent/                [ python · livekit · real-time transcription ]
   │
-  └─ packages/db             [ postgres via supabase · 55-table schema ]
+  └─ packages/db             [ postgres via supabase · drizzle ]
                                           │
             ┌───────────────────────────┐ │ ┌──────────────────────────┐
             │   fly.io (singapore)      │◀┘ │   vercel (web + landing) │
@@ -135,33 +128,33 @@ import Base from "../../layouts/Base.astro";
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Bun + Elysia over Node/Express</div>
-          <p class="decision-body">Chose Bun for native TypeScript execution and significantly lower cold-start overhead. Elysia provides end-to-end type safety from route definition to client — no schema drift, no hand-rolled validators. A bet on performance and developer experience over ecosystem maturity.</p>
+          <div class="decision-title">AI-planned DAG agent runtime</div>
+          <p class="decision-body">Off-the-shelf workflow tools (Temporal, Inngest, LangGraph) assume human-authored linear sequences. Trilo's runtime in <code>workflowOrchestrator.ts</code> uses an LLM as the planner: it generates the dependency graph from natural language, dispatches each step to a different AI coworker by capability, enforces workspace-scoped pinned tool parameters, and gates progress through three-way review (approve / reject / regenerate-with-feedback). A 200K-token completion budget caps cost per workflow, and a real safety guard force-serializes when the planner returns zero <code>dependsOn</code> annotations — a check that exists because it failed in production.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Custom DAG workflow orchestrator</div>
-          <p class="decision-body">Off-the-shelf workflow tools assume human-defined linear sequences. Trilo's workflows are AI-generated multi-step plans with dependencies, parallel branches, checkpoint/resume, token budgets, and review gates. The DAG engine in <code>workflowOrchestrator.ts</code> was written from scratch because nothing in the ecosystem fit the shape.</p>
+          <div class="decision-title">AI coworkers as live Yjs peers</div>
+          <p class="decision-body">Luna, Atlas, Nova and Sage aren't chatbots behind a slash command. Each connects to every Lexical page as a server-side Yjs peer via Hocuspocus, appearing in awareness with a shimmer effect on the exact blocks they're editing. Initialization order is load-bearing: the Yjs binding has to register before the WebSocket connects, and the Lexical → Yjs writeback listener has to register after sync — get it wrong and Lexical's normalization permanently accumulates phantom paragraphs across every user's view. ~13K LOC across the AI-collab service layer.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Dual-tier model routing</div>
-          <p class="decision-body">Simple queries hit a fast, cheap small model. Complex reasoning escalates to a specialist via <code>fastPathService.ts</code> → <code>lunaSpecialistService.ts</code>. Every path is traced with Opik for prompt observability. The result is cost-aware AI dispatch that doesn't sacrifice response quality for common cases.</p>
+          <div class="decision-title">77-tool MCP server in the Anthropic registry</div>
+          <p class="decision-body">Trilo ships a spec-compliant MCP server (built on <code>@modelcontextprotocol/sdk</code>, live at <code>api.trilo.chat/mcp</code>) and is published in the Anthropic MCP Registry. 77 tools across 14 domain modules — boards, tasks, messages, meetings, knowledge graph, pages (26 alone), spreadsheets and more. Auth supports PAT, bot tokens, and OAuth 2.1 with workspace-level isolation enforced on every call. Schemas are hand-authored Zod, used as the single source of truth shared with internal coworkers. Distribution by protocol, not by integration.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Supabase + 55-table schema</div>
-          <p class="decision-body">468 migration files represent sustained, iterative schema evolution — not a big-bang design. Drizzle ORM keeps migrations type-safe. The knowledge graph, workspace membership model, versioned pages, and spreadsheet engine all live in the same Postgres cluster, intentionally co-located for join efficiency.</p>
+          <div class="decision-title">Rust ↔ Swift FFI for native StoreKit</div>
+          <p class="decision-body">The desktop app is Tauri 2, but the desktop story isn't "Tauri over Electron". The Rust shell calls Swift directly via <code>extern "C"</code> for StoreKit 2 (five IPC functions covering fetch, purchase, entitlements, restore and the transaction listener) plus Sign in with Apple. <code>objc2</code> reaches into <code>NSApplication.dockTile</code> for badge counts where Tauri's API was broken, and tweaks <code>WKWebView</code> compositing to fix scroll artifacts in virtualized lists. The result is a native macOS App Store build, not a thin web shell — shipped from the same Rust workspace as Linux and Windows.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Tauri 2 over Electron</div>
-          <p class="decision-body">Electron was the obvious default. Tauri was the right call: a Rust-native shell with a smaller binary, no bundled Chromium, and a proper OS integration layer. The desktop app shares 100% of the React frontend — the Rust layer only handles OS APIs and window management.</p>
+          <div class="decision-title">Unified credit ledger across 5 billing surfaces</div>
+          <p class="decision-body">Stripe subscriptions, Stripe Billing Meters (metered AI overage), Stripe Connect (referral payouts), Apple IAP (8 product IDs across iOS + Mac App Store) and partner/promo plans all flow into a single Postgres credit ledger via a consistent <code>resetCreditsForNewPeriod()</code> regardless of which provider triggered the event. Referral commissions enforce a 30-day hold with atomic <code>eligible → processing</code> transitions before generating a Stripe Transfer with a deterministic idempotency key derived from sorted commission IDs — full marketplace-payout correctness, not a webhook-and-pray sketch.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">MCP-first tool architecture (14 modules)</div>
-          <p class="decision-body">Trilo ships its own MCP server exposing all core operations as tool calls — boards, tasks, messages, meetings, knowledge graph, spreadsheets, and more. Any MCP-aware agent (Claude, Cursor, Codex) can operate Trilo natively. It's as much a distribution move as an architecture one: make Trilo the workspace that AI agents already know how to use.</p>
+          <div class="decision-title">Sammy: multi-speaker transcription infrastructure</div>
+          <p class="decision-body">Sammy is a Python LiveKit agent that delivers real-time multi-speaker transcription — not a conversational voice AI. The interesting work is in infrastructure: per-participant STT stream isolation with a custom 100ms / 5-frame backpressure drop policy, dual-path delivery (Redis WebSocket for authenticated members and a LiveKit data channel for guests), and duplicate-dispatch dedup via TTL timestamps because the agent runs in a forked child process where parent-memory sets are invisible. The comment in the code points at the production failure that taught that lesson.</p>
         </div>
       </div>
     </section>
@@ -216,11 +209,13 @@ import Base from "../../layouts/Base.astro";
     <section class="section" data-section-tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
       <p class="body-para">
         Trilo is live at trilo.chat with paid plans, on the App Store and Google Play, and as a Tauri
-        desktop binary — all from a single monorepo, one architect. The technical decisions that made
-        this possible: a custom DAG orchestrator instead of a workflow tool that assumed linear steps,
-        dual-tier model routing that keeps costs manageable without sacrificing response quality, and
-        an MCP server that means AI agents can operate Trilo without a custom integration. The deploy
-        pipeline posts its own status updates into Trilo's chat. The workspace runs itself.
+        desktop binary — all from a single monorepo, one architect. The technical bets that made this
+        possible: an AI-planned DAG runtime where the planner is itself an LLM and capability dispatch
+        routes steps to different coworker models; AI coworkers that join every Lexical page as live
+        Yjs peers rather than chatbots behind a slash command; a 77-tool MCP server in the Anthropic
+        registry that lets external agents operate Trilo natively; and a Rust ↔ Swift FFI layer that
+        makes the macOS build a native App Store binary, not a thin web shell. The deploy pipeline
+        posts its own status updates into Trilo's chat. The workspace runs itself.
       </p>
     </section>
     </div>
@@ -251,5 +246,15 @@ import Base from "../../layouts/Base.astro";
   .ownership-header,
   .ownership-row {
     grid-template-columns: 1fr 2.5fr 1fr 1fr;
+  }
+
+  /* ── NUMBERS STRIP: trilo has 5 cells (overrides shared 6-col) ── */
+  @media (min-width: 768px) {
+    .numbers {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  .numbers-cell--last {
+    border-right: none;
   }
 </style>

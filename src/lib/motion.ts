@@ -288,10 +288,11 @@ export function initMagnetic(selector: string, strength = 0.3) {
   if (prefersReducedMotion()) return;
 
   document.querySelectorAll(selector).forEach((el) => {
-    el.addEventListener("mousemove", (e: MouseEvent) => {
+    el.addEventListener("mousemove", (e: Event) => {
+      const me = e as MouseEvent;
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+      const x = me.clientX - rect.left - rect.width / 2;
+      const y = me.clientY - rect.top - rect.height / 2;
       gsap.to(el, {
         x: x * strength,
         y: y * strength,

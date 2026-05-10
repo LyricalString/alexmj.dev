@@ -144,10 +144,11 @@ if (!prefersReducedMotion) {
   document
     .querySelectorAll(".work-row, .other-row, .case-badge")
     .forEach((el) => {
-      el.addEventListener("mousemove", (e: MouseEvent) => {
+      el.addEventListener("mousemove", (e: Event) => {
+        const me = e as MouseEvent;
         const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+        const x = me.clientX - rect.left - rect.width / 2;
+        const y = me.clientY - rect.top - rect.height / 2;
         gsap.to(el, {
           x: x * 0.15,
           y: y * 0.15,

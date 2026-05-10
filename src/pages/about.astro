@@ -1,8 +1,8 @@
 ---
-import Base from "../layouts/Base.astro";
+import Brand from "../components/Brand.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
-import Brand from "../components/Brand.astro";
+import Base from "../layouts/Base.astro";
 ---
 
 <Base
@@ -329,5 +329,44 @@ import Brand from "../components/Brand.astro";
     display: flex;
     gap: 24px;
     color: var(--dim);
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      padding-inline: 20px;
+    }
+
+    .hero-h1 {
+      font-size: clamp(1.75rem, 6vw + 0.5rem, 2.5rem);
+    }
+
+    /* MAJ-1: collapse principle 3-col to single column */
+    .principles-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    /* MIN-1: make label a clear heading on mobile */
+    .principle-label {
+      font-size: var(--text-mono-sm);
+      color: var(--fg);
+      letter-spacing: 0.06em;
+    }
+
+    /* stack timeline items */
+    .timeline-row {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .footer {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
   }
 </style>

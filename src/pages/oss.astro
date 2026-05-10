@@ -1,7 +1,7 @@
 ---
-import Base from "../layouts/Base.astro";
-import Link from "../components/Link.astro";
 import Brand from "../components/Brand.astro";
+import Link from "../components/Link.astro";
+import Base from "../layouts/Base.astro";
 ---
 
 <Base
@@ -332,6 +332,8 @@ import Brand from "../components/Brand.astro";
     display: flex;
     flex-direction: column;
     gap: 4px;
+    overflow-x: auto;
+    max-width: 100%;
   }
 
   .install-cmds code {
@@ -341,7 +343,8 @@ import Brand from "../components/Brand.astro";
     background: #101216;
     border: 1px solid var(--rule);
     padding: 4px 10px;
-    display: inline-block;
+    display: block;
+    white-space: nowrap;
   }
 
   /* ── FOOTER ── */
@@ -363,5 +366,43 @@ import Brand from "../components/Brand.astro";
     display: flex;
     gap: 24px;
     color: var(--dim);
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      padding-inline: 20px;
+    }
+
+    .oss-header {
+      grid-template-columns: 36px 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .oss-links {
+      grid-column: 2;
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .oss-desc {
+      padding-left: 0;
+    }
+
+    .oss-install {
+      padding-left: 0;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
   }
 </style>

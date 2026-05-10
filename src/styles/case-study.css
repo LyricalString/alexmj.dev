@@ -386,6 +386,7 @@
 /* ownership-header / ownership-row column templates are per-file (vary across case studies) */
 .ownership-header {
   display: grid;
+  column-gap: 16px;
   padding: 10px 0;
   border-bottom: 1px solid var(--rule);
   color: var(--faint);
@@ -395,6 +396,7 @@
 
 .ownership-row {
   display: grid;
+  column-gap: 16px;
   padding: 12px 0;
   border-bottom: 1px solid var(--rule);
 }

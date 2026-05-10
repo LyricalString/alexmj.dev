@@ -153,7 +153,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Sammy: multi-speaker transcription infrastructure</div>
-          <p class="decision-body">Sammy is a Python LiveKit agent that delivers real-time multi-speaker transcription. It is not a conversational voice AI. The interesting work is in infrastructure: per-participant STT stream isolation with a custom 100ms / 5-frame backpressure drop policy, dual-path delivery (Redis WebSocket for authenticated members and a LiveKit data channel for guests), and duplicate-dispatch dedup via TTL timestamps because the agent runs in a forked child process where parent-memory sets are invisible. The comment in the code points at the production failure that taught that lesson.</p>
+          <p class="decision-body">Sammy is a Python LiveKit agent that delivers real-time multi-speaker transcription. It is not a conversational voice AI. The interesting work is in infrastructure: per-participant STT stream isolation with a custom 100ms / 5-frame backpressure drop policy, dual-path delivery (Redis WebSocket for authenticated members and a LiveKit data channel for guests), and a 15-second TTL timestamp dedup that survives LiveKit's forked-child dispatcher model where in-memory sets in the parent are invisible to the child.</p>
         </div>
       </div>
     </section>
@@ -207,8 +207,8 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
       <p class="body-para">
-        Trilo is live at trilo.chat with paid plans, on the App Store and Google Play, and as a Tauri
-        desktop binary, all from a single monorepo, one architect. The technical bets that made this
+        Trilo is live at trilo.chat with paid plans, on the App Store, and as a Tauri desktop
+        binary, all from a single monorepo, one architect. The technical bets that made this
         possible: an AI-planned DAG runtime where the planner is itself an LLM and capability dispatch
         routes steps to different coworker models; AI coworkers that connect to every Lexical page as
         live Yjs peers (they don't wait behind a slash command); a 77-tool MCP server in the Anthropic

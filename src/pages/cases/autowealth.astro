@@ -127,12 +127,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Deposit-adjusted drawdown with 3-day attribution</div>
-          <p class="decision-body">Raw AUM drawdown inflates whenever a deposit lands: AUM spikes, then the strategy looks like it immediately lost capital. The performance engine in <code>calculateAumBasedMetrics()</code> walks a 3-day attribution window to match transaction amounts to AUM jumps before computing peak-to-trough. The attribution logic exists because a production failure is documented in the code at <code>trade-analysis.ts:1006-1041</code>: late-day deposits landing after the daily snapshot produced phantom -100% drawdowns. The 3-day window is the fix.</p>
+          <p class="decision-body">Raw AUM drawdown inflates whenever a deposit lands: AUM spikes, then the strategy looks like it immediately lost capital. The performance engine walks a 3-day attribution window to match transaction amounts to AUM jumps before computing peak-to-trough. The window exists because of a production failure: late-day deposits landing after the daily snapshot produced phantom -100% drawdowns until the attribution logic was added.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Reliability tiers: hide numbers that can't be defended</div>
-          <p class="decision-body">The performance API returns a <code>startBalanceReliable</code> flag when there is no AUM snapshot before the first trade. When the flag is false, the UI hides annualized return and average monthly return entirely. The dashboard doesn't fill in a guess — it shows fewer numbers. Accounts that connected mid-strategy get a smaller metrics set until a full pre-trade snapshot exists. This is a falsifiable claim: the code in <code>providers.ts:57-220</code> strips metrics explicitly when data coverage is incomplete.</p>
+          <p class="decision-body">The performance API returns a <code>startBalanceReliable</code> flag when there is no AUM snapshot before the first trade. When the flag is false, the UI hides annualized return and average monthly return entirely. The dashboard doesn't fill in a guess; it shows fewer numbers. Accounts that connected mid-strategy get a smaller metrics set until a full pre-trade snapshot exists.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>

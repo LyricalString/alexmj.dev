@@ -126,7 +126,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Cursed-inscription edge case in BRC-20</div>
-          <p class="decision-body">Most indexers treat a transaction with a cursed inscription as dead — no BRC-20 op processed. The BRC-20 spec says otherwise: a cursed inscription still carries a valid <code>transfer</code> of an existing active inscribe-transfer. The Rust indexer (<code>indexer.rs</code>) tracks this per-transaction with an <code>all_inscriptions_cursed</code> flag (line 292), loads a <code>HashSet</code> of known cursed TXIDs at startup, and continues to dispatch transfer operations when all inscriptions in a TX are cursed. Getting this wrong produces divergent user balances. UniSat, Hiro, and OKX have all shipped different interpretations of the same spec.</p>
+          <p class="decision-body">Most indexers treat a transaction with a cursed inscription as dead and skip the BRC-20 op. The BRC-20 spec says otherwise: a cursed inscription still carries a valid <code>transfer</code> of an existing active inscribe-transfer. The Rust indexer tracks an <code>all_inscriptions_cursed</code> flag per transaction, loads a <code>HashSet</code> of known cursed TXIDs at startup, and continues to dispatch transfer operations when every inscription in a TX is cursed. Getting this wrong produces divergent user balances. UniSat, Hiro, and OKX have all shipped different interpretations of the same spec.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>

@@ -82,7 +82,7 @@ import Base from "../../layouts/Base.astro";
       <p class="body-para">
         Bitcoin's RPC is fine for nodes and miserable for applications. Anyone shipping a wallet,
         explorer or DeFi product against BRC-20, Runes or Ordinals ends up writing the same indexer
-        twice — once badly, once again with the lessons. Satstream is that indexer, written once,
+        twice: once badly, once again with the lessons. Satstream is that indexer, written once,
         operated as infrastructure, exposed as a clean REST API and as an MCP server for AI agents.
       </p>
     </section>
@@ -131,12 +131,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">LEB128/big.Int Runestone decoder with dual-path parser</div>
-          <p class="decision-body">The Runes protocol encodes amounts as little-endian base-128 varints (LEB128) with values up to 2^128. The Go decoder in <code>runestone.go</code> (522 LOC) uses <code>big.Int</code> throughout, not uint64, because the UNCOMMONGOODS cap is <code>340282366920938463463374607431768211455</code>. It also handles dual-path input: Bitcoin Core returns either raw hex (<code>6a5d...</code>) or asm-tokenized (<code>OP_RETURN 13 &lt;hex&gt;</code>) depending on node version and verbosity level, and the parser falls back to hex when asm decoding fails. The UNCOMMONGOODS genesis rune is hard-coded at block 840,000 with exact cap, height range, turbo, and spacers — if that initialization is wrong, every downstream Runes balance is wrong.</p>
+          <p class="decision-body">The Runes protocol encodes amounts as little-endian base-128 varints (LEB128) with values up to 2^128. The Go decoder uses <code>big.Int</code> throughout, not uint64, because the UNCOMMONGOODS cap is <code>340282366920938463463374607431768211455</code>. It also handles dual-path input: Bitcoin Core returns either raw hex (<code>6a5d...</code>) or asm-tokenized (<code>OP_RETURN 13 &lt;hex&gt;</code>) depending on node version and verbosity level, and the parser falls back to hex when asm decoding fails. The UNCOMMONGOODS genesis rune is hard-coded at block 840,000 with exact cap, height range, turbo, and spacers. If that initialization is wrong, every downstream Runes balance is wrong.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Adaptive concurrency tied to MongoDB shard load</div>
-          <p class="decision-body"><code>adaptative_concurrency.go</code> (321 LOC) implements a live-adjusting semaphore. Every 10 seconds it queries MongoDB's <code>serverStatus</code> across all shard clients, computes connection load ratio and average commit latency in microseconds, then increments or decrements the worker pool capacity (bounded [1, 100]) via a <code>sync.Cond</code>-based <code>CountingSemaphore</code>. Hard-coded thread counts get wedged when the database is slow. This controller backs off the indexer in proportion to actual DB saturation rather than guessing a ceiling at deploy time.</p>
+          <p class="decision-body">The adaptive concurrency controller implements a live-adjusting semaphore. Every 10 seconds it queries MongoDB's <code>serverStatus</code> across all shard clients, computes connection load ratio and average commit latency in microseconds, then increments or decrements the worker pool capacity (bounded [1, 100]) via a <code>sync.Cond</code>-based <code>CountingSemaphore</code>. Hard-coded thread counts get wedged when the database is slow. This controller backs off the indexer in proportion to actual DB saturation rather than guessing a ceiling at deploy time.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
@@ -146,7 +146,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Ord server HA without an external load balancer</div>
-          <p class="decision-body"><code>ord_server/manager/manager.go</code> in ss-api maintains a pool of Ord clients — one main, N backups — each with its own HTTP connection pool. A background goroutine health-checks each server on a configurable interval and marks failed nodes. <code>getClient()</code> returns the first healthy client, falling back to backups in round-robin. Inscription queries survive ord-server restarts with no ELB or ALB in front and no manual intervention. Failure state is consistent even under concurrent request load because the URL manager is shared across all clients.</p>
+          <p class="decision-body">The Ord client pool in ss-api maintains one main client and N backups, each with its own HTTP connection pool. A background goroutine health-checks each server on a configurable interval and marks failed nodes. <code>getClient()</code> returns the first healthy client, falling back to backups in round-robin. Inscription queries survive ord-server restarts with no ELB or ALB in front and no manual intervention. Failure state is consistent even under concurrent request load because the URL manager is shared across all clients.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
@@ -234,7 +234,7 @@ import Base from "../../layouts/Base.astro";
         production distributed systems (ScyllaDB write throughput, gRPC service boundaries, Prometheus
         instrumentation, AWS CDK). Nine repositories, sole committer on seven of them. The adaptive
         concurrency controller in ss-indexer reads live MongoDB shard load to tune its own worker pool
-        in real time. The MCP server extends the data layer to AI agents — the same Bitcoin data
+        in real time. The MCP server extends the data layer to AI agents. The same Bitcoin data
         previously only queryable via REST is now a native tool call for any MCP client.
       </p>
     </section>

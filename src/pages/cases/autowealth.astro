@@ -137,12 +137,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AUM circuit breaker isolates dead API keys</div>
-          <p class="decision-body">A snapshot job that retries every failing account wastes cycles on expired keys and slows down active ones. The worker in <code>snapshotAUM.ts</code> tracks consecutive failures per account in a <code>Map&lt;string, number&gt;</code>, skips accounts with 3+ consecutive failures, and resets the count hourly. An <code>isRunning</code> guard prevents concurrent execution without a lock library. One expired API key has no effect on the snapshot cadence of live accounts. The job runs every 5 minutes (288 snapshots/day per active account).</p>
+          <p class="decision-body">A snapshot job that retries every failing account wastes cycles on expired keys and slows down active ones. The AUM snapshot worker tracks consecutive failures per account in a <code>Map&lt;string, number&gt;</code>, skips accounts with 3+ consecutive failures, and resets the count hourly. An <code>isRunning</code> guard prevents concurrent execution without a lock library. One expired API key has no effect on the snapshot cadence of live accounts. The job runs every 5 minutes (288 snapshots/day per active account).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Position deduplication via 8-decimal-place PnL fingerprint</div>
-          <p class="decision-body">Not all exchange APIs return stable order IDs across paginated history endpoints. Bybit's position history in particular doesn't guarantee idempotent IDs. The worker in <code>processNewClosedPositions.ts</code> uses a 5-field composite key: exchange + account UID + symbol + side + timestamp + PnL formatted to 8 decimal places via <code>formatToPrecision8()</code>, matching the <code>decimal(18,8)</code> DB column. The fingerprint check in <code>positionExists()</code> runs before every write. Positions are fetched in 7-day chunks with 100ms rate-limit delays to stay within Bybit's pagination limits.</p>
+          <p class="decision-body">Not all exchange APIs return stable order IDs across paginated history endpoints. Bybit's position history in particular doesn't guarantee idempotent IDs. The closed-position worker uses a 5-field composite key: exchange + account UID + symbol + side + timestamp + PnL formatted to 8 decimal places via <code>formatToPrecision8()</code>, matching the <code>decimal(18,8)</code> DB column. The fingerprint check in <code>positionExists()</code> runs before every write. Positions are fetched in 7-day chunks with 100ms rate-limit delays to stay within Bybit's pagination limits.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -174,7 +174,7 @@ import Base from "../../layouts/Base.astro";
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Performance engine</span>
-          <span class="ownership-dim">1,334-line trade-analysis.ts · sharpe · twr · sortino · calmar</span>
+          <span class="ownership-dim">typescript · sharpe · twr · sortino · calmar · 1,334 lines</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
@@ -210,9 +210,9 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="Live algo trading with public, auditable performance.">
       <p class="body-para">
-        CompoundFox is running live on Bybit with performance published at stats.autowealth.trade —
-        equity curve, Sharpe, deposit-adjusted drawdown, and TWR calculated from real position
-        history by a 1,334-line metrics engine built from scratch. The numbers on the dashboard are
+        CompoundFox is running live on Bybit with performance published at stats.autowealth.trade.
+        Equity curve, Sharpe, deposit-adjusted drawdown, and TWR are calculated from real position
+        history by a metrics engine built from scratch (1,334 lines). The numbers on the dashboard are
         either defensible or the platform says so: the <code>startBalanceReliable</code> flag hides
         annualized return on accounts without a pre-trade AUM snapshot. Autowealth as a platform
         handles multi-tenant copy trading across three exchanges, per-community ECS deployment

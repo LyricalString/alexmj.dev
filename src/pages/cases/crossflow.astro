@@ -31,7 +31,7 @@ import Base from "../../layouts/Base.astro";
           <p class="hero-lead">
             Crossflow is a decentralised cross-chain loan protocol on a custom Cosmos SDK / CometBFT L1.
             Borrowers lock collateral on Bitcoin, EVM, or Solana; the chain issues loans without a
-            custodial multisig. The signing key never exists in one place — threshold signatures
+            custodial multisig. The signing key never exists in one place. Threshold signatures
             (Gennaro-Goldfeder 2018 MPC-ECDSA) let a quorum of attesters co-sign outbound transactions
             without any single node holding the full secret. Built to testnet at Hexmount.
           </p>
@@ -85,7 +85,7 @@ import Base from "../../layouts/Base.astro";
       <p class="body-para">
         Most cross-chain bridges are trusted multisigs: a small set of operators hold keys, sign
         withdrawals, and collect $600M into one target every 18 months. The fix is not better
-        key management — it is never assembling the key at all. Threshold signatures let a
+        key management. It is never assembling the key at all. Threshold signatures let a
         quorum of validators jointly produce a valid ECDSA or EdDSA signature through a
         multi-party computation ceremony, so the private key provably never exists in one place.
         Crossflow ships that primitive on a purpose-built Cosmos SDK chain: borrow against
@@ -133,12 +133,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Gennaro-Goldfeder over a simple multisig</div>
-          <p class="decision-body">A t-of-n multisig requires each signer to hold a complete key share that can be extracted under duress. GG18 MPC-ECDSA never produces a full key — signers run a distributed ceremony, so no single compromise breaks the scheme. The security baseline was established quickly by adapting the Kudelski-audited tss-lib rather than implementing the paper from scratch.</p>
+          <p class="decision-body">A t-of-n multisig requires each signer to hold a complete key share that can be extracted under duress. GG18 MPC-ECDSA never produces a full key. Signers run a distributed ceremony, so no single compromise breaks the scheme. The security baseline was established quickly by adapting the Kudelski-audited tss-lib rather than implementing the paper from scratch.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Cosmos SDK over an EVM L2</div>
-          <p class="decision-body">EVM L2s inherit Ethereum's account model and consensus — useful for DeFi composability, wrong for a chain that needs native module governance and IBC. Cosmos SDK lets x/tss and x/loan live as first-class state machines with deterministic execution and direct IBC transport to BandChain, without wrapping logic in Solidity contracts.</p>
+          <p class="decision-body">EVM L2s inherit Ethereum's account model and consensus, which is useful for DeFi composability but wrong for a chain that needs native module governance and IBC. Cosmos SDK lets x/tss and x/loan live as first-class state machines with deterministic execution and direct IBC transport to BandChain, without wrapping logic in Solidity contracts.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
@@ -148,12 +148,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">HTLC scripts for Bitcoin atomicity</div>
-          <p class="decision-body">Bitcoin's UTXO model has no native smart contracts. HTLCs (hash time-locked contracts) encode the lock condition directly in the script with a custom sighash, giving atomic cross-chain settlement guarantees without a bridge operator — if the secret is not revealed within the timelock, funds return to the sender.</p>
+          <p class="decision-body">Bitcoin's UTXO model has no native smart contracts. HTLCs (hash time-locked contracts) encode the lock condition directly in the script with a custom sighash, giving atomic cross-chain settlement guarantees without a bridge operator. If the secret is not revealed within the timelock, funds return to the sender.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">BandChain over a centralised price oracle</div>
-          <p class="decision-body">A centralised price feed is a single point of manipulation — one compromised endpoint can trigger mass liquidations. BandChain is a decentralised oracle chain with its own validator set. Consuming price data over IBC means price updates arrive as verifiable IBC packets, not as trusted HTTP calls.</p>
+          <p class="decision-body">A centralised price feed is a single point of manipulation. One compromised endpoint can trigger mass liquidations. BandChain is a decentralised oracle chain with its own validator set. Consuming price data over IBC means price updates arrive as verifiable IBC packets, not as trusted HTTP calls.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
@@ -221,7 +221,7 @@ import Base from "../../layouts/Base.astro";
         demonstrates implementing Gennaro-Goldfeder MPC-ECDSA (Feldman VSS, Paillier
         encryption, Schnorr/DLN zero-knowledge proofs, MtA sub-protocol) on a custom L1 chain,
         integrating HTLC scripts on Bitcoin for atomic settlement, and operating a decentralised
-        oracle over IBC — that is the primitive stack that bridge security and institutional DeFi
+        oracle over IBC. That is the primitive stack that bridge security and institutional DeFi
         teams spend years hiring for. Built as one engineer at Hexmount.
       </p>
     </section>

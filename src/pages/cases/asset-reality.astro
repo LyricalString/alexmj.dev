@@ -35,7 +35,7 @@ import Base from "../../layouts/Base.astro";
             controls every custody withdrawal, and the 12-chain blockchain ingestion platform that monitors
             the network in real time. Platform AUM grew from $200–300M when I joined to $500M by the time
             I left, with seizure workflows live across French, Belgian, US, EU, and Caribbean law
-            enforcement. AUM figures are platform-attributable, not personal — but the systems that
+            enforcement. AUM figures are platform-attributable, not personal, but the systems that
             sustained that growth are mine.
           </p>
         </div>
@@ -86,7 +86,7 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
       <p class="body-para">
-        When governments seize crypto, the asset doesn't sit in an evidence bag — it needs to be
+        When governments seize crypto, the asset doesn't sit in an evidence bag. It needs to be
         transferred into custody, tracked across jurisdictions, approved for disbursement by multiple
         agencies, and produce an audit trail that will survive courtroom scrutiny. Until recently there
         was no dedicated infrastructure for any of this. Asset Reality built it: multi-sig governance
@@ -154,7 +154,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Auto-denial when threshold becomes unreachable</div>
-          <p class="decision-body">If enough required approvers have denied that the remaining approvals can never reach the threshold, the escrow record is automatically set to DENIED without waiting for a timeout. Government custody workflows can't have funds hanging in limbo — deterministic denial keeps queues clean and audit trails unambiguous.</p>
+          <p class="decision-body">If enough required approvers have denied that the remaining approvals can never reach the threshold, the escrow record is automatically set to DENIED without waiting for a timeout. Government custody workflows can't have funds hanging in limbo. Deterministic denial keeps queues clean and audit trails unambiguous.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
@@ -169,12 +169,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">RabbitMQ as the event bus across all services</div>
-          <p class="decision-body">All 20+ microservices communicate via RabbitMQ AMQP — blockchain events, governance state changes, notification triggers. Kafka would have been overengineered for this workload volume. RabbitMQ's per-queue durability and per-message acknowledgement gives the reliability guarantees custody workflows need without operational complexity.</p>
+          <p class="decision-body">All 20+ microservices communicate via RabbitMQ AMQP: blockchain events, governance state changes, notification triggers. Kafka would have been overengineered for this workload volume. RabbitMQ's per-queue durability and per-message acknowledgement gives the reliability guarantees custody workflows need without operational complexity.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">External-ID system for chain-of-custody traceability</div>
-          <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. Without the external-ID layer, correlating an Asset Reality record to a court filing requires manual lookup — an audit failure in a courtroom context.</p>
+          <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. Without the external-ID layer, correlating an Asset Reality record to a court filing requires manual lookup, an audit failure in a courtroom context.</p>
         </div>
       </div>
     </section>
@@ -244,7 +244,7 @@ import Base from "../../layouts/Base.astro";
       </p>
       <p class="body-para" style="margin-top: 20px;">
         What I took from 19 months in a regulated, government-grade codebase: the cost of correctness
-        is not abstract. A bug in the governance engine doesn't break a user flow — it could mis-release
+        is not abstract. A bug in the governance engine doesn't break a user flow. It could mis-release
         seized government funds or stall a criminal prosecution. That changes how you design state
         machines, how you write tests, and how you think about edge cases. Multi-sig design patterns,
         Fireblocks integration, and Go microservices at production scale are the portable skills;

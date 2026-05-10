@@ -1,8 +1,8 @@
 ---
-import Base from "../layouts/Base.astro";
+import Brand from "../components/Brand.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
-import Brand from "../components/Brand.astro";
+import Base from "../layouts/Base.astro";
 ---
 
 <Base
@@ -344,12 +344,15 @@ import Brand from "../components/Brand.astro";
     align-items: baseline;
     font-family: var(--font-mono);
     font-size: 13px;
+    gap: 12px;
   }
 
   .whoami-left {
     display: flex;
     align-items: baseline;
     gap: 6px;
+    flex-wrap: wrap;
+    min-width: 0;
   }
 
   .chevron { color: var(--faint); }
@@ -364,6 +367,7 @@ import Brand from "../components/Brand.astro";
     text-decoration: none;
     transition: opacity 120ms ease;
     padding: 4px 0;
+    flex-shrink: 0;
   }
 
   .status-inner {
@@ -373,6 +377,8 @@ import Brand from "../components/Brand.astro";
     font-family: var(--font-mono);
     font-size: 13px;
     color: var(--fg);
+    max-width: calc(100vw - 2rem);
+    overflow: hidden;
   }
 
   .status-text {
@@ -384,18 +390,20 @@ import Brand from "../components/Brand.astro";
     transition: transform 120ms ease;
   }
 
-  .status-link:hover .status-arrow {
-    transform: translate(2px, -2px);
-  }
+  @media (hover: hover) {
+    .status-link:hover .status-arrow {
+      transform: translate(2px, -2px);
+    }
 
-  .status-link:hover {
-    color: var(--fg);
+    .status-link:hover {
+      color: var(--fg);
+    }
   }
 
   /* H1 */
   .hero-h1 {
     font-family: var(--font-sans);
-    font-size: 56px;
+    font-size: var(--text-hero-home);
     font-weight: 500;
     letter-spacing: -0.025em;
     line-height: 1.05;
@@ -413,6 +421,7 @@ import Brand from "../components/Brand.astro";
     font-size: 12px;
     color: var(--faint);
     margin-top: 28px;
+    flex-wrap: wrap;
   }
 
   /* numbers strip */
@@ -439,6 +448,7 @@ import Brand from "../components/Brand.astro";
     letter-spacing: -0.02em;
     color: var(--fg);
     margin-top: 4px;
+    word-break: break-word;
   }
 
   .stat-sub {
@@ -471,7 +481,7 @@ import Brand from "../components/Brand.astro";
   }
 
   .work-rows {
-    /* right column */
+    overflow: hidden;
   }
 
   .work-row {
@@ -483,14 +493,18 @@ import Brand from "../components/Brand.astro";
     color: inherit;
     text-decoration: none;
     transition: background 120ms ease;
+    /* CSS fallback: visible when GSAP hasn't run or reduced-motion is on */
+    opacity: 1;
   }
 
-  .work-row:hover {
-    background: rgba(255, 255, 255, 0.015);
-  }
+  @media (hover: hover) {
+    .work-row:hover {
+      background: rgba(255, 255, 255, 0.015);
+    }
 
-  .work-row:hover .row-name { color: var(--accent); }
-  .work-row:hover .case-badge { color: var(--accent); border-color: var(--dim); }
+    .work-row:hover .row-name { color: var(--accent); }
+    .work-row:hover .case-badge { color: var(--accent); border-color: var(--dim); }
+  }
 
   .row-idx {
     font-family: var(--font-mono);
@@ -502,6 +516,7 @@ import Brand from "../components/Brand.astro";
     display: flex;
     align-items: baseline;
     gap: 14px;
+    flex-wrap: wrap;
   }
 
   .row-name {
@@ -589,11 +604,13 @@ import Brand from "../components/Brand.astro";
     transition: background 120ms ease;
   }
 
-  a.other-row:hover {
-    background: rgba(255, 255, 255, 0.015);
-  }
+  @media (hover: hover) {
+    a.other-row:hover {
+      background: rgba(255, 255, 255, 0.015);
+    }
 
-  a.other-row:hover .other-name { color: var(--accent); }
+    a.other-row:hover .other-name { color: var(--accent); }
+  }
 
   .other-idx {
     font-family: var(--font-mono);
@@ -666,8 +683,10 @@ import Brand from "../components/Brand.astro";
     transition: opacity 120ms ease;
   }
 
-  .contact-email:hover {
-    opacity: 0.7;
+  @media (hover: hover) {
+    .contact-email:hover {
+      opacity: 0.7;
+    }
   }
 
   .contact-channels {
@@ -689,8 +708,10 @@ import Brand from "../components/Brand.astro";
     transition: color 120ms ease;
   }
 
-  .contact-channel:hover {
-    color: var(--fg);
+  @media (hover: hover) {
+    .contact-channel:hover {
+      color: var(--fg);
+    }
   }
 
   .channel-key {
@@ -738,5 +759,115 @@ import Brand from "../components/Brand.astro";
 
   .reveal-item {
     opacity: 0;
+  }
+
+  /* ── RESPONSIVE — ≤768px (tablet portrait + mobile) ────────────────── */
+  @media (max-width: 767px) {
+    .page {
+      padding: 20px 16px 40px;
+    }
+
+    /* Nav: stack brand + nav on separate lines */
+    .topbar {
+      flex-direction: column;
+      gap: 12px;
+      padding-bottom: 16px;
+    }
+
+    .nav {
+      gap: 20px;
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 48px;
+      padding-bottom: 40px;
+    }
+
+    .whoami-line {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .status-inner {
+      max-width: calc(100% - 2rem);
+      overflow: hidden;
+    }
+
+    /* stats-strip: 2-column at ≤768px */
+    .stats-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    /* work section: collapse sidebar label into top of column */
+    .work-section {
+      grid-template-columns: 1fr;
+    }
+
+    .work-label {
+      position: static;
+      margin-bottom: 8px;
+    }
+
+    /* work-row: hide year, stack content */
+    .work-row {
+      grid-template-columns: 36px 1fr;
+    }
+
+    .row-year {
+      display: none;
+    }
+
+    /* other projects: single column */
+    .other-grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* contact: collapse sidebar */
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .contact-channel {
+      grid-template-columns: 80px 1fr 20px;
+      gap: 8px;
+    }
+
+    /* footer: stack vertically */
+    .footer {
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .footer-links {
+      gap: 16px;
+    }
+  }
+
+  /* ── RESPONSIVE — ≤480px (phone portrait) ──────────────────────────── */
+  @media (max-width: 479px) {
+    /* stats-strip: single column */
+    .stats-strip {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+    }
+
+    /* nav items: ensure 44px touch targets */
+    .nav {
+      gap: 16px;
+    }
+
+    .whoami-left {
+      font-size: 11px;
+    }
   }
 </style>

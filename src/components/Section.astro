@@ -45,4 +45,19 @@ const { tag, title } = Astro.props;
     margin: 0 0 28px;
     color: var(--fg);
   }
+
+  @media (max-width: 767px) {
+    .section {
+      padding-top: 40px;
+    }
+
+    .section-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .section-title {
+      font-size: 22px;
+    }
+  }
 </style>

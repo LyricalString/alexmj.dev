@@ -54,12 +54,12 @@ import Base from "../../layouts/Base.astro";
       <div class="numbers-cell">
         <div class="numbers-key">EXCHANGES</div>
         <div class="numbers-val">3 targets</div>
-        <div class="numbers-sub">bybit · binance · hyperliquid (divergent precision + position rules)</div>
+        <div class="numbers-sub">bybit master · binance + hyperliquid followers</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">PRECISION</div>
-        <div class="numbers-val">BigDecimal · zero f64</div>
-        <div class="numbers-sub">prevents rounding drift on partial closes and leverage changes</div>
+        <div class="numbers-val">BigDecimal</div>
+        <div class="numbers-sub">no f64 in monetary math · drift-safe partial closes</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">IDEMPOTENCY</div>

@@ -1,0 +1,475 @@
+/*
+ * Shared case study styles — imported by all 7 case study pages.
+ * Per-file overrides (ownership column ratios, page-specific classes) stay
+ * in each page's <style> block.
+ *
+ * Responsive strategy: mobile-first with ascending breakpoints.
+ * Hard-coded px — CSS custom properties do NOT work inside @media conditions.
+ */
+
+/* ── PAGE SHELL ── */
+.page {
+  max-width: 1280px;
+  padding: 28px 16px 56px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 28px 32px 56px;
+  }
+}
+
+/* ── REVEAL SECTIONS ── */
+.reveal-section {
+  margin-block: 48px;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.topbar-left {
+  display: flex;
+  gap: 14px;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 28px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+}
+
+/* Desktop: 3-column grid (tag | main | links) */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 180px 1fr 280px;
+    gap: 32px;
+    align-items: baseline;
+  }
+}
+
+.hero-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+}
+
+.hero-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+}
+
+/* MAJ-3: fluid hero h1 */
+.hero-h1 {
+  font-size: var(--text-hero-case);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  margin: 16px 0 0;
+  max-width: 880px;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .hero-h1 {
+    margin: 20px 0 0;
+    line-height: 1.02;
+  }
+}
+
+.hero-lead {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--dim);
+  line-height: 1.55;
+  margin-top: 20px;
+  max-width: 680px;
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .hero-lead {
+    font-size: 18px;
+    margin-top: 24px;
+  }
+}
+
+/* CRIT-1: hero-links column — stack on mobile, sidebar on desktop */
+.hero-links {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.7;
+  /* mobile: horizontal flex wrap so links don't overflow */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: baseline;
+}
+
+@media (min-width: 768px) {
+  .hero-links {
+    display: block;
+  }
+}
+
+.hero-links-label {
+  color: var(--faint);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  /* on mobile, label is full-width to force links below it */
+  width: 100%;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .hero-links-label {
+    margin-bottom: 8px;
+    width: auto;
+  }
+}
+
+.hero-link {
+  display: inline-block;
+  color: var(--fg);
+}
+
+@media (min-width: 768px) {
+  .hero-link {
+    display: block;
+  }
+}
+
+/* ── NUMBERS STRIP — CRIT-2 ── */
+.numbers {
+  display: grid;
+  /* mobile: 2-column grid */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 480px) {
+  .numbers {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .numbers {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.numbers-cell {
+  padding: 16px 12px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .numbers-cell {
+    padding: 24px 16px;
+    border-bottom: none;
+  }
+}
+
+/* Remove right border on the last column of each row */
+.numbers-cell:nth-child(2n) {
+  border-right: none;
+}
+
+@media (min-width: 480px) {
+  .numbers-cell:nth-child(2n) {
+    border-right: 1px solid var(--rule);
+  }
+  .numbers-cell:nth-child(3n) {
+    border-right: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .numbers-cell:nth-child(2n),
+  .numbers-cell:nth-child(3n) {
+    border-right: 1px solid var(--rule);
+  }
+  .numbers-cell--last {
+    border-right: none;
+  }
+}
+
+.numbers-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--faint);
+  letter-spacing: 0.1em;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .numbers-key {
+    font-size: 11px;
+  }
+}
+
+.numbers-val {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .numbers-val {
+    font-size: 28px;
+    margin-top: 6px;
+  }
+}
+
+.numbers-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--faint);
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .numbers-sub {
+    font-size: 10px;
+    margin-top: 4px;
+  }
+}
+
+/* ── BODY PARA ── */
+.body-para {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  color: var(--dim);
+  line-height: 1.65;
+  max-width: 640px;
+  text-wrap: pretty;
+  margin: 0;
+}
+
+/* ── ARCHITECTURE DIAGRAM — MAJ-9 ── */
+.arch-diagram {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  line-height: 1.85;
+  background: #101216;
+  border: 1px solid var(--rule);
+  padding: 16px 16px;
+  max-width: 100%;
+  white-space: pre;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .arch-diagram {
+    font-size: 12px;
+    padding: 24px 28px;
+    max-width: 760px;
+  }
+}
+
+/* ── DECISIONS ── */
+.decisions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  max-width: 920px;
+}
+
+@media (min-width: 640px) {
+  .decisions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 56px;
+  }
+}
+
+.decision-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.decision-title {
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.decision-body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--dim);
+  line-height: 1.6;
+  margin-top: 8px;
+  text-wrap: pretty;
+}
+
+.decision-body code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+/* ── OWNERSHIP TABLE — MAJ-8 ── */
+/*
+ * On mobile we switch to a scrollable container so the multi-column
+ * table stays scannable. Option (b) from audit recommendation.
+ */
+.ownership-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ownership {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+  max-width: 920px;
+  min-width: 560px; /* keep columns legible when scrolling */
+}
+
+@media (min-width: 768px) {
+  .ownership {
+    min-width: 0;
+  }
+}
+
+/* ownership-header / ownership-row column templates are per-file (vary across case studies) */
+.ownership-header {
+  display: grid;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--faint);
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+.ownership-row {
+  display: grid;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ownership-repo {
+  color: var(--fg);
+}
+
+.ownership-dim {
+  color: var(--dim);
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* ── NEXT CASE ── */
+.next-case {
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .next-case {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 88px;
+    gap: 0;
+  }
+}
+
+.next-case-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.08em;
+}
+
+.next-case-link {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+@media (min-width: 640px) {
+  .next-case-link {
+    font-size: 22px;
+  }
+}
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--faint);
+}
+
+@media (min-width: 640px) {
+  .footer {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 88px;
+    gap: 0;
+  }
+}

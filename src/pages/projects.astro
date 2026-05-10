@@ -1,7 +1,7 @@
 ---
-import Base from "../layouts/Base.astro";
-import Link from "../components/Link.astro";
 import Brand from "../components/Brand.astro";
+import Link from "../components/Link.astro";
+import Base from "../layouts/Base.astro";
 ---
 
 <Base
@@ -306,7 +306,7 @@ import Brand from "../components/Brand.astro";
 
   .item-blurb {
     font-family: var(--font-sans);
-    font-size: 13px;
+    font-size: var(--text-body);
     color: var(--dim);
     line-height: 1.55;
     margin: 0 0 10px;
@@ -314,7 +314,7 @@ import Brand from "../components/Brand.astro";
 
   .item-stack {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: var(--text-mono-sm);
     color: var(--faint);
     letter-spacing: 0.02em;
   }
@@ -338,5 +338,35 @@ import Brand from "../components/Brand.astro";
     display: flex;
     gap: 24px;
     color: var(--dim);
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      padding-inline: 20px;
+    }
+
+    .hero-h1 {
+      font-size: clamp(1.75rem, 6vw + 0.5rem, 2.5rem);
+    }
+
+    /* MAJ-7: single column grid below 768px */
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .item-header {
+      flex-wrap: wrap;
+    }
+
+    .footer {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
   }
 </style>

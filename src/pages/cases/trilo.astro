@@ -30,10 +30,11 @@ import Base from "../../layouts/Base.astro";
           <h1 class="hero-h1">An AI workspace with coworkers, not chatbots.</h1>
           <p class="hero-lead">
             Trilo is an AI workspace for chat, projects, workflows, meetings and a knowledge
-            graph, with autonomous AI coworkers (Luna, Atlas, Nova, Sage) that join every doc as live
-            peers. They sit inside every doc the same way a human teammate does, not behind a slash
-            command waiting to be summoned. One monorepo ships web, iOS, Android and desktop clients,
-            with a Python real-time transcription agent. Live at trilo.chat.
+            graph, with 11 role-based AI coworker templates (copywriter, devops engineer, data
+            analyst, project manager, support agent, and seven more) that join every doc as
+            live peers. They sit inside the doc with persistent memory and tool access, the way
+            a teammate does. One monorepo ships web, iOS, Android and desktop clients, plus a
+            Python real-time transcription agent. Live at trilo.chat.
           </p>
         </div>
         <div class="hero-links">
@@ -79,10 +80,12 @@ import Base from "../../layouts/Base.astro";
       <p class="body-para">
         One product that replaces chat, task management, docs, spreadsheets, video calls, calendar,
         and social media scheduling, connected by a knowledge graph that remembers context across
-        all of them. The differentiator isn't the feature list; it's the AI layer. Luna, Atlas, Nova,
-        and Sage aren't chatbots behind a slash command. They're coworkers with memory, tool access,
-        and a place in the team structure. Trilo was designed from the first commit to be AI-native
-        rather than AI-sprinkled.
+        all of them. The differentiator isn't the feature list; it's the AI layer. The 11 starter
+        coworker templates (copywriter, devops engineer, data analyst, content strategist, frontend
+        engineer, marketing advisor, project manager, SEO specialist, social media manager, support
+        agent, e-commerce analyst) ship as full members of the workspace with persistent memory,
+        tool access, and a place in the team structure. Trilo was designed from the first commit
+        to be AI-native rather than AI-sprinkled.
       </p>
     </section>
     </div>
@@ -114,11 +117,6 @@ import Base from "../../layouts/Base.astro";
   └──▶ agent/                [ python · livekit · real-time transcription ]
   │
   └─ packages/db             [ postgres via supabase · drizzle ]
-                                          │
-            ┌───────────────────────────┐ │ ┌──────────────────────────┐
-            │   fly.io (singapore)      │◀┘ │   vercel (web + landing) │
-            │   redis · docker · ecs    │   └──────────────────────────┘
-            └───────────────────────────┘
 </pre>
     </section>
     </div>
@@ -135,7 +133,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AI coworkers as live Yjs peers</div>
-          <p class="decision-body">Luna, Atlas, Nova and Sage aren't chatbots behind a slash command. Each connects to every Lexical page as a server-side Yjs peer via Hocuspocus, appearing in awareness with a shimmer effect on the exact blocks they're editing. Initialization order is load-bearing: the Yjs binding has to register before the WebSocket connects, and the Lexical → Yjs writeback listener has to register after sync. Get it wrong and Lexical's normalization permanently accumulates phantom paragraphs across every user's view. ~13K LOC across the AI-collab service layer.</p>
+          <p class="decision-body">Coworker templates connect to every Lexical page as server-side Yjs peers via Hocuspocus, appearing in awareness with a shimmer effect on the exact blocks they're editing. They sit inside the doc with persistent memory and tool access, the way a teammate does. Initialization order is load-bearing: the Yjs binding has to register before the WebSocket connects, and the Lexical → Yjs writeback listener has to register after sync. Get it wrong and Lexical's normalization permanently accumulates phantom paragraphs across every user's view. ~13K LOC across the AI-collab service layer.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>

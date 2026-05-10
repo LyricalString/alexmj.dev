@@ -7,9 +7,9 @@ import Base from "../../layouts/Base.astro";
 
 <Base
   title="Copy Trader — Multi-exchange copy trading engine | Alejandro Martínez"
-  description="Built a multi-exchange copy trading system in Rust: copies trades from a master Bybit account to follower accounts on Bybit, Binance, and Hyperliquid in real-time via WebSocket streams. Position-based math, BigDecimal precision, idempotent execution."
+  description="Built a production copy trading engine in Rust: 20s → 4s per copy cycle via tokio::spawn parallelism, position-based quantity math, Bybit two-event cache for correct margin data, and a DB connection pool exhaustion fix that kept 15+ followers running under a 5-connection Supabase limit."
 >
-  <div class="page"> 
+  <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
@@ -26,13 +26,15 @@ import Base from "../../layouts/Base.astro";
       <div class="hero-grid">
         <div class="hero-tag">CASE STUDY · 07</div>
         <div class="hero-main">
-          <div class="hero-meta">COPY TRADING INFRASTRUCTURE &nbsp;·&nbsp; 2024 — 2025 &nbsp;·&nbsp; SOLE ENGINEER</div>
+          <div class="hero-meta">COPY TRADING INFRASTRUCTURE &nbsp;·&nbsp; 2024 — 2026 &nbsp;·&nbsp; SOLE ENGINEER</div>
           <h1 class="hero-h1">A multi-exchange copy trading engine built in Rust.</h1>
           <p class="hero-lead">
             Copy Trader is the real-time copy trading engine behind Autowealth. It copies trades from
             a master Bybit account to follower accounts across Bybit, Binance, and Hyperliquid via
-            WebSocket streams. Position-based quantity math with BigDecimal precision, idempotent
-            execution, and smart reduction fallback when orders fail. Deployed on AWS via CDK.
+            WebSocket streams. Parallelizing follower execution via <code>tokio::spawn</code> cut the copy cycle
+            from 20s to 4s for 11 followers. Position-based quantity math with BigDecimal precision,
+            idempotent execution, and a periodic audit service with alert deduplication. 251 commits,
+            deployed on AWS via CDK.
           </p>
         </div>
         <div class="hero-links">
@@ -45,34 +47,29 @@ import Base from "../../layouts/Base.astro";
     <!-- numbers strip -->
     <div class="numbers">
       <div class="numbers-cell">
-        <div class="numbers-key">EXCHANGES</div>
-        <div class="numbers-val">3</div>
-        <div class="numbers-sub">bybit · binance · hyperliquid</div>
+        <div class="numbers-key">COPY LATENCY</div>
+        <div class="numbers-val">20s → 4s</div>
+        <div class="numbers-sub">11 followers · sequential → parallel tokio::spawn</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">MASTER</div>
-        <div class="numbers-val">bybit</div>
-        <div class="numbers-sub">only exchange with master role</div>
+        <div class="numbers-key">EXCHANGES</div>
+        <div class="numbers-val">3 targets</div>
+        <div class="numbers-sub">bybit · binance · hyperliquid (divergent precision + position rules)</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">PRECISION</div>
-        <div class="numbers-val">BigDecimal</div>
-        <div class="numbers-sub">no floating-point in financial math</div>
+        <div class="numbers-val">BigDecimal · zero f64</div>
+        <div class="numbers-sub">prevents rounding drift on partial closes and leverage changes</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">LATENCY</div>
-        <div class="numbers-val">real-time</div>
-        <div class="numbers-sub">WebSocket streams, no polling</div>
-      </div>
-      <div class="numbers-cell">
-        <div class="numbers-key">INFRA</div>
-        <div class="numbers-val">AWS</div>
-        <div class="numbers-sub">CDK · Docker · CloudWatch</div>
+        <div class="numbers-key">IDEMPOTENCY</div>
+        <div class="numbers-val">DB-keyed</div>
+        <div class="numbers-sub">24h window · connection released before API calls</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">NOTIFICATIONS</div>
-        <div class="numbers-val">3</div>
-        <div class="numbers-sub">telegram · sms · dashboard</div>
+        <div class="numbers-key">INFRA</div>
+        <div class="numbers-val">AWS CDK</div>
+        <div class="numbers-sub">docker · cloudwatch · 251 commits · active to march 2026</div>
       </div>
     </div>
 
@@ -81,12 +78,13 @@ import Base from "../../layouts/Base.astro";
     <section class="section" data-section-tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
       <p class="body-para">
         Copy trading sounds simple: master opens a position, followers open the same position.
-        The reality is much harder. Each follower has a different margin, different leverage, and
+        The reality is harder. Each follower has different margin, different leverage, and
         different position sizes. A naive ratio-based approach breaks on partial closes, leverage
         mismatches, and exchange precision requirements. Copy Trader solves this with position-based
-        math: calculate follower quantity from their current position relative to the master's,
-        not from a fixed ratio. The result is proportional exposure that survives partial closes,
-        leverage changes, and exchange-specific lot size constraints.
+        math: calculate each follower's quantity from their current position relative to the master's,
+        not from a fixed ratio. The formula self-corrects on every event because it recalculates from
+        live API state rather than accumulating from a running counter, so rounding drift across
+        multiple position increases doesn't accumulate.
       </p>
     </section>
     </div>
@@ -95,22 +93,26 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="ARCHITECTURE" title="Master → WebSocket → position cache → parallel follower execution.">
       <pre class="arch-diagram">  ┌─ master account (Bybit only)
-  │      WebSocket stream → position events
+  │      WebSocket stream → ExecutionType::Trade events
   │
-  ├──▶ pending_orders_cache     [ in-memory · until position event arrives ]
+  ├──▶ pending_orders_cache     [ in-memory · keyed by symbol:position_idx ]
+  │      parks OrderUpdate (no margin) until PositionUpdate arrives with confirmed IM
   │
   ├──▶ position_event_handler   [ classify: open · increase · partial_close · full_close ]
   │
   ├──▶ quantity_calculator      [ position-based math · BigDecimal · no f64 ]
-  │      opens:   qty = master_qty × (follower_margin / master_im)
-  │      reduces: qty = follower_position × reduction_pct
+  │      target = master_position × (follower_equity × margin_pct / master_IM)
+  │      incremental = target − current_follower_position  (self-correcting)
   │      rounding: down for opens (under-expose), up for closes (avoid residuals)
   │
-  ├──▶ follower_executor        [ parallel per-follower · ExchangeClient trait ]
+  ├──▶ follower_executor        [ tokio::spawn per follower · join_all ]
   │      ├── leverage_sync      [ block opens on failure ]
-  │      ├── validate           [ precision · min/max · notional ]
-  │      ├── smart_reduction    [ fallback if order fails ]
-  │      └── execute            [ idempotency check via DB ]
+  │      ├── validate           [ precision · min/max · notional per exchange ]
+  │      ├── smart_reduction    [ fallback if order fails validation ]
+  │      └── execute            [ idempotency check → release DB conn → API call ]
+  │
+  ├──▶ audit_service            [ periodic reconciliation · MissingPosition / SizeMismatch ]
+  │      60s grace · 1pp re-alert threshold · telegram alerts
   │
   └──▶ notification_pipeline    [ telegram bot · twilio sms · dashboard push ]
 </pre>
@@ -124,32 +126,32 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Position-based math over ratio-based</div>
-          <p class="decision-body">A fixed ratio (follower_margin / master_margin) breaks on partial closes and leverage changes. Position-based math calculates each follower's quantity from their current position relative to the master's, so exposure stays proportional regardless of partial closes, leverage adjustments, or margin changes. The formula: follower_qty = master_qty × (follower_margin / master_position_im).</p>
+          <p class="decision-body">A fixed ratio breaks on partial closes and leverage changes. The formula is: <code>follower_target = master_position × (follower_equity × margin_pct / master_IM)</code>, then subtract the follower's current position to get the incremental order. The subtraction step is the key insight — it makes the formula self-correcting. Each event recalculates from live API state instead of accumulating from a running counter, so rounding errors on partial closes and leverage adjustments don't compound over a session.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">BigDecimal for all financial calculations</div>
-          <p class="decision-body">Floating-point arithmetic introduces rounding errors that compound across trades. Every financial calculation uses BigDecimal — never f64. This eliminates the class of bugs where a follower ends up with 0.0001 BTC more or less than expected, which on high-frequency copy trading can mean the difference between profit and loss.</p>
+          <div class="decision-title">Bybit two-event cache for correct margin data</div>
+          <p class="decision-body">Bybit fires two events for every fill: <code>OrderUpdate</code> arrives first with fill qty and price but no margin data, then <code>PositionUpdate</code> arrives with the confirmed initial margin (IM). The engine parks the order in an in-memory <code>pending_orders_cache</code> keyed by <code>symbol:position_idx</code> and only processes followers when the position event delivers the real IM. Estimating IM from price × qty × leverage is wrong in cross-margin, fractional leverage, and hedge mode — this architecture eliminates that class of error.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Bybit as master-only, Binance/Hyperliquid follower-only</div>
-          <p class="decision-body">Bybit's WebSocket API and REST endpoints are the most reliable for master account monitoring. Binance and Hyperliquid are follower-only (they receive copies but never act as masters). This asymmetry simplifies the architecture: one master stream, multiple follower execution paths, each with exchange-specific order mapping and precision rules.</p>
+          <div class="decision-title">tokio::spawn per follower, join_all at the end</div>
+          <p class="decision-body">The original sequential model ran each follower's pipeline (leverage sync → equity fetch → position fetch → quantity calc → execute) one after another. With 11 followers and 1–9s exchange API calls each, that added up to ~20s per copy cycle. Moving every per-follower API call inside a <code>tokio::spawn</code> and collecting results with <code>join_all</code> brought the cycle to ~4s — measured on Bybit testnet with a 2-follower subset, extrapolated to 11. The tradeoff is that DB connection handling had to be restructured to avoid pool exhaustion under concurrent tasks.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Idempotent execution via database</div>
-          <p class="decision-body">WebSocket reconnections emit duplicate position events. Without idempotency, a reconnection during an open trade means the follower places the same order twice. Every execution is checked against a database key before hitting the exchange — the record either exists or it doesn't.</p>
+          <div class="decision-title">DB connection pool exhaustion (production P0)</div>
+          <p class="decision-body">With 15+ concurrent <code>tokio::spawn</code> tasks each holding an r2d2 <code>PooledConnection</code> through a 3–9s exchange API call, a 5-connection Supabase pool deadlocked. In async Rust, connections are held as long as the struct stays in scope — crossing into HTTP territory while holding a connection blocks every other task waiting on the pool. The fix: acquire connection → idempotency check → drop connection (explicit <code>{}</code> scope) → exchange API call → acquire new connection → write result. Pool timing instrumentation was added afterward to detect regressions (warns if <code>pool.get()</code> exceeds 500ms).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Smart reduction fallback</div>
-          <p class="decision-body">If a follower's order fails (insufficient margin, exchange rejection, precision mismatch), the system doesn't abort the entire copy operation. Instead, it attempts a reduced quantity that satisfies the exchange's constraints. This keeps followers partially exposed rather than completely missing the trade.</p>
+          <div class="decision-title">Audit service with alert deduplication</div>
+          <p class="decision-body">A periodic audit service compares master positions against follower positions via live API calls and detects <code>MissingPosition</code>, <code>ExtraPosition</code>, and <code>SizeMismatch</code> discrepancies. Without deduplication, a persistent 10% mismatch would spam Telegram on every audit cycle. The 1pp re-alert threshold means an alert fires only if deviation changed by at least 1 percentage point since the last notification, and a 60s grace period suppresses alerts while the copy engine catches up on recent trades. The system stays supervisable rather than noisy.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Rust over Python/Node for the core engine</div>
-          <p class="decision-body">Copy trading is latency-sensitive and correctness-critical. Rust's compile-time guarantees eliminate entire classes of bugs (null pointer, data races) and its performance means WebSocket events are processed in microseconds, not milliseconds. The Next.js dashboard handles the UI, but the core copy pipeline is pure Rust with Axum for the API layer.</p>
+          <div class="decision-title">Deliberate fork during testing refactor</div>
+          <p class="decision-body">A second repo (<code>bybit_copy_trader_clone</code>, 188 commits) was created as a deliberate fork during the handler architecture overhaul. Rather than rewiring the WebSocket handler and test harness on the production codebase mid-flight, the fork provided a safe space to iterate — then the changes were re-applied to the canonical repo via PRs. The fork ended in October 2025; all subsequent commits went back to the canonical 251-commit repo. The <code>audit/</code> and <code>indicators/</code> modules exist only in the canonical repo and were never present in the fork.</p>
         </div>
       </div>
     </section>
@@ -176,7 +178,12 @@ import Base from "../../layouts/Base.astro";
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Trade execution engine</span>
-          <span class="ownership-dim">rust · position math · BigDecimal · idempotency</span>
+          <span class="ownership-dim">rust · position math · BigDecimal · idempotency · r2d2</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">Audit service</span>
+          <span class="ownership-dim">rust · position reconciliation · telegram alerts · 1pp threshold</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
@@ -189,11 +196,6 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim">typescript · aws cdk · docker · cloudwatch</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">Notification system</span>
-          <span class="ownership-dim">telegram bot · twilio sms · dashboard push</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
       </div></div>
     </section>
     </div>
@@ -202,12 +204,15 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="A production copy trading engine that handles real money.">
       <p class="body-para">
-        Copy trading is a coordination problem disguised as a math problem. The math is
-        position-based quantity calculation with BigDecimal precision — tractable once you've
-        thought it through. The coordination is harder: three exchanges with different precision
-        rules, WebSocket streams that drop and reconnect, followers with different margin sizes,
-        and trades that need to survive partial closes without accumulating residuals. That's the
-        engine running under Autowealth's CompoundFox subscribers.
+        Copy Trader handles the full coordination problem: three exchanges with divergent precision,
+        notional, and position-mode rules; WebSocket streams that can disconnect (manual restart
+        required, alerted via the audit service); and followers with different margin sizes that need
+        proportional exposure across partial closes without accumulating residuals. The engineering
+        breakthroughs are concrete: a two-event Bybit cache that waits for confirmed IM rather than
+        estimating it; a DB connection scoping fix that kept a 5-connection pool alive under 15+
+        concurrent followers; and a <code>tokio::spawn</code> parallelization that cut the copy cycle
+        from 20s to 4s. That engine runs under Autowealth's CompoundFox subscribers with a periodic
+        audit service watching for position drift.
       </p>
     </section>
     </div>
@@ -238,6 +243,23 @@ import Base from "../../layouts/Base.astro";
   .ownership-header,
   .ownership-row {
     grid-template-columns: 2fr 2fr 1fr;
+  }
+
+  /* ── NUMBERS STRIP: copy-trader has 5 cells (overrides shared 6-col) ── */
+  @media (min-width: 768px) {
+    .numbers {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  /* ── inline code style in decision-body ── */
+  .decision-body code {
+    background: #101216;
+    padding: 1px 5px;
+    border-radius: 3px;
   }
 
   /* hover effect on next-case-link (under hover:hover for touch safety) */

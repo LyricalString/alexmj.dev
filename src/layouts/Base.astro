@@ -45,6 +45,57 @@ const {
     <script is:raw defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Global responsive chrome — nav + footer shared across all pages -->
+    <style is:global>
+      /* ── Shared chrome: ≤767px ──────────────────────────────────────── */
+      @media (max-width: 767px) {
+        /* Page padding */
+        .page {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        /* Nav: stack brand above nav links */
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        /* Nav touch targets ≥44px via padding */
+        .nav {
+          gap: 20px;
+        }
+
+        .nav a,
+        .nav .link {
+          padding: 8px 0;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+        }
+
+        /* Footer: stack vertically */
+        .footer {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .footer-links {
+          gap: 16px;
+        }
+      }
+
+      /* ── Shared chrome: ≤479px ──────────────────────────────────────── */
+      @media (max-width: 479px) {
+        .page {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+    </style>
   </head>
   <body>
     <slot />
@@ -98,9 +149,12 @@ const {
                 .fromTo(".hero-meta", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.3")
                 .fromTo(".stats-strip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.2");
 
+              // TODO(F1.5/Gate4): work-row reveal may not fire on narrow widths if rows
+              // are already partially in-viewport when the page loads and user hasn't
+              // scrolled — consider IntersectionObserver fallback or once:true + refreshOnUpdate.
               gsap.fromTo(".work-row", { opacity: 0, y: 20 }, {
                 opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: "power2.out",
-                scrollTrigger: { trigger: ".work-row", start: "top bottom-=15%", toggleActions: "play none none none" }
+                scrollTrigger: { trigger: ".work-rows", start: "top 95%", toggleActions: "play none none none" }
               });
             } else {
               gsap.set(".whoami-line, .hero-h1, .hero-meta, .stats-strip, .work-row", { opacity: 1, y: 0 });

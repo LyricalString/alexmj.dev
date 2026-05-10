@@ -51,12 +51,12 @@ const commits = stats.reforms.toLocaleString("en-US");
           <h1 class="hero-h1">190 years of Spanish law as a Git repository.</h1>
           <p class="hero-lead">
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
-            Git commit dated to its official BOE publication — {laws} laws, {commits} commits,
+            Git commit dated to its official BOE publication: {laws} laws, {commits} commits,
             18 jurisdictions. On top of the repository lives a hybrid retrieval engine with a
             hand-rolled int8 SIMD C kernel and a 100% Qwen stack: R@1 went from 50% (Gemini
             dense baseline) through 28% (an early BM25 regression caught by the eval harness)
-            to 93% after migrating every component — embeddings, query analyzer, reranker,
-            and synthesis — to Qwen on a private inference server. $0/month in API costs.
+            to 93% after migrating every component (embeddings, query analyzer, reranker,
+            and synthesis) to Qwen on a private inference server. $0/month in API costs.
             AGPL-3.0. Live at leyabierta.es.
           </p>
         </div>
@@ -104,7 +104,7 @@ const commits = stats.reforms.toLocaleString("en-US");
         Spanish legislation is nominally public: the BOE publishes every law as a PDF. But
         there's no API, no diff between versions, no way to ask "what changed in labor law
         in 2018?" and get a useful answer. The official site returns keyword matches in legal
-        prose, not structured documents. Ley Abierta treats the law as source code — each
+        prose, not structured documents. Ley Abierta treats the law as source code. Each
         reform is a commit, each jurisdiction a folder, each version a checkable diff. The
         result is 190 years of legislation that's queryable, diffable, and free.
       </p>
@@ -166,27 +166,27 @@ const commits = stats.reforms.toLocaleString("en-US");
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Git as the storage layer</div>
-          <p class="decision-body">Laws are versioned documents. Git is the right tool — <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only). The repo is the product, not just a backend artifact.</p>
+          <p class="decision-body">Laws are versioned documents. Git is the right tool: <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only). The repo is the product, not just a backend artifact.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom int8 SIMD C kernel</div>
-          <p class="decision-body">Off-the-shelf vector libraries were too slow at 486k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics — dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator — cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU, no managed vector DB, no network round-trips per query.</p>
+          <p class="decision-body">Off-the-shelf vector libraries were too slow at 486k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU, no managed vector DB, no network round-trips per query.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">The BM25 regression that taught the stack</div>
-          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em>: R@1 dropped from 50% to 28% on real citizen queries — FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix wasn't tuning BM25 weights — it was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. The dip is the engineering story: a reproducible eval harness against a 50-question citizen set + a 57-question omnibus caught the regression before it reached prod.</p>
+          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em>: R@1 dropped from 50% to 28% on real citizen queries. FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix wasn't tuning BM25 weights. It was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. The dip is the engineering story: a reproducible eval harness against a 50-question citizen set + a 57-question omnibus caught the regression before it reached prod.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Full Qwen stack over Gemini + Cohere</div>
-          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro — three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis (judge score 8.82 vs 7.17). Combined: R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month, no external dependencies in the main path.</p>
+          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis (judge score 8.82 vs 7.17). Combined: R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month, no external dependencies in the main path.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Self-hosted Opik per-span RAG tracing</div>
-          <p class="decision-body">Every <code>/v1/ask</code> call creates an Opik trace with spans for <code>embed_query</code>, <code>bm25</code>, <code>vector_knn</code>, <code>aggregate_pool</code>, <code>rrf_fusion</code>, <code>rerank</code>, and <code>synthesis</code>. Tracing is fail-safe — span failures never break the pipeline. Opik runs self-hosted in the same VM (full backend + frontend + Python OSS stack), so per-stage latency is debuggable in prod without exfiltrating queries to a SaaS. The catch that justified the work: the BM25 OR-explosion bug was identified at the <code>bm25</code> span before it tanked recall.</p>
+          <p class="decision-body">Every <code>/v1/ask</code> call creates an Opik trace with spans for <code>embed_query</code>, <code>bm25</code>, <code>vector_knn</code>, <code>aggregate_pool</code>, <code>rrf_fusion</code>, <code>rerank</code>, and <code>synthesis</code>. Tracing is fail-safe. Span failures never break the pipeline. Opik runs self-hosted in the same VM (full backend + frontend + Python OSS stack), so per-stage latency is debuggable in prod without exfiltrating queries to a SaaS. The catch that justified the work: the BM25 OR-explosion bug was identified at the <code>bm25</code> span before it tanked recall.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
@@ -248,8 +248,8 @@ const commits = stats.reforms.toLocaleString("en-US");
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
         citizen language. Retrieval R@1 went from 50% (Gemini dense baseline) to 93% (full Qwen
-        stack) after a structured A/B program that replaced every Gemini and Cohere component —
-        embeddings, query analyzer, reranker, and synthesis — each measured in isolation against
+        stack) after a structured A/B program that replaced every Gemini and Cohere component
+        (embeddings, query analyzer, reranker, and synthesis), each measured in isolation against
         a 50-question citizen set and a 57-question omnibus. The early hybrid stack regressed to
         28% R@1 because BM25 OR-expansion on citizen Spanish matched noise across centuries of
         legal prose; the eval harness caught it before prod. Index size dropped from 7.6 GB to

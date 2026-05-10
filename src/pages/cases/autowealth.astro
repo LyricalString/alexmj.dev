@@ -6,10 +6,10 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base
-  title="Autowealth + CompoundFox — Algo trading platform with live dashboard | Alejandro Martínez"
-  description="Built CompoundFox algorithmic trading strategy with a live, public performance dashboard. Full equity curve, Sharpe and drawdown updated in real time. Autowealth is the SaaS distribution layer: Turborepo monorepo with backend, Telegram bot, Next dashboards, React Native, and AWS CDK."
+  title="Autowealth + CompoundFox — Algo trading platform with live performance dashboard | Alejandro Martínez"
+  description="Built CompoundFox algorithmic trading strategy and Autowealth, its SaaS distribution platform. Live performance dashboard at stats.autowealth.trade: deposit-adjusted drawdown, Sharpe, TWR and Sortino calculated from real Bybit trade history. Per-community ECS via CDK, on-chain fee settlement, AUM circuit breaker. Sole engineer."
 >
-  <div class="page"> 
+  <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
@@ -26,13 +26,15 @@ import Base from "../../layouts/Base.astro";
       <div class="hero-grid">
         <div class="hero-tag">CASE STUDY · 06</div>
         <div class="hero-main">
-          <div class="hero-meta">ALGORITHMIC TRADING · DISTRIBUTION PLATFORM &nbsp;·&nbsp; 2024 — now &nbsp;·&nbsp; SOLE ENGINEER</div>
-          <h1 class="hero-h1">CompoundFox strategy with a live, public performance dashboard.</h1>
+          <div class="hero-meta">ALGORITHMIC TRADING · DISTRIBUTION PLATFORM &nbsp;·&nbsp; 2025 — NOW &nbsp;·&nbsp; SOLE ENGINEER</div>
+          <h1 class="hero-h1">CompoundFox: live algo trading with a public, defensible performance record.</h1>
           <p class="hero-lead">
-            Autowealth is a SaaS distribution platform for algorithmic trading strategies. CompoundFox
-            is the flagship strategy — full equity curve, Sharpe ratio and drawdown updated in real time
-            on a public dashboard. The platform includes a Turborepo monorepo with backend, Telegram bot,
-            Next.js dashboards, React Native mobile app, and AWS CDK infrastructure.
+            Autowealth is a SaaS platform that distributes algorithmic trading strategies to followers
+            across Bybit, Binance, and Hyperliquid. CompoundFox is the flagship strategy, with live
+            performance published at stats.autowealth.trade: equity curve, Sharpe, deposit-adjusted
+            drawdown, and TWR calculated in real time from actual Bybit trade history — not a
+            backtest, not a screenshot. Per-community ECS containers, an on-chain fee Splitter, and
+            an AUM circuit breaker make the platform multi-tenant and production-grade.
           </p>
         </div>
         <div class="hero-links">
@@ -46,34 +48,29 @@ import Base from "../../layouts/Base.astro";
     <!-- numbers strip -->
     <div class="numbers">
       <div class="numbers-cell">
-        <div class="numbers-key">STRATEGY</div>
-        <div class="numbers-val">CompoundFox</div>
-        <div class="numbers-sub">flagship algorithm</div>
+        <div class="numbers-key">STATUS</div>
+        <div class="numbers-val">live · public dashboard</div>
+        <div class="numbers-sub">stats.autowealth.trade · refreshed daily</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">DASHBOARD</div>
-        <div class="numbers-val">live</div>
-        <div class="numbers-sub">equity curve · sharpe · drawdown</div>
+        <div class="numbers-key">AUM SNAPSHOTS</div>
+        <div class="numbers-val">every 5 min</div>
+        <div class="numbers-sub">288 snapshots/day · circuit breaker after 3 failures</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">PLATFORM</div>
-        <div class="numbers-val">SaaS</div>
-        <div class="numbers-sub">distribution layer for strategies</div>
+        <div class="numbers-key">EXCHANGES</div>
+        <div class="numbers-val">3 supported</div>
+        <div class="numbers-sub">bybit (master) · binance · hyperliquid (followers)</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">MONOREPO</div>
-        <div class="numbers-val">Turborepo</div>
-        <div class="numbers-sub">backend · bot · dashboards · mobile</div>
-      </div>
-      <div class="numbers-cell">
-        <div class="numbers-key">INFRA</div>
-        <div class="numbers-val">AWS</div>
-        <div class="numbers-sub">CDK · ECS · CloudWatch</div>
+        <div class="numbers-key">ON-CHAIN BILLING</div>
+        <div class="numbers-val">Solidity Splitter</div>
+        <div class="numbers-sub">bsc + arbitrum · hd wallet derivation</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">STRATEGIES</div>
-        <div class="numbers-val">3+</div>
-        <div class="numbers-sub">CompoundFox · AlgoAI · Forex</div>
+        <div class="numbers-key">DEPLOYMENT</div>
+        <div class="numbers-val">per-community ECS</div>
+        <div class="numbers-sub">cdk · one container per community id</div>
       </div>
     </div>
 
@@ -81,62 +78,79 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="THE BRIEF" title="A trading strategy with proof.">
       <p class="body-para">
-        Most algo strategies are sold on backtests. Autowealth publishes live performance: full equity
-        curve, Sharpe and drawdown, updated in real time, publicly accessible before anyone commits
-        capital. CompoundFox is the flagship — running live on Bybit since 2024. The platform is
-        built as a distribution layer for multiple strategies, not a single-strategy product.
+        Most algo strategies are sold on backtests or cherry-picked screenshots. Autowealth publishes
+        live performance: full equity curve, Sharpe, drawdown, and TWR pulled from real Bybit trade
+        history and updated daily on a public dashboard. Anyone can check it before committing capital.
+        CompoundFox is the flagship strategy. Autowealth is the platform behind it: copy trading across
+        three exchanges, per-community deployment, and on-chain fee invoicing.
       </p>
     </section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bot, dashboards, mobile.">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bot, dashboards, mobile, infra.">
       <pre class="arch-diagram">  ┌─ Turborepo monorepo
   │
   ├── apps/
-  │   ├── backend              [ Bun · TypeScript · Jesse (backtesting) ]
-  │   │      Bybit API integration · trade execution · performance calculation
+  │   ├── backend              [ Bun · TypeScript · Drizzle · PostgreSQL ]
+  │   │      Bybit API integration · AUM snapshotting · performance calculation
+  │   │      on-chain fee invoicing · position deduplication
   │   │
   │   ├── telegram-bot         [ Telegraf · TypeScript ]
   │   │      strategy signals · performance alerts · follower management
   │   │
-  │   ├── dashboard            [ Next.js 14 · React Query · shadcn/ui ]
-  │   │      live equity curve · Sharpe · drawdown · real-time metrics
+  │   ├── performance-page     [ Next.js · React Query ]
+  │   │      live equity curve · Sharpe · deposit-adjusted drawdown · TWR
+  │   │      startBalanceReliable flag: hides metrics it can't defend
   │   │
   │   └── mobile               [ React Native ]
   │          strategy overview · performance charts · notifications
   │
-  └── infra/
-       └── aws-cdk             [ TypeScript · ECS · CloudWatch · RDS ]
-              auto-scaling · monitoring · blue/green deploys
+  ├── packages/
+  │   ├── database             [ Drizzle · PostgreSQL · 7 migrations ]
+  │   └── sweep-service        [ Solidity Splitter · Hardhat · BSC + Arbitrum ]
+  │
+  └── cdk/                     [ TypeScript · AWS CDK ]
+         ExchangeBotStack per community · shared VPC/cluster via CF exports
+         512MB / 0.25 CPU per bot · VPS Docker alternative
 </pre>
     </section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Four calls that define the platform.">
+    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the platform.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Live public dashboard over periodic reports</div>
-          <p class="decision-body">No email reports, no cherry-picked screenshots. The dashboard is a live feed: equity curve, Sharpe, drawdown, all pulled from the running engine. Anyone can check it before subscribing. Publishing in real time removes the option of curating what gets shown.</p>
+          <div class="decision-title">Deposit-adjusted drawdown with 3-day attribution</div>
+          <p class="decision-body">Raw AUM drawdown inflates whenever a deposit lands: AUM spikes, then the strategy looks like it immediately lost capital. The performance engine in <code>calculateAumBasedMetrics()</code> walks a 3-day attribution window to match transaction amounts to AUM jumps before computing peak-to-trough. The attribution logic exists because a production failure is documented in the code at <code>trade-analysis.ts:1006-1041</code>: late-day deposits landing after the daily snapshot produced phantom -100% drawdowns. The 3-day window is the fix.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Turborepo monorepo over separate repos</div>
-          <p class="decision-body">The backend, Telegram bot, dashboard and mobile app share performance calculations, API client types and constants. With four apps that must agree on what a "trade" or "drawdown" means, a monorepo isn't a preference — it's the only way to keep them from drifting. Turborepo handles incremental builds and the shared deployment pipeline.</p>
+          <div class="decision-title">Reliability tiers: hide numbers that can't be defended</div>
+          <p class="decision-body">The performance API returns a <code>startBalanceReliable</code> flag when there is no AUM snapshot before the first trade. When the flag is false, the UI hides annualized return and average monthly return entirely. The dashboard doesn't fill in a guess — it shows fewer numbers. Accounts that connected mid-strategy get a smaller metrics set until a full pre-trade snapshot exists. This is a falsifiable claim: the code in <code>providers.ts:57-220</code> strips metrics explicitly when data coverage is incomplete.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Strategy-agnostic distribution layer</div>
-          <p class="decision-body">CompoundFox is the first strategy, but the platform is not built around it. Each strategy gets its own performance tracking, risk metrics and follower management — the distribution infrastructure is shared. Adding AlgoAI or Forex doesn't touch the platform; it adds a config and a data source.</p>
+          <div class="decision-title">AUM circuit breaker isolates dead API keys</div>
+          <p class="decision-body">A snapshot job that retries every failing account wastes cycles on expired keys and slows down active ones. The worker in <code>snapshotAUM.ts</code> tracks consecutive failures per account in a <code>Map&lt;string, number&gt;</code>, skips accounts with 3+ consecutive failures, and resets the count hourly. An <code>isRunning</code> guard prevents concurrent execution without a lock library. One expired API key has no effect on the snapshot cadence of live accounts. The job runs every 5 minutes (288 snapshots/day per active account).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Bybit as primary exchange</div>
-          <p class="decision-body">Bybit's WebSocket API is stable enough to build a copy trading system on top of, and its REST endpoints handle trade execution without the rate-limit issues that make Binance harder to use as a master. Copy Trader (the engine behind Autowealth) also handles Binance and Hyperliquid as follower exchanges — but the master feed is Bybit only.</p>
+          <div class="decision-title">Position deduplication via 8-decimal-place PnL fingerprint</div>
+          <p class="decision-body">Not all exchange APIs return stable order IDs across paginated history endpoints. Bybit's position history in particular doesn't guarantee idempotent IDs. The worker in <code>processNewClosedPositions.ts</code> uses a 5-field composite key: exchange + account UID + symbol + side + timestamp + PnL formatted to 8 decimal places via <code>formatToPrecision8()</code>, matching the <code>decimal(18,8)</code> DB column. The fingerprint check in <code>positionExists()</code> runs before every write. Positions are fetched in 7-day chunks with 100ms rate-limit delays to stay within Bybit's pagination limits.</p>
+        </div>
+        <div class="decision reveal-item">
+          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Per-community ECS containers via CDK</div>
+          <p class="decision-body">Each trading community gets its own exchange-bot container, not a shared bot with multi-tenant config. The CDK stack (<code>ExchangeBotStack</code>) takes a <code>communityId</code> as a prop and deploys into a shared ECS cluster imported via CloudFormation cross-stack exports (<code>InfrastructureClusterArn</code>, <code>InfrastructureVPCId</code>). Adding a community is a <code>deploy-exchange-bot.sh COMMUNITY_ID TOKEN</code> call. For operators who want lower AWS costs, a Docker VPS alternative runs the same container at 512MB / 0.25 CPU with the same isolation guarantee per community ID.</p>
+        </div>
+        <div class="decision reveal-item">
+          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">On-chain fee settlement via Solidity Splitter</div>
+          <p class="decision-body">Trading fees invoiced to followers go into a Hardhat-tested Solidity Splitter contract on BSC and Arbitrum that distributes to provider, platform, and referral wallets atomically. Each trader's wallet is derived deterministically via <code>BSCWalletService.deriveTraderWallet(traderId, communityId)</code>, so wallets don't need manual provisioning per follower. The pipeline runs fully automated: position close triggers invoice, invoice triggers on-chain sweep. Coverage data shows 40+ contract statements exercised in tests.</p>
         </div>
       </div>
     </section>
@@ -144,7 +158,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="The full stack: backend, bot, dashboards, mobile, infra.">
+    <section class="section" data-section-tag="OWNERSHIP" title="The full stack, built and shipped sole.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -153,22 +167,22 @@ import Base from "../../layouts/Base.astro";
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Trading backend</span>
-          <span class="ownership-dim">bun · typescript · jesse · bybit api</span>
+          <span class="ownership-dim">bun · typescript · drizzle · postgresql · bybit api</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Performance engine</span>
-          <span class="ownership-dim">equity curve · sharpe · drawdown · real-time</span>
+          <span class="ownership-dim">1,334-line trade-analysis.ts · sharpe · twr · sortino · calmar</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
-          <span class="ownership-repo">Next.js dashboard</span>
-          <span class="ownership-dim">next.js 14 · react query · shadcn/ui</span>
+          <span class="ownership-repo">Performance page</span>
+          <span class="ownership-dim">next.js · react query · live equity curve · reliability tiers</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Telegram bot</span>
-          <span class="ownership-dim">telegraf · typescript · strategy signals</span>
+          <span class="ownership-dim">telegraf · typescript · strategy signals · follower management</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
@@ -177,8 +191,13 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
+          <span class="ownership-repo">Sweep service</span>
+          <span class="ownership-dim">solidity splitter · hardhat · bsc + arbitrum · hd wallet derivation</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
           <span class="ownership-repo">AWS infrastructure</span>
-          <span class="ownership-dim">typescript · aws cdk · ecs · cloudwatch</span>
+          <span class="ownership-dim">typescript · aws cdk · ecs · cloudwatch · rds</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div></div>
@@ -187,13 +206,16 @@ import Base from "../../layouts/Base.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="A production trading platform with real-time transparency.">
+    <section class="section" data-section-tag="OUTCOME" title="Live algo trading with public, auditable performance.">
       <p class="body-para">
-        CompoundFox has been running live since 2024 with a Sharpe of 5.26 and +56% ROI over 137
-        days on a public dashboard anyone can verify. That's the point: the performance is either
-        defensible or it isn't. Autowealth as the distribution layer is working — the harder part
-        was building a copy trading engine (Copy Trader) that handles three exchanges, per-follower
-        position math, and real-money idempotency without a margin for error.
+        CompoundFox is running live on Bybit with performance published at stats.autowealth.trade —
+        equity curve, Sharpe, deposit-adjusted drawdown, and TWR calculated from real position
+        history by a 1,334-line metrics engine built from scratch. The numbers on the dashboard are
+        either defensible or the platform says so: the <code>startBalanceReliable</code> flag hides
+        annualized return on accounts without a pre-trade AUM snapshot. Autowealth as a platform
+        handles multi-tenant copy trading across three exchanges, per-community ECS deployment
+        via CDK, automated on-chain fee settlement, and a circuit breaker that keeps AUM
+        snapshotting unblocked when individual API keys expire.
       </p>
     </section>
     </div>
@@ -220,16 +242,26 @@ import Base from "../../layouts/Base.astro";
 <style>
   @import "../../styles/case-study.css";
 
-  /* ── OWNERSHIP TABLE: autowealth has 3 columns (2fr 2fr 1fr) ── */
+  /* ── OWNERSHIP TABLE: autowealth has 3 columns (2fr 3fr 1fr) ── */
   .ownership-header,
   .ownership-row {
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: 2fr 3fr 1fr;
   }
 
-  /* hover effect on next-case-link (under hover:hover for touch safety) */
-  @media (hover: hover) {
-    .next-case-link:hover {
-      color: var(--accent);
+  /* ── NUMBERS STRIP: autowealth has 5 cells (overrides shared 6-col) ── */
+  @media (min-width: 768px) {
+    .numbers {
+      grid-template-columns: repeat(5, 1fr);
     }
+  }
+  .numbers-cell--last {
+    border-right: none;
+  }
+
+  /* inline code in decision-body */
+  .decision-body code {
+    background: #101216;
+    padding: 1px 5px;
+    border-radius: 3px;
   }
 </style>

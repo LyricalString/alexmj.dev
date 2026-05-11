@@ -51,28 +51,33 @@ import Base from "../../layouts/Base.astro";
     <div class="numbers">
       <div class="numbers-cell">
         <div class="numbers-key">STATUS</div>
-        <div class="numbers-val">live · public dashboard</div>
-        <div class="numbers-sub">stats.autowealth.trade · refreshed daily</div>
+        <div class="numbers-val">live</div>
+        <div class="numbers-sub">stats.autowealth.trade · public dashboard · daily</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">AUM SNAPSHOTS</div>
-        <div class="numbers-val">every 5 min</div>
-        <div class="numbers-sub">288 snapshots/day · circuit breaker after 3 failures</div>
+        <div class="numbers-val">288/day</div>
+        <div class="numbers-sub">every 5 min · circuit breaker after 3 failures</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">EXCHANGES</div>
-        <div class="numbers-val">3 supported</div>
-        <div class="numbers-sub">bybit (master) · binance · hyperliquid (followers)</div>
+        <div class="numbers-val">3</div>
+        <div class="numbers-sub">bybit · binance · hyperliquid</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">ON-CHAIN BILLING</div>
-        <div class="numbers-val">Solidity Splitter</div>
-        <div class="numbers-sub">bsc + arbitrum · hd wallet derivation</div>
+        <div class="numbers-val">on-chain</div>
+        <div class="numbers-sub">solidity splitter · bsc + arbitrum · hd wallets</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-key">DEPLOYMENT</div>
+        <div class="numbers-val">aws ecs</div>
+        <div class="numbers-sub">cdk · one container per community id</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">DEPLOYMENT</div>
-        <div class="numbers-val">per-community ECS</div>
-        <div class="numbers-sub">cdk · one container per community id</div>
+        <div class="numbers-key">SURFACES</div>
+        <div class="numbers-val">4</div>
+        <div class="numbers-sub">web dashboard · mobile · telegram bot · mini-app</div>
       </div>
     </div>
 
@@ -91,27 +96,37 @@ import Base from "../../layouts/Base.astro";
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bot, dashboards, mobile, infra.">
+    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bots, dashboards, mobile, on-chain, infra.">
       <pre class="arch-diagram">  ┌─ Turborepo monorepo
   │
   ├── apps/
   │   ├── backend              [ Bun · TypeScript · Drizzle · PostgreSQL ]
   │   │      Bybit API integration · AUM snapshotting · performance calculation
   │   │      on-chain fee invoicing · position deduplication
+  │   │      notification router (Expo push + Telegram fallback)
+  │   │      community auto-provisioning (HD wallet + splitter approval worker)
   │   │
   │   ├── telegram-bot         [ Telegraf · TypeScript ]
   │   │      strategy signals · performance alerts · follower management
+  │   │
+  │   ├── telegram-mini-app    [ Next.js 16 · React 19 · Recharts ]
+  │   │      in-Telegram dashboard · deep-linked from bot commands
   │   │
   │   ├── performance-page     [ Next.js · React Query ]
   │   │      live equity curve · Sharpe · deposit-adjusted drawdown · TWR
   │   │      startBalanceReliable flag: hides metrics it can't defend
   │   │
-  │   └── mobile               [ React Native ]
-  │          strategy overview · performance charts · notifications
+  │   └── mobile               [ Expo · React Native · Clerk · MMKV ]
+  │          strategy overview · performance charts · push notifications
+  │          App Store build via EAS
   │
   ├── packages/
   │   ├── database             [ Drizzle · PostgreSQL · 7 migrations ]
+  │   ├── wallet-service       [ ethers v6 · HD derivation · async-mutex ]
+  │   │      gas station per chain · refill below threshold
+  │   │      deterministic community wallets via keccak256(id + secret)
   │   └── sweep-service        [ Solidity Splitter · Hardhat · BSC + Arbitrum ]
+  │          atomic distribution to provider / platform / referral
   │
   └── cdk/                     [ TypeScript · AWS CDK ]
          ExchangeBotStack per community · shared VPC/cluster via CF exports
@@ -122,7 +137,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the platform.">
+    <section class="section" data-section-tag="DECISIONS" title="Nine calls that define the platform.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -153,6 +168,21 @@ import Base from "../../layouts/Base.astro";
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">On-chain fee settlement via Solidity Splitter</div>
           <p class="decision-body">Trading fees invoiced to followers go into a Hardhat-tested Solidity Splitter contract on BSC and Arbitrum that distributes to provider, platform, and referral wallets atomically. Each trader's wallet is derived deterministically via <code>BSCWalletService.deriveTraderWallet(traderId, communityId)</code>, so wallets don't need manual provisioning per follower. The pipeline runs fully automated: position close triggers invoice, invoice triggers on-chain sweep. Coverage data shows 40+ contract statements exercised in tests.</p>
+        </div>
+        <div class="decision reveal-item">
+          <div class="decision-tag">07 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Multi-chain gas station with mutex-serialized refills</div>
+          <p class="decision-body">On-chain operations stall when a wallet runs out of native gas. The <code>wallet-service</code> package runs a gas station per chain (BSC and Arbitrum): it monitors every operational wallet, refills below threshold (0.0002 BNB / 0.0001 ETH) from a dedicated funding wallet, and uses <code>async-mutex</code> to serialize refills so concurrent operations never trigger duplicate transfers. Two modes: <code>withGas()</code> waits for the refill to confirm before the dependent transaction; <code>withGasHybrid()</code> releases the caller as soon as gas lands on-chain. If the funding wallet itself is depleted, callers get a clean error instead of a silent stall.</p>
+        </div>
+        <div class="decision reveal-item">
+          <div class="decision-tag">08 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Zero-touch community wallet provisioning</div>
+          <p class="decision-body">Creating a community is one <code>POST /communities</code> call. The backend derives a deterministic HD branch from <code>keccak256(communityId + WALLET_DERIVATION_SECRET) mod 2^31</code>, persists the address, and queues splitter approval. A background worker then approves the Splitter contract on BSC and Arbitrum for that wallet, gated by an AUM threshold so dormant communities don't burn gas. The <code>splitter_approved</code> and <code>arb_splitter_approved</code> flags in <code>community_bsc_wallets</code> make the worker idempotent. No operator ever touches a key, and the derivation is deterministic, so the address is reproducible from <code>communityId</code> alone if state is ever lost.</p>
+        </div>
+        <div class="decision reveal-item">
+          <div class="decision-tag">09 &nbsp;·&nbsp; DECISION</div>
+          <div class="decision-title">Dual-channel notifications for security-critical events</div>
+          <p class="decision-body">The notification router fans events out by user preference (Expo push, Telegram, or both), but security-critical events (API key changes, withdrawals, delinquency) always go to both channels regardless of preference. Push tokens flagged as invalid by Expo get deactivated automatically on the next send failure, so dead devices don't accumulate and concurrent sends don't waste retry budget. Critical alerts never depend on a single transport.</p>
         </div>
       </div>
     </section>
@@ -188,13 +218,28 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
-          <span class="ownership-repo">React Native mobile</span>
-          <span class="ownership-dim">react native · performance charts · notifications</span>
+          <span class="ownership-repo">Mobile app</span>
+          <span class="ownership-dim">expo · react native · clerk · mmkv · wagmi-charts · app store via eas</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">Telegram mini-app</span>
+          <span class="ownership-dim">next.js 16 · react 19 · recharts · bot deep links</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">Wallet service</span>
+          <span class="ownership-dim">ethers v6 · async-mutex · gas station · deterministic hd derivation</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">Sweep service</span>
-          <span class="ownership-dim">solidity splitter · hardhat · bsc + arbitrum · hd wallet derivation</span>
+          <span class="ownership-dim">solidity splitter · hardhat · bsc + arbitrum</span>
+          <span class="ownership-dim text-right">sole</span>
+        </div>
+        <div class="ownership-row">
+          <span class="ownership-repo">Notification router</span>
+          <span class="ownership-dim">expo push sdk · telegram bot api · dual-channel for critical events</span>
           <span class="ownership-dim text-right">sole</span>
         </div>
         <div class="ownership-row">
@@ -213,11 +258,14 @@ import Base from "../../layouts/Base.astro";
         CompoundFox is running live on Bybit with performance published at stats.autowealth.trade.
         Equity curve, Sharpe, deposit-adjusted drawdown, and TWR are calculated from real position
         history by a metrics engine built from scratch (1,334 lines). The numbers on the dashboard are
-        either defensible or the platform says so: the <code>startBalanceReliable</code> flag hides
+        either defensible or hidden: the <code>startBalanceReliable</code> flag suppresses
         annualized return on accounts without a pre-trade AUM snapshot. Autowealth as a platform
-        handles multi-tenant copy trading across three exchanges, per-community ECS deployment
-        via CDK, automated on-chain fee settlement, and a circuit breaker that keeps AUM
-        snapshotting unblocked when individual API keys expire.
+        handles multi-tenant copy trading across three exchanges, per-community ECS deployment via
+        CDK, on-chain fee settlement with a multi-chain gas station keeping operational wallets
+        funded, zero-touch HD wallet provisioning when a community is created, and a notification
+        router that fans security-critical events to push and Telegram in parallel. Four user
+        surfaces ship from one monorepo: web dashboard, Expo mobile app, Telegram bot, and an
+        in-Telegram mini-app.
       </p>
     </section>
     </div>
@@ -248,16 +296,6 @@ import Base from "../../layouts/Base.astro";
   .ownership-header,
   .ownership-row {
     grid-template-columns: 2fr 3fr 1fr;
-  }
-
-  /* ── NUMBERS STRIP: autowealth has 5 cells (overrides shared 6-col) ── */
-  @media (min-width: 768px) {
-    .numbers {
-      grid-template-columns: repeat(5, 1fr);
-    }
-  }
-  .numbers-cell--last {
-    border-right: none;
   }
 
   /* inline code in decision-body */

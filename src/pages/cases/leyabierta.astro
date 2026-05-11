@@ -30,7 +30,7 @@ const commits = stats.reforms.toLocaleString("en-US");
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
   description={`Solo engineer behind Ley Abierta: ${laws} Spanish laws reconstructed as ${commits} Git commits, searchable via a hybrid retrieval engine with a custom int8 SIMD C kernel. R@1 from 50% (Gemini dense) through 28% (early hybrid regression) to 93% (full Qwen stack); index 7.6 GB → 1.4 GB. Live at leyabierta.es.`}
 >
-  <div class="page"> 
+  <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
@@ -101,12 +101,13 @@ const commits = stats.reforms.toLocaleString("en-US");
     <div class="reveal-section">
     <section class="section" data-section-tag="THE BRIEF" title="Public law that's practically inaccessible.">
       <p class="body-para">
-        Spanish legislation is nominally public: the BOE publishes every law as a PDF. But
-        there's no API, no diff between versions, no way to ask "what changed in labor law
-        in 2018?" and get a useful answer. The official site returns keyword matches in legal
-        prose, not structured documents. Ley Abierta treats the law as source code. Each
-        reform is a commit, each jurisdiction a folder, each version a checkable diff. The
-        result is 190 years of legislation that's queryable, diffable, and free.
+        Spanish legislation is nominally public: the BOE exposes every law via an XML API. But
+        the raw feed is a stream of documents, not a navigable history. No diff between versions,
+        no graph of which reform amended which article, no way to ask "what changed in labor law
+        in 2018?" and get a useful answer. The official search returns keyword matches in legal
+        prose, not structured documents. Ley Abierta treats the law as source code. Each reform
+        is a commit, each jurisdiction a folder, each version a checkable diff. The result is 190
+        years of legislation that's queryable and diffable, with full version history.
       </p>
     </section>
     </div>
@@ -166,12 +167,12 @@ const commits = stats.reforms.toLocaleString("en-US");
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Git as the storage layer</div>
-          <p class="decision-body">Laws are versioned documents. Git is the right tool: <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only). The repo is the product, not just a backend artifact.</p>
+          <p class="decision-body">Laws are versioned documents. Git is the right tool: <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only). The repo is the product.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom int8 SIMD C kernel</div>
-          <p class="decision-body">Off-the-shelf vector libraries were too slow at 486k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU, no managed vector DB, no network round-trips per query.</p>
+          <p class="decision-body">Off-the-shelf vector libraries were too slow at 486k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU and no managed vector DB.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
@@ -181,7 +182,7 @@ const commits = stats.reforms.toLocaleString("en-US");
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Full Qwen stack over Gemini + Cohere</div>
-          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis (judge score 8.82 vs 7.17). Combined: R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month, no external dependencies in the main path.</p>
+          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis. Combined: R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month, no external dependencies in the main path.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>

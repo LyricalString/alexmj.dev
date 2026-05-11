@@ -33,7 +33,7 @@ import Base from "../../layouts/Base.astro";
             digital and physical assets. During 19 months on the engineering team (Jul 2022 – Feb 2024),
             I owned two load-bearing systems: the multi-signature governance and escrow engine that
             controls every custody withdrawal, and the 12-chain blockchain ingestion platform that monitors
-            the network in real time. Platform AUM grew from $200–300M when I joined to $500M by the time
+            the network in real time. Platform AUM grew from $200M when I joined to $500M by the time
             I left, with seizure workflows live across French, Belgian, US, EU, and Caribbean law
             enforcement. AUM figures are platform-attributable, not personal, but the systems that
             sustained that growth are mine.
@@ -113,7 +113,7 @@ import Base from "../../layouts/Base.astro";
   │      JWT-signed Fireblocks client — vaults, wallet addresses, balances,
   │      transactions, exchange accounts
   │
-  └──▶ ar-governance-service  (57% ownership)  [ go · MongoDB · WebSocket · RabbitMQ ]
+  └──▶ ar-governance-service  [ go · MongoDB · WebSocket · RabbitMQ ]
          │
          ├── escrow state machine
          │     PENDING → AWAITING_APPROVAL → APPROVED / DENIED / EXPIRED
@@ -187,44 +187,37 @@ import Base from "../../layouts/Base.astro";
         <div class="ownership-header">
           <span>SYSTEM / REPO</span>
           <span>STACK</span>
-          <span class="text-right">OWNED %</span>
           <span class="text-right">ROLE</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">ar-governance-service</span>
           <span class="ownership-dim">go · mongodb · rabbitmq · websocket</span>
-          <span class="ownership-dim text-right">57%</span>
           <span class="ownership-dim text-right">primary author</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">ar-chain-service (12 monitors)</span>
           <span class="ownership-dim">go workspaces · go-ethereum · rabbitmq</span>
-          <span class="ownership-dim text-right">30%</span>
           <span class="ownership-dim text-right">primary author</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">ar-frontends (8 React apps)</span>
           <span class="ownership-dim">react 18 · typescript · ant design · vite · turborepo</span>
-          <span class="ownership-dim text-right">30%</span>
           <span class="ownership-dim text-right">primary contributor</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">tokenbalancelambda / portfoliovaluelambda</span>
           <span class="ownership-dim">typescript · aws lambda · ccxt</span>
-          <span class="ownership-dim text-right">93–94%</span>
           <span class="ownership-dim text-right">sole author</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">ar-custodian-service</span>
           <span class="ownership-dim">go · fireblocks api · postgresql · gorm</span>
-          <span class="ownership-dim text-right">10%</span>
           <span class="ownership-dim text-right">contributor</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">platform dockerization (15+ services)</span>
           <span class="ownership-dim">docker · docker compose · air · aws ecs</span>
-          <span class="ownership-dim text-right">led effort</span>
-          <span class="ownership-dim text-right">dec 2023</span>
+          <span class="ownership-dim text-right">led effort (dec 2023)</span>
         </div>
       </div></div>
     </section>
@@ -234,7 +227,7 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <section class="section" data-section-tag="OUTCOME" title="What the platform became.">
       <p class="body-para">
-        During my tenure (Jul 2022 – Feb 2024) the platform grew from $200–300M AUM to $500M, supporting
+        During my tenure (Jul 2022 – Feb 2024) the platform grew from $200M AUM to $500M, supporting
         seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
         UK law enforcement, and agencies across North America and the Caribbean. The $4.91M seed round
         closed in January 2023 to hire engineers and expand operations. Since I left, Asset
@@ -275,9 +268,9 @@ import Base from "../../layouts/Base.astro";
 <style>
   @import "../../styles/case-study.css";
 
-  /* ── OWNERSHIP TABLE: asset-reality has 4 columns (2fr 2fr 1fr 1fr) ── */
+  /* ── OWNERSHIP TABLE: asset-reality has 3 columns (2fr 3fr 1fr) ── */
   .ownership-header,
   .ownership-row {
-    grid-template-columns: 2fr 2fr 1fr 1fr;
+    grid-template-columns: 2fr 3fr 1fr;
   }
 </style>

@@ -52,7 +52,7 @@ import Base from "../../layouts/Base.astro";
       <div class="numbers-cell">
         <div class="numbers-key">COMMITS</div>
         <div class="numbers-val">376</div>
-        <div class="numbers-sub">sole committer on 7 of 8 production repos</div>
+        <div class="numbers-sub">8 production repos</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">PROTOCOLS</div>
@@ -97,7 +97,7 @@ import Base from "../../layouts/Base.astro";
   │      └──▶ runestone-decoding  [ grpc microservice · LEB128/big.Int decoder ]
   │
   ├──▶ satstream-brc20-indexer    [ rust · mongo ]   brc-20 ops · cursed-inscription edge case
-  │      (15,831 LOC · sole committer)
+  │      (15,831 LOC)
   │
   ├──▶ satstream-delta-indexer    [ rust · scylladb · prometheus ]   per-address sat deltas
   │      gap scan + block continuity verification across 800K+ blocks
@@ -151,77 +151,9 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">MCP server exposes the full API surface to AI agents</div>
-          <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms — previously only accessible via REST — are now a native tool call. New onramp, same backend, zero additional indexing work.</p>
+          <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms are now a native tool call. New onramp, same backend, zero additional indexing work.</p>
         </div>
       </div>
-    </section>
-    </div>
-
-    <!-- ownership -->
-    <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="The nine repositories I shipped.">
-      <div class="ownership-scroll"><div class="ownership">
-        <div class="ownership-header">
-          <span>REPO</span>
-          <span>STACK</span>
-          <span class="text-right">OWNED / TOTAL</span>
-          <span class="text-right">ROLE</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ss-api</span>
-          <span class="ownership-dim">go · fiber · mongo · scylla · redis · stripe</span>
-          <span class="ownership-dim text-right">127 / 132</span>
-          <span class="ownership-dim text-right">owner</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">satstream-brc20-indexer</span>
-          <span class="ownership-dim">rust · mongo</span>
-          <span class="ownership-dim text-right">107 / 107</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ss-core</span>
-          <span class="ownership-dim">go · postgres · stripe</span>
-          <span class="ownership-dim text-right">31 / 31</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">satstream-delta-indexer</span>
-          <span class="ownership-dim">rust · scylladb · prometheus</span>
-          <span class="ownership-dim text-right">29 / 29</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ss-indexer</span>
-          <span class="ownership-dim">go · mongo · grpc</span>
-          <span class="ownership-dim text-right">21 / 23</span>
-          <span class="ownership-dim text-right">owner</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">satstream-delta-indexer-go</span>
-          <span class="ownership-dim">go · cassandra</span>
-          <span class="ownership-dim text-right">19 / 19</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">charms-extractor</span>
-          <span class="ownership-dim">python · cassandra · prometheus</span>
-          <span class="ownership-dim text-right">13 / 13</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ss-mcp</span>
-          <span class="ownership-dim">typescript · bun</span>
-          <span class="ownership-dim text-right">—</span>
-          <span class="ownership-dim text-right">sole</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">hex-cdk-infra</span>
-          <span class="ownership-dim">go · aws cdk · ecs · alb</span>
-          <span class="ownership-dim text-right">—</span>
-          <span class="ownership-dim text-right">owner</span>
-        </div>
-      </div></div>
     </section>
     </div>
 
@@ -232,10 +164,9 @@ import Base from "../../layouts/Base.astro";
         Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec
         including the cursed-inscription edge case, Runestone LEB128 encoding, inscription model) and
         production distributed systems (ScyllaDB write throughput, gRPC service boundaries, Prometheus
-        instrumentation, AWS CDK). Nine repositories, sole committer on seven of them. The adaptive
-        concurrency controller in ss-indexer reads live MongoDB shard load to tune its own worker pool
-        in real time. The MCP server extends the data layer to AI agents. The same Bitcoin data
-        previously only queryable via REST is now a native tool call for any MCP client.
+        instrumentation, AWS CDK). The adaptive concurrency controller in ss-indexer reads live MongoDB
+        shard load to tune its own worker pool in real time. The MCP server extends the data layer to
+        AI agents. Bitcoin state is a native tool call for any MCP client, no custom integration.
       </p>
     </section>
     </div>
@@ -261,12 +192,6 @@ import Base from "../../layouts/Base.astro";
 
 <style>
   @import "../../styles/case-study.css";
-
-  /* ── OWNERSHIP TABLE: satstream has 4 columns (2fr 2fr 1fr 1fr) ── */
-  .ownership-header,
-  .ownership-row {
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-  }
 
   /* ── NUMBERS STRIP: satstream has 5 cells (overrides shared 6-col) ── */
   @media (min-width: 768px) {

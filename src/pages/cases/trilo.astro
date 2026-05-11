@@ -85,7 +85,7 @@ import Base from "../../layouts/Base.astro";
         engineer, marketing advisor, project manager, SEO specialist, social media manager, support
         agent, e-commerce analyst) ship as full members of the workspace with persistent memory,
         tool access, and a place in the team structure. Trilo was designed from the first commit
-        to be AI-native rather than AI-sprinkled.
+        to be AI-native.
       </p>
     </section>
     </div>
@@ -143,12 +143,12 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Rust ↔ Swift FFI for native StoreKit</div>
-          <p class="decision-body">The desktop app is Tauri 2, but the desktop story isn't "Tauri over Electron". The Rust shell calls Swift directly via <code>extern "C"</code> for StoreKit 2 (five IPC functions covering fetch, purchase, entitlements, restore and the transaction listener) plus Sign in with Apple. <code>objc2</code> reaches into <code>NSApplication.dockTile</code> for badge counts where Tauri's API was broken, and tweaks <code>WKWebView</code> compositing to fix scroll artifacts in virtualized lists. The result is a native macOS App Store build, not a thin web shell. It ships from the same Rust workspace as Linux and Windows.</p>
+          <p class="decision-body">The desktop app is Tauri 2, but the desktop story isn't "Tauri over Electron". The Rust shell calls Swift directly via <code>extern "C"</code> for StoreKit 2 (five IPC functions covering fetch, purchase, entitlements, restore and the transaction listener) plus Sign in with Apple. <code>objc2</code> reaches into <code>NSApplication.dockTile</code> for badge counts where Tauri's API was broken, and tweaks <code>WKWebView</code> compositing to fix scroll artifacts in virtualized lists. The result is a native macOS App Store build that ships from the same Rust workspace as Linux and Windows.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Unified credit ledger across 5 billing surfaces</div>
-          <p class="decision-body">Stripe subscriptions, Stripe Billing Meters (metered AI overage), Stripe Connect (referral payouts), Apple IAP (8 product IDs across iOS + Mac App Store) and partner/promo plans all flow into a single Postgres credit ledger via a consistent <code>resetCreditsForNewPeriod()</code> regardless of which provider triggered the event. Referral commissions enforce a 30-day hold with atomic <code>eligible → processing</code> transitions before generating a Stripe Transfer with a deterministic idempotency key derived from sorted commission IDs. Full marketplace-payout correctness, not a webhook-and-pray sketch.</p>
+          <p class="decision-body">Stripe subscriptions, Stripe Billing Meters (metered AI overage), Stripe Connect (referral payouts), Apple IAP (8 product IDs across iOS + Mac App Store) and partner/promo plans all flow into a single Postgres credit ledger via a consistent <code>resetCreditsForNewPeriod()</code> regardless of which provider triggered the event. Referral commissions enforce a 30-day hold with atomic <code>eligible → processing</code> transitions before generating a Stripe Transfer with a deterministic idempotency key derived from sorted commission IDs. Full marketplace-payout correctness with deterministic idempotency.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
@@ -213,7 +213,7 @@ import Base from "../../layouts/Base.astro";
         routes steps to different coworker models; AI coworkers that connect to every Lexical page as
         live Yjs peers (they don't wait behind a slash command); a 77-tool MCP server in the Anthropic
         registry that lets external agents operate Trilo natively; and a Rust ↔ Swift FFI layer that
-        makes the macOS build a native App Store binary, not a thin web shell. The deploy pipeline
+        makes the macOS build a native App Store binary. The deploy pipeline
         posts its own status updates into Trilo's chat. The workspace runs itself.
       </p>
     </section>

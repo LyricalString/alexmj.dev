@@ -3,10 +3,10 @@
 // Lives in the topbar of every page, replacing the terminal prompt.
 ---
 
-<div class="brand">
+<a href="/" class="brand" aria-label="konar — home">
   <span class="brand-mark">konar</span>
   <span class="brand-est">est. 2026</span>
-</div>
+</a>
 
 <style>
   .brand {
@@ -14,6 +14,8 @@
     flex-direction: column;
     font-family: var(--font-mono);
     line-height: 1.2;
+    text-decoration: none;
+    color: inherit;
   }
 
   .brand-mark {

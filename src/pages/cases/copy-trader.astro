@@ -32,7 +32,7 @@ import Base from "../../layouts/Base.astro";
             Copy Trader is the real-time copy trading engine behind Autowealth. It copies trades from
             a master Bybit account to follower accounts across Bybit, Binance, and Hyperliquid via
             WebSocket streams. Parallelizing follower execution via <code>tokio::spawn</code> cut the copy cycle
-            from 20s to 4s for 11 followers. Position-based quantity math with BigDecimal precision,
+            from ~20s to ~4s. Position-based quantity math with BigDecimal precision,
             idempotent execution, and a periodic audit service with alert deduplication. 251 commits,
             deployed on AWS via CDK.
           </p>
@@ -49,7 +49,7 @@ import Base from "../../layouts/Base.astro";
       <div class="numbers-cell">
         <div class="numbers-key">COPY LATENCY</div>
         <div class="numbers-val">20s → 4s</div>
-        <div class="numbers-sub">11 followers · sequential → parallel tokio::spawn</div>
+        <div class="numbers-sub">sequential → parallel tokio::spawn</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">EXCHANGES</div>
@@ -121,7 +121,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the system.">
+    <section class="section" data-section-tag="DECISIONS" title="Five calls that define the system.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -136,22 +136,17 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">tokio::spawn per follower, join_all at the end</div>
-          <p class="decision-body">The original sequential model ran each follower's pipeline (leverage sync → equity fetch → position fetch → quantity calc → execute) one after another. With 11 followers and 1–9s exchange API calls each, that added up to ~20s per copy cycle. Moving every per-follower API call inside a <code>tokio::spawn</code> and collecting results with <code>join_all</code> brought the cycle to ~4s (measured on Bybit testnet with a 2-follower subset, extrapolated to 11). The tradeoff is that DB connection handling had to be restructured to avoid pool exhaustion under concurrent tasks.</p>
+          <p class="decision-body">The original sequential model ran each follower's pipeline (leverage sync → equity fetch → position fetch → quantity calc → execute) one after another. With per-follower exchange API calls of 1–9s each, that compounded to ~20s per copy cycle. Moving every per-follower call inside a <code>tokio::spawn</code> and collecting results with <code>join_all</code> brought the cycle to ~4s. The tradeoff is that DB connection handling had to be restructured to avoid pool exhaustion under concurrent tasks.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">DB connection pool exhaustion (production P0)</div>
+          <div class="decision-title">Scoped DB connections to survive async fanout</div>
           <p class="decision-body">With 15+ concurrent <code>tokio::spawn</code> tasks each holding an r2d2 <code>PooledConnection</code> through a 3–9s exchange API call, a 5-connection Supabase pool deadlocked. In async Rust, connections are held as long as the struct stays in scope. Crossing into HTTP territory while holding a connection blocks every other task waiting on the pool. The fix: acquire connection → idempotency check → drop connection (explicit <code>{}</code> scope) → exchange API call → acquire new connection → write result. Pool timing instrumentation was added afterward to detect regressions (warns if <code>pool.get()</code> exceeds 500ms).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Audit service with alert deduplication</div>
           <p class="decision-body">A periodic audit service compares master positions against follower positions via live API calls and detects <code>MissingPosition</code>, <code>ExtraPosition</code>, and <code>SizeMismatch</code> discrepancies. Without deduplication, a persistent 10% mismatch would spam Telegram on every audit cycle. The 1pp re-alert threshold means an alert fires only if deviation changed by at least 1 percentage point since the last notification, and a 60s grace period suppresses alerts while the copy engine catches up on recent trades. The system stays supervisable rather than noisy.</p>
-        </div>
-        <div class="decision reveal-item">
-          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Deliberate fork during testing refactor</div>
-          <p class="decision-body">A second repo (<code>bybit_copy_trader_clone</code>, 188 commits) was created as a deliberate fork during the handler architecture overhaul. Rather than rewiring the WebSocket handler and test harness on the production codebase mid-flight, the fork provided a safe space to iterate — then the changes were re-applied to the canonical repo via PRs. The fork ended in October 2025; all subsequent commits went back to the canonical 251-commit repo. The <code>audit/</code> and <code>indicators/</code> modules exist only in the canonical repo and were never present in the fork.</p>
         </div>
       </div>
     </section>

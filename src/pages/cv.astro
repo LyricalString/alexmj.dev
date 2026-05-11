@@ -46,21 +46,21 @@ import Base from "../layouts/Base.astro";
           <div class="work-name">
             <Link href="/cases/satstream" class="work-link">Satstream ↗</Link>
           </div>
-          <div class="work-desc">Bitcoin data layer. Sole engineer, 9 repos, 4 indexers, 5-language SDK, MCP server. Indexes full chain (~3 TB) into 4-database cluster. 2024–now.</div>
+          <div class="work-desc">Bitcoin data layer. 8 production repos, 4 indexers, 5-language SDK, MCP server. Indexes the full chain into a 4-database cluster (MongoDB · ScyllaDB · Postgres · Redis). 2024–now.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
             <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
           </div>
-          <div class="work-desc">190 years of Spanish law as Git. 12,260 laws, 42,866 commits. Custom int8 SIMD C kernel for hybrid BM25 + RAG retrieval: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. AGPL-3.0. 2026.</div>
+          <div class="work-desc">190 years of Spanish law as Git. 12,260 laws, 42,866 commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and self-hosted Qwen inference. R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month in inference cost. AGPL-3.0. 2026.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
             <Link href="/cases/asset-reality" class="work-link">Asset Reality ↗</Link>
           </div>
-          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Feb 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM grew from $200–300M to $500M during my 19-month tenure ($1B+ now post-tenure).</div>
+          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Feb 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM grew from $200M to $500M during my 19-month tenure ($1B+ now post-tenure).</div>
         </div>
 
         <div class="work-item">
@@ -70,7 +70,7 @@ import Base from "../layouts/Base.astro";
 
         <div class="work-item">
           <div class="work-name">CompoundFox + Autowealth</div>
-          <div class="work-desc">Algo strategy with a live, public performance dashboard. Distribution SaaS platform. Turborepo: backend, Telegram bot, dashboards, React Native, AWS CDK.</div>
+          <div class="work-desc">Algo strategy with a live, public performance dashboard (equity curve, Sharpe, deposit-adjusted drawdown, TWR from real Bybit history). Multi-tenant copy trading across Bybit, Binance, Hyperliquid. Per-community ECS via CDK, on-chain Splitter on BSC + Arbitrum, multi-chain gas station, four user surfaces (web · Expo mobile · Telegram bot · in-Telegram mini-app). 2025–now.</div>
         </div>
 
         <div class="work-item">
@@ -82,7 +82,7 @@ import Base from "../layouts/Base.astro";
           <div class="work-name">
             <Link href="/cases/crossflow" class="work-link">Crossflow Network ↗</Link>
           </div>
-          <div class="work-desc">L1 Cosmos SDK + TSS/MPC-ECDSA implementation. Gennaro-Goldfeder CCS 2018 (Feldman VSS, Paillier, ZK proofs). Cross-chain HTLC scripts, BandChain oracle via IBC.</div>
+          <div class="work-desc">Custom Cosmos SDK L1 with Gennaro-Goldfeder 2018 MPC-ECDSA threshold signatures (Feldman VSS, Paillier, Schnorr/DLN ZKPs, MtA). Dual-curve attesters cover Bitcoin and EVM (secp256k1) plus Solana (ed25519). HTLC scripts for atomic Bitcoin settlement, BandChain oracle via IBC. 2023–2024.</div>
         </div>
 
       </div>
@@ -101,7 +101,7 @@ import Base from "../layouts/Base.astro";
             <div class="exp-dates">2025 — present</div>
           </div>
           <p class="exp-desc">Designed and shipped Trilo: an AI workspace where autonomous coworker AIs participate as teammates, with persistent memory, a queryable knowledge graph and an MCP-native tool surface. Web (Next.js 16), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit voice agent. Custom DAG workflow orchestrator with checkpointing and dual-tier model routing with LLM observability. Live in production at trilo.chat.</p>
-          <div class="exp-stack">TypeScript · Rust · Python · Bun · Elysia · Supabase · Tauri · MCP · LiveKit</div>
+          <div class="exp-stack">TypeScript · Rust · Python · Next.js · Bun · Elysia · Drizzle · Supabase · Redis · Tauri · MCP · LiveKit</div>
         </div>
 
         <div class="exp-item reveal-item">
@@ -110,7 +110,7 @@ import Base from "../layouts/Base.astro";
             <div class="exp-role">Sole engineer</div>
             <div class="exp-dates">2024 — present</div>
           </div>
-          <p class="exp-desc">Built and operate Bitcoin's data infrastructure. 350+ commits across 9 repos. 4 indexers covering UTXOs, inscriptions, BRC-20, Runes, Ordinals charms. 5 OpenAPI-generated SDKs. MCP server (ss-mcp) for AI agent integration. Block explorer. AWS CDK infra. ScyllaDB migration from MongoDB for write throughput. gRPC microservice for Runestone decoding.</p>
+          <p class="exp-desc">Built and operate Bitcoin's data infrastructure. 376 commits across 8 production repos. 4 indexers covering UTXOs, inscriptions, BRC-20, Runes, Ordinals charms. 5 OpenAPI-generated SDKs. MCP server (ss-mcp) for AI agent integration. Block explorer. AWS CDK infra. ScyllaDB migration from MongoDB for write throughput. gRPC microservice for Runestone decoding.</p>
           <div class="exp-stack">Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK</div>
         </div>
 
@@ -120,7 +120,7 @@ import Base from "../layouts/Base.astro";
             <div class="exp-role">Software engineer</div>
             <div class="exp-dates">Jul 2022 — Feb 2024</div>
           </div>
-          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary owner of: (1) Governance/Escrow Engine: multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform: 12 chain monitors (ETH, BTC, BCH, LTC, DOGE, XRP, Solana, Tron, Polygon, Arbitrum, ERC-20) as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200–300M to $500M during my tenure; $1B+ now post-tenure.</p>
+          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary owner of: (1) Governance/Escrow Engine: multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform: 12 chain monitors as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200M to $500M during my tenure; $1B+ now post-tenure.</p>
           <div class="exp-stack">Go · TypeScript · React · Ant Design · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks</div>
         </div>
 
@@ -131,7 +131,7 @@ import Base from "../layouts/Base.astro";
             <div class="exp-dates">2021 — present</div>
           </div>
           <p class="exp-desc">Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS operating a real electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle (emails, repairs, shipping, invoicing). Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking select freelance engineering work.</p>
-          <div class="exp-stack">TypeScript · Next.js · Prisma · Rust · Bun · Docker · Traefik</div>
+          <div class="exp-stack">TypeScript · Next.js · Prisma · Bun · Docker · Traefik</div>
         </div>
 
       </div>
@@ -358,7 +358,7 @@ import Base from "../layouts/Base.astro";
     flex-direction: column;
   }
 
-  .exp-item reveal-item {
+  .exp-item {
     padding: 24px 0;
     border-top: 1px solid var(--rule);
   }

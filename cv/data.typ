@@ -24,7 +24,7 @@
   (
     company: "Satstream",
     role: "Sole engineer",
-    dates: "2024 — present",
+    dates: "2024 — 2025",
     body: "Built and ran the data infrastructure behind several Bitcoin analytics products. Four indexers and five client SDKs in production. Other teams used it so they didn't have to deal with chain-level complexity themselves.",
     stack: "Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK",
   ),

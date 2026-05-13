@@ -2,6 +2,9 @@
 import Brand from "../components/Brand.astro";
 import Link from "../components/Link.astro";
 import Base from "../layouts/Base.astro";
+import { getLeyAbiertaStats } from "../lib/leyabierta-stats";
+
+const { laws, commits } = await getLeyAbiertaStats();
 ---
 
 <Base
@@ -84,7 +87,7 @@ import Base from "../layouts/Base.astro";
           </div>
         </div>
         <p class="oss-desc">
-          190 years of Spanish legislation as a public Git repository: 12,260 laws, 42,866 commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
+          190 years of Spanish legislation as a public Git repository: {laws} laws, {commits} commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
         </p>
       </div>
 

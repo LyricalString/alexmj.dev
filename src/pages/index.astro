@@ -3,6 +3,9 @@ import Brand from "../components/Brand.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
 import Base from "../layouts/Base.astro";
+import { getLeyAbiertaStats } from "../lib/leyabierta-stats";
+
+const { laws, commits } = await getLeyAbiertaStats();
 ---
 
 <Base
@@ -65,7 +68,7 @@ import Base from "../layouts/Base.astro";
         </div>
         <div class="stat reveal-item">
           <div class="stat-label">laws indexed</div>
-          <div class="stat-value">12,260</div>
+          <div class="stat-value">{laws}</div>
           <div class="stat-sub">190 years · 484K embeddings · 17 jurisdictions</div>
         </div>
         <div class="stat reveal-item">
@@ -155,7 +158,7 @@ import Base from "../layouts/Base.astro";
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              190 years of Spanish legislation as a Git repository: 12,260 laws, 42,866 commits dated
+              190 years of Spanish legislation as a Git repository: {laws} laws, {commits} commits dated
               to their official publication. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C
               kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s
               to sub-second. Live at leyabierta.es.

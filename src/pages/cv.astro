@@ -2,6 +2,9 @@
 import Brand from "../components/Brand.astro";
 import Link from "../components/Link.astro";
 import Base from "../layouts/Base.astro";
+import { getLeyAbiertaStats } from "../lib/leyabierta-stats";
+
+const { laws, commits } = await getLeyAbiertaStats();
 ---
 
 <Base
@@ -53,7 +56,7 @@ import Base from "../layouts/Base.astro";
           <div class="work-name">
             <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
           </div>
-          <div class="work-desc">190 years of Spanish law as Git. 12,260 laws, 42,866 commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and self-hosted Qwen inference. R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month in inference cost. AGPL-3.0. 2026.</div>
+          <div class="work-desc">190 years of Spanish law as Git. {laws} laws, {commits} commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and self-hosted Qwen inference. R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month in inference cost. AGPL-3.0. 2026.</div>
         </div>
 
         <div class="work-item">
@@ -183,7 +186,7 @@ import Base from "../layouts/Base.astro";
         </div>
         <div class="oss-item">
           <div class="oss-name">Ley Abierta engine</div>
-          <div class="oss-desc">Hybrid BM25 + RAG retrieval with custom int8 SIMD C kernel. 12,260 laws, 42,866 commits. AGPL-3.0.</div>
+          <div class="oss-desc">Hybrid BM25 + RAG retrieval with custom int8 SIMD C kernel. {laws} laws, {commits} commits. AGPL-3.0.</div>
         </div>
       </div>
     </section>

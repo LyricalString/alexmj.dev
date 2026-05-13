@@ -3,27 +3,9 @@ import Brand from "../../components/Brand.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
 import Base from "../../layouts/Base.astro";
+import { getLeyAbiertaStats } from "../../lib/leyabierta-stats";
 
-// Live stats from leyabierta.es fetched at build time.
-// Falls back to hardcoded values if the API is unreachable
-// so a transient outage during deploy can't break the case study.
-const FALLBACK = { norms: 12268, reforms: 43868 };
-let stats = FALLBACK;
-try {
-  const res = await fetch("https://api.leyabierta.es/v1/stats", {
-    signal: AbortSignal.timeout(5000),
-  });
-  if (res.ok) {
-    const data = await res.json();
-    if (typeof data?.norms === "number" && typeof data?.reforms === "number") {
-      stats = { norms: data.norms, reforms: data.reforms };
-    }
-  }
-} catch {
-  // network/timeout/parse failure — keep fallback
-}
-const laws = stats.norms.toLocaleString("en-US");
-const commits = stats.reforms.toLocaleString("en-US");
+const { laws, commits } = await getLeyAbiertaStats();
 ---
 
 <Base

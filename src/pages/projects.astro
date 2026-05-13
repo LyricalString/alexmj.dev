@@ -134,7 +134,7 @@ const { laws, commits } = await getLeyAbiertaStats();
             <Link href="/cases/leyabierta" class="item-name item-name--linked">Ley Abierta</Link>
             <Link href="/cases/leyabierta" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">190 years of Spanish legislation as Git: {laws} laws, {commits} commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and self-hosted Qwen inference. R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month in inference cost. Live at leyabierta.es.</p>
+          <p class="item-blurb">190 years of Spanish legislation as Git: {laws} laws, {commits} commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and a fully self-hosted Qwen stack (embeddings, query analyzer, reranker, synthesis). $0/month in inference cost. Live at leyabierta.es.</p>
           <div class="item-stack">TypeScript · Bun · SQLite + FTS5 · C SIMD · Qwen · AGPL-3.0</div>
         </div>
 

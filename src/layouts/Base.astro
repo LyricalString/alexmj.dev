@@ -47,11 +47,11 @@ const {
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" />
     </noscript>
 
-    <!-- GSAP 3.15 + ScrollTrigger via CDN — is:raw prevents Astro/Vite from processing -->
-    <script is:raw defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
-    <script is:raw defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
-    <!-- Lenis 1.0.42 via CDN -->
-    <script is:raw defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- GSAP 3.15 + ScrollTrigger + Lenis 1.0.42 — self-hosted under /vendor/*
+         Served with 1-year immutable cache via public/_headers (CF Pages). -->
+    <script is:raw defer src="/vendor/gsap.min.js"></script>
+    <script is:raw defer src="/vendor/ScrollTrigger.min.js"></script>
+    <script is:raw defer src="/vendor/lenis.min.js"></script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -64,8 +64,9 @@ const {
          If GSAP fails to load entirely, the 1.5s-delayed animation reveals everything. -->
     <style is:global>
       @media (prefers-reduced-motion: no-preference) {
+        /* .hero-h1 deliberately omitted — it is the LCP element, must paint
+           immediately. Its animation now only translates, no opacity. */
         .whoami-line,
-        .hero-h1,
         .hero-meta,
         .hero-tag,
         .hero-lead,
@@ -203,7 +204,7 @@ const {
             if (!prefersReducedMotion) {
               var tl = gsap.timeline({ defaults: { ease: "power3.out" } });
               tl.fromTo(".whoami-line", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 })
-                .fromTo(".hero-h1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.2")
+                .from(".hero-h1", { y: 30, duration: 0.7 }, "-=0.2")
                 .fromTo(".hero-meta", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, "-=0.3")
                 .fromTo(".stats-strip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.2");
 
@@ -225,7 +226,7 @@ const {
               var tl2 = gsap.timeline({ defaults: { ease: "power3.out" } });
               tl2.fromTo(".hero-tag", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 })
                 .fromTo(".hero-meta", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.2")
-                .fromTo(".hero-h1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.3")
+                .from(".hero-h1", { y: 30, duration: 0.7 }, "-=0.3")
                 .fromTo(".hero-lead", { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, "-=0.3")
                 .fromTo(".hero-links", { opacity: 0 }, { opacity: 1, duration: 0.4 }, "-=0.3");
             } else {

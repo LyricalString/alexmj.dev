@@ -11,7 +11,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
 <Base
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
-  description={`Solo engineer behind Ley Abierta: ${laws} Spanish laws reconstructed as ${commits} Git commits, searchable via a hybrid retrieval engine with a custom int8 SIMD C kernel. R@1 from 50% (Gemini dense) through 28% (early hybrid regression) to 93% (full Qwen stack); index 7.6 GB → 1.4 GB. Live at leyabierta.es.`}
+  description={`Solo engineer behind Ley Abierta: ${laws} Spanish laws reconstructed as ${commits} Git commits, searchable via a hybrid retrieval engine with a custom int8 SIMD C kernel and a fully self-hosted Qwen stack. Index 7.6 GB → 1.4 GB. Live at leyabierta.es.`}
 >
   <div class="page">
 
@@ -36,11 +36,9 @@ const { laws, commits } = await getLeyAbiertaStats();
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
             Git commit dated to its official BOE publication: {laws} laws, {commits} commits,
             18 jurisdictions. On top of the repository lives a hybrid retrieval engine with a
-            hand-rolled int8 SIMD C kernel and a 100% Qwen stack: R@1 went from 50% (Gemini
-            dense baseline) through 28% (an early BM25 regression caught by the eval harness)
-            to 93% after migrating every component (embeddings, query analyzer, reranker,
-            and synthesis) to Qwen on a private inference server. $0/month in API costs.
-            AGPL-3.0. Live at leyabierta.es.
+            hand-rolled int8 SIMD C kernel and a fully self-hosted Qwen stack: embeddings,
+            query analyzer, reranker and synthesis all running on a private inference server.
+            $0/month in API costs. AGPL-3.0. Live at leyabierta.es.
           </p>
         </div>
         <div class="hero-links">
@@ -69,9 +67,9 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="numbers-sub">int8 simd · custom AVX2/NEON · -81%</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">RETRIEVAL R@1</div>
-        <div class="numbers-val">50% → 93%</div>
-        <div class="numbers-sub">gemini dense → qwen full stack</div>
+        <div class="numbers-key">RETRIEVAL</div>
+        <div class="numbers-val">hybrid</div>
+        <div class="numbers-sub">bm25 + rag · llm rerank · synthesis</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
         <div class="numbers-key">API COST</div>
@@ -125,7 +123,7 @@ const { laws, commits } = await getLeyAbiertaStats();
   │   │  SharedArrayBuffer worker pool      │                          │
   │   └────────────────────────────────────┘                          │
   │         +                                                         │
-  │   RRF fusion  →  R@1: 50% → 93%  ·  P50 vector stage: 2.1s → 0.8s │
+  │   RRF fusion  ·  P50 vector stage: 2.1s → 0.8s                    │
   │                                                                    │
   │   Stack: Qwen (embed + analyzer + rerank + synthesis) · $0/mo     │
   └───────────────────────────────────────────────────────────────────┘
@@ -160,12 +158,12 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">The BM25 regression that taught the stack</div>
-          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em>: R@1 dropped from 50% to 28% on real citizen queries. FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix wasn't tuning BM25 weights. It was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. The dip is the engineering story: a reproducible eval harness against a 50-question citizen set + a 57-question omnibus caught the regression before it reached prod.</p>
+          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em> on real citizen queries: FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix wasn't tuning BM25 weights. It was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. A reproducible eval harness against citizen and omnibus question sets caught the regression before it reached prod.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Full Qwen stack over Gemini + Cohere</div>
-          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings (+4 pp R@1), query analyzer (+4 pp), LLM reranker (+14 pp), and synthesis. Combined: R@1 50%→93% on the omnibus eval, citation precision 97.1%→99.6%, $0/month, no external dependencies in the main path.</p>
+          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings, query analyzer, LLM reranker, and synthesis. Combined: $0/month, no external dependencies in the main path.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -231,14 +229,13 @@ const { laws, commits } = await getLeyAbiertaStats();
       <p class="body-para">
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
-        citizen language. Retrieval R@1 went from 50% (Gemini dense baseline) to 93% (full Qwen
-        stack) after a structured A/B program that replaced every Gemini and Cohere component
-        (embeddings, query analyzer, reranker, and synthesis), each measured in isolation against
-        a 50-question citizen set and a 57-question omnibus. The early hybrid stack regressed to
-        28% R@1 because BM25 OR-expansion on citizen Spanish matched noise across centuries of
-        legal prose; the eval harness caught it before prod. Index size dropped from 7.6 GB to
-        1.4 GB via the custom int8 SIMD C kernel. $0/month in inference costs on a single
-        self-hosted VM. The whole stack is AGPL-3.0 and live at leyabierta.es.
+        citizen language. A structured A/B program replaced every Gemini and Cohere component
+        (embeddings, query analyzer, reranker, and synthesis) with self-hosted Qwen,
+        measured in isolation against citizen and omnibus question sets. An early hybrid
+        regression was caught by the eval harness before prod, when BM25 OR-expansion on
+        citizen Spanish matched noise across centuries of legal prose. Index size dropped from
+        7.6 GB to 1.4 GB via the custom int8 SIMD C kernel. $0/month in inference costs on a
+        single self-hosted VM. The whole stack is AGPL-3.0 and live at leyabierta.es.
       </p>
     </section>
     </div>

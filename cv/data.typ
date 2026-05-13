@@ -16,23 +16,23 @@
 #let experience = (
   (
     company: "Trilo",
-    role: "Tech lead",
+    role: "Sole architect",
     dates: "2025 — present",
-    body: "Tech lead on a two-person team. Own the technical build across web, backend, mobile, desktop and a voice agent. Co-shape product direction with the founder. Live at trilo.chat.",
+    body: "Sole architect of an AI workspace where 11 role-based coworker AIs join every doc as live peers with persistent memory and tool access. One monorepo ships web, iOS, Android, desktop and a Python transcription agent. Live at trilo.chat.",
     stack: "TypeScript · Rust · Python · Bun · Elysia · Supabase · Tauri · MCP · LiveKit",
   ),
   (
     company: "Satstream",
     role: "Sole engineer",
     dates: "2024 — 2025",
-    body: "Built and ran the data infrastructure behind several Bitcoin analytics products. Four indexers and five client SDKs in production. Other teams used it so they didn't have to deal with chain-level complexity themselves.",
+    body: "Multi-protocol Bitcoin indexer covering BRC-20, Runes and Ordinals charms. Four indexers write into a 4-database cluster for sub-second queries, exposed through a 14-category REST API, five SDKs, an MCP server and a block explorer. 376 commits across nine production repos.",
     stack: "Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK",
   ),
   (
     company: "Asset Reality",
-    role: "Lead engineer",
+    role: "Engineer",
     dates: "Jul 2022 — Feb 2024",
-    body: "Led two of the platform's main systems within a 3-person team: the multi-sig engine that signs off every withdrawal, and the 12-chain blockchain ingestion layer. AUM grew from $200M to $500M during my tenure ($1B+ today).",
+    body: "Owned two load-bearing systems at a government-grade crypto custody platform: the multi-sig governance engine signing off every withdrawal, and the 12-chain blockchain ingestion layer monitoring the network in real time. Platform AUM grew $200M → $500M over my 19-month tenure ($1B+ today).",
     stack: "Go · TypeScript · React · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks",
   ),
   (
@@ -54,14 +54,14 @@
   (
     name: "Crossflow Network",
     year: "2023 — 2024",
-    body: "Cross-chain DeFi lending protocol I designed and shipped at Hexmount. The kind of work institutional teams spend years trying to hire senior protocol engineers for.",
+    body: "Cross-chain DeFi lending protocol shipped at Hexmount. Custom Cosmos SDK L1 with MPC-ECDSA threshold signatures bridging Bitcoin, EVM and Solana.",
     stack: "Go · Cosmos SDK · CosmWasm · Solidity",
   ),
 )
 
 #let oss = (
   (name: "Node-Discord-Bot", desc: "Discord bot framework. 140★, 3M users across 28k servers. MIT."),
-  (name: "Lovely-Logs", desc: "Type-safe logging library — Node, browser, Lambda. Zero deps. MIT."),
+  (name: "Lovely-Logs", desc: "Type-safe logging library for Node, browser and Lambda. Zero deps. MIT."),
   (name: "Ley Abierta engine", desc: "Hybrid BM25 + RAG with custom int8 SIMD C kernel. AGPL-3.0."),
 )
 

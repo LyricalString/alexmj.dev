@@ -1,5 +1,6 @@
 ---
 import Brand from "../../components/Brand.astro";
+import EmailLink from "../../components/EmailLink.astro";
 import Link from "../../components/Link.astro";
 import Section from "../../components/Section.astro";
 import Base from "../../layouts/Base.astro";
@@ -17,7 +18,7 @@ import Base from "../../layouts/Base.astro";
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
         <Link href="/#case-studies">case studies</Link>
-        <Link href="mailto:alex@konar.es">contact</Link>
+        <EmailLink>contact</EmailLink>
       </nav>
     </header>
 
@@ -223,7 +224,7 @@ import Base from "../../layouts/Base.astro";
     <!-- footer -->
     <footer class="footer">
       <span>alejandro martinez · @lyricalstring · oss under konar technologies</span>
-      <span>alex@konar.es</span>
+      <EmailLink as="text" />
     </footer>
 
   </div>

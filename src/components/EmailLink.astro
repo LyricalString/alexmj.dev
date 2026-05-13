@@ -1,0 +1,34 @@
+---
+interface Props {
+  class?: string;
+  as?: "link" | "text";
+  withArrow?: boolean;
+}
+const { class: className, as = "link", withArrow = false } = Astro.props;
+const hasSlot = Astro.slots.has("default");
+const fallback = `alex [at] konar [dot] es${withArrow ? " →" : ""}`;
+const attrs = {
+  "data-email-user": "alex",
+  "data-email-domain": "konar.es",
+  ...(hasSlot ? {} : { "data-email-fill": withArrow ? "arrow" : "true" }),
+};
+---
+
+{as === "link" ? (
+  <a class:list={["link", "email-anchor", className]} href="#" {...attrs}>
+    {hasSlot ? <slot /> : fallback}
+  </a>
+) : (
+  <span class:list={[className]} {...attrs}>{fallback}</span>
+)}
+
+<style>
+  .link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 120ms ease;
+  }
+  .link:hover {
+    color: var(--accent);
+  }
+</style>

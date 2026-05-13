@@ -1,5 +1,6 @@
 ---
 import Brand from "../components/Brand.astro";
+import EmailLink from "../components/EmailLink.astro";
 import Link from "../components/Link.astro";
 import Pulse from "../components/Pulse.astro";
 import Base from "../layouts/Base.astro";
@@ -268,7 +269,7 @@ const { laws, commits } = await getLeyAbiertaStats();
             Open to fulltime roles and select freelance now.<br>
             Best reached by email. I read every message.
           </p>
-          <Link href="mailto:alex@konar.es" class="contact-email">alex@konar.es →</Link>
+          <EmailLink class="contact-email" withArrow />
           <div class="contact-channels">
             <Link href="https://github.com/lyricalstring" class="contact-channel">
               <span class="channel-key">github</span>

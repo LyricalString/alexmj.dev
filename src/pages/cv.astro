@@ -1,5 +1,6 @@
 ---
 import Brand from "../components/Brand.astro";
+import EmailLink from "../components/EmailLink.astro";
 import Link from "../components/Link.astro";
 import Base from "../layouts/Base.astro";
 import { getLeyAbiertaStats } from "../lib/leyabierta-stats";
@@ -9,7 +10,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
 <Base
   title="CV — Alejandro Martínez"
-  description="CV for Alejandro Martínez — software engineer based in Valencia."
+  description="CV for Alejandro Martínez - software engineer based in Valencia."
 >
   <div class="page">
 
@@ -28,7 +29,7 @@ const { laws, commits } = await getLeyAbiertaStats();
     <section class="hero">
       <div class="hero-tag">CV</div>
       <h1 class="hero-h1">Alejandro Martínez</h1>
-      <div class="hero-sub">Software engineer · Valencia · <Link href="mailto:alex@konar.es" class="email-link">alex@konar.es</Link></div>
+      <div class="hero-sub">Software engineer · Valencia · <EmailLink class="email-link" /></div>
       <p class="hero-summary">Sole engineer behind Satstream (Bitcoin data layer), Ley Abierta (190 years of Spanish law as Git), and Trilo (multi-platform AI workspace). Previously at Asset Reality, owning the multi-sig governance engine and 12-chain ingestion platform for a government-grade crypto custody platform.</p>
       <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
     </section>
@@ -213,7 +214,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <Link href="https://github.com/lyricalstring">github</Link>
         <Link href="https://www.linkedin.com/in/lyricalstring/">linkedin</Link>
         <Link href="https://x.com/lyricalstring">x</Link>
-        <Link href="mailto:alex@konar.es">email →</Link>
+        <EmailLink>email →</EmailLink>
       </span>
     </footer>
 

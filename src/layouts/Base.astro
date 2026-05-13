@@ -8,7 +8,7 @@ interface Props {
 
 const {
   title,
-  description = "Alejandro Martínez — software engineer building reliable backend systems.",
+  description = "Alejandro Martínez - software engineer building reliable backend systems.",
 } = Astro.props;
 ---
 
@@ -29,6 +29,9 @@ const {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+
+    {/* Preconnect to analytics origin so the Umami beacon doesn't wait on a fresh TLS handshake. */}
+    <link rel="preconnect" href="https://analytics.alexmj.dev" crossorigin />
 
     <!-- Geist + Geist Mono via Google Fonts — weights 400 & 500 only.
          Non-blocking: preload as style, promote to stylesheet on load. -->
@@ -134,6 +137,26 @@ const {
     <main>
       <slot />
     </main>
+
+    <!-- Email obfuscation — fills mailto: + visible text from data attrs on mount.
+         Pre-JS users see "alex [at] konar [dot] es"; scrapers parsing raw HTML never see the address. -->
+    <script is:raw>
+      (function () {
+        var nodes = document.querySelectorAll("[data-email-user]");
+        for (var i = 0; i < nodes.length; i++) {
+          var el = nodes[i];
+          var addr = el.getAttribute("data-email-user") + "@" + el.getAttribute("data-email-domain");
+          if (el.tagName === "A") {
+            el.setAttribute("href", "mailto:" + addr);
+            var fill = el.getAttribute("data-email-fill");
+            if (fill === "true") el.textContent = addr;
+            else if (fill === "arrow") el.textContent = addr + " →";
+          } else {
+            el.textContent = addr;
+          }
+        }
+      })();
+    </script>
 
     <!-- GSAP + Lenis motion system — vanilla JS, no imports -->
     <script is:raw>

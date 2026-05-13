@@ -46,6 +46,10 @@ const {
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    {import.meta.env.PROD && (
+      <script is:raw defer src="https://analytics.alexmj.dev/ley.js" data-website-id="fbf38663-a8b9-4cec-8f2e-b4c545e5e52a"></script>
+    )}
+
     <!-- Global responsive chrome — nav + footer shared across all pages -->
     <style is:global>
       /* ── Shared chrome: ≤767px ──────────────────────────────────────── */

@@ -30,13 +30,19 @@ const {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Geist + Geist Mono via Google Fonts — weights 400 & 500 only -->
+    <!-- Geist + Geist Mono via Google Fonts — weights 400 & 500 only.
+         Non-blocking: preload as style, promote to stylesheet on load. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400;500&display=swap" />
+    </noscript>
 
     <!-- GSAP 3.15 + ScrollTrigger via CDN — is:raw prevents Astro/Vite from processing -->
     <script is:raw defer src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
@@ -49,6 +55,29 @@ const {
     {import.meta.env.PROD && (
       <script is:raw defer src="https://analytics.alexmj.dev/ley.js" data-website-id="fbf38663-a8b9-4cec-8f2e-b4c545e5e52a"></script>
     )}
+
+    <!-- Pre-GSAP fallback — hide animated elements before GSAP loads so the
+         initial paint doesn't flash visible content at opacity:1 then snap to 0.
+         If GSAP fails to load entirely, the 1.5s-delayed animation reveals everything. -->
+    <style is:global>
+      @media (prefers-reduced-motion: no-preference) {
+        .whoami-line,
+        .hero-h1,
+        .hero-meta,
+        .hero-tag,
+        .hero-lead,
+        .hero-links,
+        .stats-strip,
+        .work-row,
+        .reveal-item {
+          opacity: 0;
+          animation: gsap-fallback 0s linear 1.5s forwards;
+        }
+        @keyframes gsap-fallback {
+          to { opacity: 1; }
+        }
+      }
+    </style>
 
     <!-- Global responsive chrome — nav + footer shared across all pages -->
     <style is:global>
@@ -102,7 +131,9 @@ const {
     </style>
   </head>
   <body>
-    <slot />
+    <main>
+      <slot />
+    </main>
 
     <!-- GSAP + Lenis motion system — vanilla JS, no imports -->
     <script is:raw>

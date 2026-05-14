@@ -11,7 +11,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
 <Base
   title="Ley Abierta — 190 years of Spanish law as Git | Alejandro Martínez"
-  description={`Solo engineer behind Ley Abierta: ${laws} Spanish laws reconstructed as ${commits} Git commits, searchable via a hybrid retrieval engine with a custom int8 SIMD C kernel and a fully self-hosted Qwen stack. Index 7.6 GB → 1.4 GB. Live at leyabierta.es.`}
+  description={`Solo engineer behind Ley Abierta: ${laws} Spanish laws reconstructed as ${commits} Git commits, searchable via a hybrid retrieval engine with a custom int8 SIMD C kernel and a Qwen stack on Nan (EU, no-log inference). Index 7.6 GB → 1.4 GB. Live at leyabierta.es.`}
 >
   <div class="page">
 
@@ -36,9 +36,9 @@ const { laws, commits } = await getLeyAbiertaStats();
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
             Git commit dated to its official BOE publication: {laws} laws, {commits} commits,
             18 jurisdictions. On top of the repository lives a hybrid retrieval engine with a
-            hand-rolled int8 SIMD C kernel and a fully self-hosted Qwen stack: embeddings,
-            query analyzer, reranker and synthesis all running on a private inference server.
-            $0/month in API costs. AGPL-3.0. Live at leyabierta.es.
+            hand-rolled int8 SIMD C kernel and a Qwen stack on Nan (EU servers, no-log
+            policy): embeddings, query analyzer, reranker and synthesis. AGPL-3.0. Live at
+            leyabierta.es.
           </p>
         </div>
         <div class="hero-links">
@@ -72,9 +72,9 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="numbers-sub">bm25 + rag · llm rerank · synthesis</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">API COST</div>
-        <div class="numbers-val">$0 / month</div>
-        <div class="numbers-sub">self-hosted opik · nan inference</div>
+        <div class="numbers-key">INFERENCE</div>
+        <div class="numbers-val">flat-rate</div>
+        <div class="numbers-sub">nan · eu servers · no-log · unmetered</div>
       </div>
     </div>
 
@@ -125,7 +125,7 @@ const { laws, commits } = await getLeyAbiertaStats();
   │         +                                                         │
   │   RRF fusion  ·  P50 vector stage: 2.1s → 0.8s                    │
   │                                                                    │
-  │   Stack: Qwen (embed + analyzer + rerank + synthesis) · $0/mo     │
+  │   Stack: Qwen on Nan (embed + analyzer + rerank + synthesis)      │
   └───────────────────────────────────────────────────────────────────┘
           │
           ▼
@@ -163,7 +163,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Full Qwen stack over Gemini + Cohere</div>
-          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro: three external APIs at ~$9/month with every query leaving the server. A/B evaluation replaced each component with Qwen running on a private inference server: embeddings, query analyzer, LLM reranker, and synthesis. Combined: $0/month, no external dependencies in the main path.</p>
+          <p class="decision-body">The original stack used Gemini embeddings, Gemini Flash Lite as the query analyzer, and Cohere Rerank 4 Pro, all routed through OpenRouter at ~$2 per 1,000 queries with every request leaving the server. A/B evaluation replaced each component with Qwen on Nan, an EU-based inference provider with a no-log policy: embeddings, query analyzer, LLM reranker, and synthesis. Queries stay in the EU, nothing is logged on the inference side.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -230,12 +230,12 @@ const { laws, commits } = await getLeyAbiertaStats();
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
         citizen language. A structured A/B program replaced every Gemini and Cohere component
-        (embeddings, query analyzer, reranker, and synthesis) with self-hosted Qwen,
-        measured in isolation against citizen and omnibus question sets. An early hybrid
-        regression was caught by the eval harness before prod, when BM25 OR-expansion on
-        citizen Spanish matched noise across centuries of legal prose. Index size dropped from
-        7.6 GB to 1.4 GB via the custom int8 SIMD C kernel. $0/month in inference costs on a
-        single self-hosted VM. The whole stack is AGPL-3.0 and live at leyabierta.es.
+        (embeddings, query analyzer, reranker, and synthesis) with Qwen on Nan, an EU-based
+        inference provider with a no-log policy, measured in isolation against citizen and
+        omnibus question sets. An early hybrid regression was caught by the eval harness before
+        prod, when BM25 OR-expansion on citizen Spanish matched noise across centuries of legal
+        prose. Index size dropped from 7.6 GB to 1.4 GB via the custom int8 SIMD C kernel.
+        Queries stay in the EU. The whole stack is AGPL-3.0 and live at leyabierta.es.
       </p>
     </section>
     </div>

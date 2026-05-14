@@ -3,7 +3,6 @@
 
 #set document(title: "CV — " + person.name, author: person.name)
 
-// Layout constants
 #let header-h = 40mm
 #let sidebar-w = 64mm
 #let page-w = 210mm
@@ -12,14 +11,13 @@
 
 #set page(
   paper: "a4",
-  margin: (top: header-h + 8mm, bottom: 12mm, left: sidebar-w + 11mm, right: 14mm),
+  margin: (top: header-h + 7mm, bottom: 8mm, left: sidebar-w + 11mm, right: 14mm),
   fill: bg,
   background: {
     place(top + left, rect(width: page-w, height: header-h, fill: accent))
     place(top + left, dy: header-h, rect(width: sidebar-w, height: page-h - header-h, fill: sidebar-bg))
   },
   foreground: {
-    // ── HEADER content: photo + name/role + contact ──
     place(top + left, dx: 16mm, dy: (header-h - photo-d) / 2,
       box(width: photo-d, height: photo-d, clip: true, radius: photo-d / 2,
         stroke: 1.5pt + white,
@@ -48,44 +46,28 @@
       })
     )
 
-    // ── SIDEBAR content ──
+    // ── SIDEBAR ──
     place(top + left, dx: 9mm, dy: header-h + 8mm, box(width: sidebar-w - 18mm, {
 
-      side-section("Stack")
+      // First section: no top rule needed — sits flush under header band.
+      block(below: 10pt, text(font: sans, size: 9pt, weight: 600, fill: accent, tracking: 0.8pt, upper("Stack")))
       for (label, items) in skills {
         skill-block(label, items)
       }
 
       side-section("Education")
       for ed in education {
-        block(below: 9pt, {
-          text(font: sans, size: 8.8pt, weight: 600, fill: ink, ed.school)
-          v(2pt)
-          text(font: sans, size: 8.2pt, fill: ink-soft, ed.degree)
-          if ed.dates != "" {
-            linebreak()
-            v(1pt)
-            text(font: mono, size: 7.4pt, fill: faint, ed.dates)
-          }
-        })
+        edu-entry(school: ed.school, degree: ed.degree, dates: ed.dates)
       }
 
       side-section("Languages")
       for l in languages {
-        block(below: 5pt, {
-          text(font: sans, size: 9.2pt, weight: 600, fill: ink, l.at(0))
-          h(6pt)
-          text(font: mono, size: 7.8pt, fill: faint, l.at(1))
-        })
+        lang-entry(l.at(0), l.at(1))
       }
 
       side-section("Open source")
       for o in oss {
-        block(below: 9pt, {
-          text(font: sans, size: 8.8pt, weight: 600, fill: ink, o.name)
-          v(2pt)
-          text(font: sans, size: 8.4pt, fill: ink-soft, o.desc)
-        })
+        oss-entry(name: o.name, desc: o.desc)
       }
     }))
   },
@@ -95,7 +77,6 @@
 #set par(leading: 0.6em, justify: false)
 #show link: it => underline(stroke: 0.4pt + faint, offset: 1.5pt, it)
 
-// ── MAIN COLUMN ──
 #main-section("Summary")
 #text(font: sans, size: 9.5pt, fill: ink-soft, summary)
 #v(4pt)

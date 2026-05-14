@@ -1,0 +1,9 @@
+# Bun install configuration.
+
+[install]
+# Refuse to install package versions published less than 3 days ago.
+# Defense against supply-chain attacks (malicious version published and
+# yanked within hours). Override with `--minimum-release-age=0` if needed.
+#
+# Unit: seconds. 3 days = 259200.
+minimumReleaseAge = 259200

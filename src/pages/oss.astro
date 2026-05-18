@@ -88,7 +88,7 @@ const { laws, commits } = await getLeyAbiertaStats();
           </div>
         </div>
         <p class="oss-desc">
-          190 years of Spanish legislation as a public Git repository: {laws} laws, {commits} commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel: Recall@5 from 2% to 66% on real citizen queries, median latency from ~120s to sub-second. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
+          190 years of Spanish legislation as a public Git repository: {laws} laws, {commits} commits dated to their official publication dates. Includes the hybrid BM25 + RAG retrieval engine with a custom int8 SIMD C kernel and a Qwen stack on Nan (EU, no-log inference): embeddings, query analyzer, reranker, synthesis. Live at <Link href="https://leyabierta.es" class="inline-link">leyabierta.es ↗</Link>.
         </p>
       </div>
 
@@ -120,29 +120,6 @@ const { laws, commits } = await getLeyAbiertaStats();
             <code>git clone https://github.com/lyricalstring/Node-Discord-Bot</code>
           </div>
         </div>
-      </div>
-
-      <!-- ord-rs / Bitcoin contrib -->
-      <div class="oss-item reveal-item">
-        <div class="oss-header">
-          <div class="oss-idx">04</div>
-          <div class="oss-meta">
-            <div class="oss-name-row">
-              <span class="oss-name">ord-rs &amp; Bitcoin tooling</span>
-              <span class="oss-org">contrib</span>
-            </div>
-            <div class="oss-badges">
-              <span class="badge">MIT / Apache-2.0</span>
-              <span class="badge">Rust</span>
-            </div>
-          </div>
-          <div class="oss-links">
-            <Link href="https://github.com/lyricalstring" class="oss-link">github ↗</Link>
-          </div>
-        </div>
-        <p class="oss-desc">
-          Contributions to ord-rs (Rust Ordinals library) and related Bitcoin protocol tooling used in Satstream's indexing pipeline. Working familiarity with btcd (Go Bitcoin node) and Bitcoin script internals from building the Runestone decoder microservice.
-        </p>
       </div>
 
     </div>
@@ -227,7 +204,7 @@ const { laws, commits } = await getLeyAbiertaStats();
     margin-top: 48px;
   }
 
-  .oss-item reveal-item {
+  .oss-item {
     padding: 32px 0;
     border-top: 1px solid var(--rule);
   }

@@ -94,7 +94,7 @@
   ),
   (
     school: "IES L'OM",
-    degree: "Middle School Diploma, Electrical & Electronics Engineering",
+    degree: "Vocational diploma, Electrical & Electronics",
     dates: "",
   ),
 )

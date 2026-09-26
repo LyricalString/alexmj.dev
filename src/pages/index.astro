@@ -6,7 +6,78 @@ import Pulse from "../components/Pulse.astro";
 import Base from "../layouts/Base.astro";
 import { getLeyAbiertaStats } from "../lib/leyabierta-stats";
 
-const { laws, commits } = await getLeyAbiertaStats();
+const { laws } = await getLeyAbiertaStats();
+
+const systems = [
+  {
+    href: "/cases/trilo",
+    name: "Trilo",
+    years: "2025 — now",
+    role: "sole engineer",
+    blurb:
+      "AI coworkers that edit the same doc you're in. Web, iOS, Android and desktop, plus a 77-tool MCP server in Anthropic's registry.",
+    pipeline: ["web · ios · android · desktop", "one backend", "mcp · 77 tools"],
+  },
+  {
+    href: "/cases/satstream",
+    name: "Satstream",
+    years: "2024 — 2025",
+    role: "sole engineer",
+    blurb:
+      "Bitcoin indexing API. The full chain, ~3 TB, in MongoDB, ScyllaDB, Postgres and Redis for sub-second queries. 8 repos.",
+    pipeline: ["bitcoin node", "4 indexers", "api", "5-language sdk"],
+  },
+  {
+    href: "/cases/crossflow",
+    name: "Crossflow Network",
+    years: "2023 — 2024",
+    role: "sole engineer",
+    blurb:
+      "Cross-chain loans where no single node ever holds the signing key. Threshold signatures on a custom Cosmos SDK L1.",
+    pipeline: ["btc · evm · solana", "tss attesters", "cosmos l1"],
+  },
+  {
+    href: "/cases/leyabierta",
+    name: "Ley Abierta",
+    years: "2026",
+    role: "sole author",
+    blurb: `190 years of Spanish law as a Git repo, one commit per BOE publication. Search on a hand-written SIMD C kernel.`,
+    pipeline: ["boe", "git", "bm25 + int8 vectors", "api"],
+  },
+  {
+    href: "/cases/asset-reality",
+    name: "Asset Reality",
+    years: "2022 — 2024",
+    role: "primary author",
+    blurb:
+      "Multi-sig withdrawal engine and chain ingestion for a crypto custody platform used by law enforcement.",
+    pipeline: ["12 chain monitors", "rabbitmq", "governance engine"],
+  },
+  {
+    href: "/cases/autowealth",
+    name: "Autowealth + CompoundFox",
+    years: "2025 — now",
+    role: "sole engineer",
+    blurb: "A live trading strategy with a public track record, updated daily.",
+    pipeline: ["bybit", "strategy", "daily public dashboard"],
+  },
+  {
+    href: "/cases/copy-trader",
+    name: "Copy Trader",
+    years: "2024 — 2026",
+    role: "sole engineer",
+    blurb: "Rust copy-trading engine. Copy cycle down from 20s to 4s with parallel order dispatch.",
+    pipeline: ["master ws", "position cache", "parallel orders"],
+  },
+];
+
+const telemetry = [
+  { label: "ley abierta", value: laws, sub: "laws as git · 190 years · 18 jurisdictions" },
+  { label: "satstream", value: "1B+", sub: "bitcoin transactions indexed · ~3 TB" },
+  { label: "autowealth", value: "5.60", sub: "sharpe · +56% roi since nov 2025" },
+  { label: "asset reality", value: "$500M", sub: "custody aum, from $200M in my 19 months" },
+  { label: "discord bot", value: "3M", sub: "users · 28k servers · 140★" },
+];
 ---
 
 <Base
@@ -19,279 +90,115 @@ const { laws, commits } = await getLeyAbiertaStats();
     <header class="topbar">
       <Brand />
       <nav class="nav">
-        <Link href="/projects">projects</Link>
+        <Link href="#systems">systems</Link>
         <Link href="/about">about</Link>
         <Link href="/oss">oss</Link>
         <Link href="/cv">cv</Link>
       </nav>
+      <Link href="#contact" class="status-link">
+        <Pulse color="var(--accent)" />
+        <span>available</span>
+      </Link>
     </header>
 
-    <!-- ── HERO BLOCK ────────────────────────────────────────────────── -->
+    <!-- ── HERO ─────────────────────────────────────────────────────── -->
     <section class="hero">
+      <div class="whoami-line">software engineer · valencia · remote · en / es</div>
 
-      <!-- whoami response line -->
-      <div class="whoami-line">
-        <div class="whoami-left">
-          <span class="chevron">&gt;</span>
-          <span class="name">alejandro martinez</span>
-          <span class="sep">·</span>
-          <span class="role">software engineer</span>
-          <span class="sep">·</span>
-          <span class="city">valencia</span>
-        </div>
-        <Link href="#contact" class="status-link">
-          <span class="status-inner">
-            <Pulse color="var(--accent)" />
-            <span class="status-text">available now</span>
-            <span class="status-arrow">↗</span>
-          </span>
-        </Link>
-      </div>
+      <div class="hero-grid">
+        <h1 class="hero-h1">
+          End-to-end production systems
+          <em>across AI, Bitcoin infrastructure, DeFi and <span class="nowrap">full-stack</span> SaaS.</em>
+        </h1>
 
-      <!-- H1 -->
-      <h1 class="hero-h1">
-        End-to-end production systems
-        across <span class="dim">AI</span>, <span class="dim">Bitcoin infrastructure</span>,
-        <span class="dim">DeFi</span> and <span class="nowrap">full-stack</span> SaaS.
-      </h1>
-
-      <!-- meta sub-line -->
-      <div class="hero-meta">
-        <span>en · es</span>
-        <span>remote</span>
-        <span>full-time · freelance · consulting</span>
-      </div>
-
-      <!-- numbers strip -->
-      <div class="stats-strip reveal-section">
-        <div class="stat reveal-item">
-          <div class="stat-label">bitcoin chain</div>
-          <div class="stat-value">1B+</div>
-          <div class="stat-sub">transactions indexed · ~3 TB · 8 repos</div>
-        </div>
-        <div class="stat reveal-item">
-          <div class="stat-label">laws indexed</div>
-          <div class="stat-value">{laws}</div>
-          <div class="stat-sub">190 years · 484K embeddings · 18 jurisdictions</div>
-        </div>
-        <div class="stat reveal-item">
-          <div class="stat-label">sharpe (live)</div>
-          <div class="stat-value">5.60</div>
-          <div class="stat-sub">+56% roi · since nov 2025 · public dashboard</div>
-        </div>
-        <div class="stat reveal-item">
-          <div class="stat-label">discord users</div>
-          <div class="stat-value">3M</div>
-          <div class="stat-sub">28k servers · 140★  · 92 forks</div>
-        </div>
-        <div class="stat reveal-item">
-          <div class="stat-label">custody aum</div>
-          <div class="stat-value">$200M → $500M</div>
-          <div class="stat-sub">platform aum during my 19 months · primary author of 2 core services</div>
+        <div class="hero-meta">
+          <p class="hero-note">Sole engineer on six of the seven systems below.</p>
+          <div class="hero-links">
+            <a href="#systems" class="line-link"><span>see the systems</span><span class="arrow">↓</span></a>
+            <EmailLink class="line-link line-link-last" withArrow />
+          </div>
+          <div class="hero-avail">full-time · freelance · consulting</div>
         </div>
       </div>
     </section>
 
-    <!-- ── SELECTED WORK ─────────────────────────────────────────────── -->
-    <section id="work" class="work-section">
-      <div class="work-label">
-        SELECTED WORK<br>
-        <span>2022 — 2026</span>
+    <!-- ── TELEMETRY ────────────────────────────────────────────────── -->
+    <section class="stats-strip" aria-label="Production figures">
+      <div class="tele-head">
+        <span>running in production</span>
+        <span class="tele-live"><span class="live-dot"></span>live</span>
       </div>
-      <div class="work-rows">
-
-        <a href="/cases/trilo" class="work-row">
-          <div class="row-idx">01</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Trilo</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              AI workspace where AI coworkers edit docs alongside people and run multi-step workflows.
-              Web, iOS, Android and desktop, a Python transcription agent, and a 77-tool MCP server
-              published in Anthropic's registry. Live at trilo.chat.
-            </p>
-            <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp; Rust&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; Bun · Elysia&nbsp;&nbsp;·&nbsp; Supabase&nbsp;&nbsp;·&nbsp; Tauri&nbsp;&nbsp;·&nbsp; MCP</div>
+      <div class="tele-grid">
+        {telemetry.map((t) => (
+          <div class="tele-cell">
+            <span class="tele-label">{t.label}</span>
+            <span class="tele-value">{t.value}</span>
+            <span class="tele-sub">{t.sub}</span>
           </div>
-          <div class="row-year">2025 — now</div>
-        </a>
-
-        <a href="/cases/satstream" class="work-row">
-          <div class="row-idx">02</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Satstream</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              Bitcoin indexing API. Sole engineer across 8 repos, from the indexers and a 5-language SDK
-              to the block explorer and AWS infra. Indexes the full chain (~3 TB) into MongoDB, ScyllaDB,
-              Postgres and Redis for sub-second queries.
-            </p>
-            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp; Go&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; ScyllaDB&nbsp;&nbsp;·&nbsp; MongoDB&nbsp;&nbsp;·&nbsp; gRPC&nbsp;&nbsp;·&nbsp; AWS CDK</div>
-          </div>
-          <div class="row-year">2024 — 2025</div>
-        </a>
-
-        <a href="/cases/crossflow" class="work-row">
-          <div class="row-idx">03</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Crossflow Network</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              Cross-chain loan protocol on a custom Cosmos SDK L1. Instead of a trusted multisig, a quorum
-              of attesters co-signs Bitcoin, EVM and Solana transactions with threshold signatures, and no
-              single node ever holds the full key. Sole engineer at Hexmount.
-            </p>
-            <div class="row-stack">Go&nbsp;&nbsp;·&nbsp; Cosmos SDK&nbsp;&nbsp;·&nbsp; CometBFT&nbsp;&nbsp;·&nbsp; TSS/MPC-ECDSA&nbsp;&nbsp;·&nbsp; secp256k1 + ed25519&nbsp;&nbsp;·&nbsp; IBC</div>
-          </div>
-          <div class="row-year">2023 — 2024</div>
-        </a>
-
-        <a href="/cases/leyabierta" class="work-row">
-          <div class="row-idx">04</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Ley Abierta</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              {laws} Spanish laws since 1835 as a Git repo, {commits} commits dated to their official
-              publication. Search combines BM25 with int8 vector search on a hand-written SIMD C kernel
-              (index 7.6 GB → 1.4 GB), with Qwen models on an EU no-log provider. Live at leyabierta.es.
-            </p>
-            <div class="row-stack">TypeScript · Bun&nbsp;&nbsp;·&nbsp; SQLite + FTS5&nbsp;&nbsp;·&nbsp; C SIMD&nbsp;&nbsp;·&nbsp; Qwen (EU, no-log)&nbsp;&nbsp;·&nbsp; AGPL-3.0</div>
-          </div>
-          <div class="row-year">2026</div>
-        </a>
-
-        <a href="/cases/asset-reality" class="work-row">
-          <div class="row-idx">05</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Asset Reality</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              19 months at a crypto custody platform used by law enforcement. Primary author of the
-              multi-sig withdrawal-approval engine and the chain-ingestion service. Platform AUM went
-              from $200M to $500M while I was there ($1B+ today).
-            </p>
-            <div class="row-stack">Go&nbsp;&nbsp;·&nbsp; TypeScript&nbsp;&nbsp;·&nbsp; MongoDB&nbsp;&nbsp;·&nbsp; Postgres&nbsp;&nbsp;·&nbsp; RabbitMQ&nbsp;&nbsp;·&nbsp; AWS · Terraform&nbsp;&nbsp;·&nbsp; Fireblocks</div>
-          </div>
-          <div class="row-year">2022 — 2024</div>
-        </a>
-
-        <a href="/cases/autowealth" class="work-row">
-          <div class="row-idx">06</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Autowealth + CompoundFox</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              Algorithmic trading platform with a live, public performance dashboard. CompoundFox is the
-              flagship strategy, with equity curve, Sharpe and drawdown updated daily. Autowealth is the
-              SaaS that distributes it: backend, Telegram bot, dashboards and mobile app in one Turborepo,
-              deployed with AWS CDK.
-            </p>
-            <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp; Bun&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; Jesse&nbsp;&nbsp;·&nbsp; Bybit API&nbsp;&nbsp;·&nbsp; AWS CDK</div>
-          </div>
-          <div class="row-year">2025 — now</div>
-        </a>
-
-        <a href="/cases/copy-trader" class="work-row">
-          <div class="row-idx">07</div>
-          <div class="row-body">
-            <div class="row-title-line">
-              <span class="row-name">Copy Trader</span>
-              <span class="case-badge">CASE STUDY ↗</span>
-            </div>
-            <p class="row-blurb">
-              Copy trading engine in Rust. Mirrors a master Bybit account to follower accounts on Bybit,
-              Binance and Hyperliquid over WebSocket, sizing by position with BigDecimal math and
-              idempotent execution.
-            </p>
-            <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp; Axum&nbsp;&nbsp;·&nbsp; PostgreSQL&nbsp;&nbsp;·&nbsp; AWS CDK&nbsp;&nbsp;·&nbsp; Telegram Bot&nbsp;&nbsp;·&nbsp; Twilio</div>
-          </div>
-          <div class="row-year">2024 — 2026</div>
-        </a>
-
+        ))}
       </div>
     </section>
 
-    <!-- ── OTHER PROJECTS ────────────────────────────────────────────── -->
-    <section class="other-section">
-      <div class="other-header">
-        <span class="other-label">OTHER PROJECTS · 3</span>
-        <Link href="/projects" class="other-view-all">view all →</Link>
+    <!-- ── SYSTEMS ──────────────────────────────────────────────────── -->
+    <section id="systems" class="systems reveal-section">
+      <div class="section-head">
+        <h2 class="section-h2">Systems</h2>
+        <span class="section-meta">2022 — 2026 · 07</span>
       </div>
-      <div class="other-grid">
 
-        <div class="other-row">
-          <div class="other-idx">08</div>
-          <div>
-            <div class="other-name">Tecpar</div>
-            <div class="other-blurb">b2b saas for an industrial electronics repair workshop (elevator boards) · sole engineer · internal admin, client portal, e-commerce, public site</div>
-          </div>
-        </div>
+      <div class="sys-list">
+        {systems.map((s, i) => (
+          <a href={s.href} class="sys reveal-item">
+            <span class="sys-idx">{String(i + 1).padStart(2, "0")}<span class="sys-years"><span class="sys-dot"> · </span>{s.years}</span></span>
+            <span class="sys-name">{s.name}</span>
+            <span class="sys-blurb">{s.blurb}</span>
+            <span class="sys-pipe">
+              {s.pipeline.map((step, j) => (
+                <>{j > 0 && <b> → </b>}<span class="nowrap">{step}</span></>
+              ))}
+            </span>
+            <span class="sys-role">{s.role}</span>
+            <span class="sys-cta">read the case →</span>
+          </a>
+        ))}
+      </div>
 
-        <div class="other-row">
-          <div class="other-idx">09</div>
-          <div>
-            <div class="other-name">LEB</div>
-            <div class="other-blurb">expo rn + next admin · events & membership platform for expats in bali · partner discounts, mapbox</div>
-          </div>
-        </div>
-
-        <div class="other-row">
-          <div class="other-idx">10</div>
-          <div>
-            <div class="other-name">Node-Discord-Bot</div>
-            <div class="other-blurb">oss bot · 3M users, 28k servers, 140★, 92 forks</div>
-          </div>
-        </div>
-
+      <div class="also">
+        <span class="also-label">also</span>
+        <span class="also-body">
+          Tecpar, B2B SaaS for an electronics repair workshop · LEB, events platform for expats in Bali ·
+          Node-Discord-Bot, 3M users
+        </span>
+        <Link href="/projects" class="also-link">all projects →</Link>
       </div>
     </section>
 
-    <!-- ── CONTACT ───────────────────────────────────────────────────── -->
-    <section id="contact" class="contact-section">
-      <div class="contact-grid">
-        <div class="contact-label">CONTACT</div>
-        <div class="contact-body">
-          <p class="contact-lead">
-            Open to full-time roles, freelance and consulting.<br>
-            Best reached by email. I read every message.
-          </p>
-          <EmailLink class="contact-email" withArrow />
-          <div class="contact-channels">
-            <Link href="https://github.com/lyricalstring" class="contact-channel">
-              <span class="channel-key">github</span>
-              <span class="channel-handle">github.com/lyricalstring</span>
-              <span class="channel-arrow">↗</span>
-            </Link>
-            <Link href="https://www.linkedin.com/in/lyricalstring/" class="contact-channel">
-              <span class="channel-key">linkedin</span>
-              <span class="channel-handle">linkedin.com/in/lyricalstring</span>
-              <span class="channel-arrow">↗</span>
-            </Link>
-            <Link href="https://x.com/lyricalstring" class="contact-channel">
-              <span class="channel-key">x</span>
-              <span class="channel-handle">@lyricalstring</span>
-              <span class="channel-arrow">↗</span>
-            </Link>
-          </div>
+    <!-- ── CONSULTING + CONTACT ─────────────────────────────────────── -->
+    <section id="contact" class="closing">
+      <div class="consult reveal-section">
+        <div class="reveal-item">
+          <span class="consult-label">consulting</span>
+          <p class="consult-text">Bring a technical problem. I scope it and lay out the options and their tradeoffs.</p>
+          <EmailLink class="consult-link" withArrow />
+        </div>
+      </div>
+
+      <div class="contact">
+        <span class="contact-label">contact</span>
+        <p class="contact-lead">Open to full-time roles, freelance and consulting.</p>
+        <EmailLink class="contact-email" />
+        <div class="contact-channels">
+          <Link href="https://github.com/lyricalstring" class="line-link"><span class="key">github</span><span>lyricalstring ↗</span></Link>
+          <Link href="https://www.linkedin.com/in/lyricalstring/" class="line-link"><span class="key">linkedin</span><span>lyricalstring ↗</span></Link>
+          <Link href="https://x.com/lyricalstring" class="line-link"><span class="key">x</span><span>@lyricalstring ↗</span></Link>
+          <a href="/cv.pdf" class="line-link line-link-last"><span class="key">cv</span><span>pdf ↓</span></a>
         </div>
       </div>
     </section>
 
     <!-- ── FOOTER ────────────────────────────────────────────────────── -->
     <footer class="footer">
-      <span class="footer-left">alejandro martinez · @lyricalstring</span>
+      <span class="footer-left">alejandro martínez · @lyricalstring</span>
       <span class="footer-links">
         <Link href="/about">about</Link>
         <Link href="/cv">cv</Link>
@@ -301,577 +208,587 @@ const { laws, commits } = await getLeyAbiertaStats();
     </footer>
 
   </div>
-
 </Base>
 
-
 <style>
-  /* ── PAGE WRAPPER ─────────────────────────────────────────────────── */
+  /* ── PAGE ─────────────────────────────────────────────────────────── */
   .page {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 28px 32px 56px;
-    box-sizing: border-box;
-  }
-
-  /* ── TOP BAR ──────────────────────────────────────────────────────── */
-  .topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    padding-bottom: 24px;
-  }
-
-  .nav {
-    display: flex;
-    gap: 28px;
-    color: var(--dim);
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-
-  /* ── HERO BLOCK ───────────────────────────────────────────────────── */
-  .hero {
-    padding-top: 88px;
-    padding-bottom: 64px;
-    border-top: 1px solid var(--rule);
-  }
-
-  /* whoami response line */
-  .whoami-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    gap: 12px;
-  }
-
-  .whoami-left {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    flex-wrap: wrap;
-    min-width: 0;
-  }
-
-  .chevron { color: var(--faint); }
-  .name { color: var(--fg); font-weight: 500; }
-  .role { color: var(--dim); }
-  .city { color: var(--dim); }
-  .sep { color: var(--faint); }
-
-  /* status pill */
-  .status-link {
-    color: var(--fg);
-    text-decoration: none;
-    transition: opacity 120ms ease;
-    padding: 4px 0;
-    flex-shrink: 0;
-  }
-
-  .status-inner {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--fg);
-    max-width: calc(100vw - 2rem);
-    overflow: hidden;
+    padding: 0 20px 48px;
   }
 
   .nowrap {
     white-space: nowrap;
   }
 
-  .status-text {
+  /* ── TOP BAR ──────────────────────────────────────────────────────── */
+  .topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    row-gap: 4px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    gap: 22px;
+    color: var(--dim);
+  }
+
+  .nav :global(a) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    color: var(--dim);
+  }
+
+  .topbar :global(.status-link) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
     color: var(--fg);
+    text-decoration: none;
     white-space: nowrap;
   }
 
-  .status-arrow {
-    color: var(--accent);
-    transition: transform 120ms ease;
+  /* ── HERO ─────────────────────────────────────────────────────────── */
+  .hero {
+    padding: 56px 0 40px;
   }
 
-  @media (hover: hover) {
-    .status-link:hover .status-arrow {
-      transform: translate(2px, -2px);
-    }
-
-    .status-link:hover {
-      color: var(--fg);
-    }
-  }
-
-  /* H1 */
-  .hero-h1 {
-    font-family: var(--font-sans);
-    font-size: var(--text-hero-home);
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
-    margin: 36px 0 0;
-    max-width: 920px;
-  }
-
-  .dim { color: var(--dim); }
-
-  /* meta sub-line */
-  .hero-meta {
-    display: flex;
-    gap: 32px;
+  .whoami-line {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--faint);
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-
-  /* numbers strip */
-  .stats-strip {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 32px;
-    margin-top: 64px;
-    padding-top: 28px;
-    border-top: 1px solid var(--rule);
-  }
-
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--faint);
-    letter-spacing: 0.06em;
-  }
-
-  .stat-value {
-    font-family: var(--font-sans);
-    font-size: 26px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--fg);
-    margin-top: 4px;
-    word-break: break-word;
-  }
-
-  .stat-sub {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--faint);
-    margin-top: 4px;
-  }
-
-  /* ── SELECTED WORK ────────────────────────────────────────────────── */
-  .work-section {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 0;
-    padding-top: 16px;
-  }
-
-  .work-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-    position: sticky;
-    top: 24px;
-    align-self: start;
-  }
-
-  .work-label span {
-    color: var(--faint);
-  }
-
-  .work-rows {
-    overflow: hidden;
-  }
-
-  .work-row {
-    display: grid;
-    grid-template-columns: 44px 1fr 80px;
-    padding: 22px 0;
-    border-top: 1px solid var(--rule);
-    align-items: baseline;
-    color: inherit;
-    text-decoration: none;
-    transition: background 120ms ease;
-    /* CSS fallback: visible when GSAP hasn't run or reduced-motion is on */
-    opacity: 1;
-  }
-
-  @media (hover: hover) {
-    .work-row:hover {
-      background: rgba(255, 255, 255, 0.015);
-    }
-
-    .work-row:hover .row-name { color: var(--accent); }
-    .work-row:hover .case-badge { color: var(--accent); border-color: var(--dim); }
-  }
-
-  .row-idx {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--faint);
-  }
-
-  .row-title-line {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-
-  .row-name {
-    font-family: var(--font-sans);
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    color: var(--fg);
-  }
-
-  .case-badge {
-    font-family: var(--font-mono);
-    font-size: 10px;
     color: var(--dim);
-    letter-spacing: 0.08em;
-    border: 1px solid var(--rule);
-    padding: 2px 6px;
-  }
-
-  .row-blurb {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--dim);
-    margin: 8px 0 0;
-    max-width: 640px;
-    line-height: 1.55;
-  }
-
-  .row-stack {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--faint);
-    margin-top: 12px;
-    letter-spacing: 0.02em;
-  }
-
-  .row-year {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--faint);
-    text-align: right;
-  }
-
-  /* ── OTHER PROJECTS ───────────────────────────────────────────────── */
-  .other-section {
-    margin-top: 88px;
-    padding-top: 28px;
-    border-top: 1px solid var(--rule);
-  }
-
-  .other-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
     margin-bottom: 28px;
   }
 
-  .other-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-  }
-
-  .other-view-all {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--dim);
-  }
-
-  .other-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0 56px;
-  }
-
-  .other-row {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    padding: 18px 0;
-    border-top: 1px solid var(--rule);
-    align-items: baseline;
-    color: inherit;
-    text-decoration: none;
-    transition: background 120ms ease;
-  }
-
-  @media (hover: hover) {
-    a.other-row:hover {
-      background: rgba(255, 255, 255, 0.015);
-    }
-
-    a.other-row:hover .other-name { color: var(--accent); }
-  }
-
-  .other-idx {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--faint);
-  }
-
-  .other-name {
-    font-family: var(--font-sans);
-    font-size: 15px;
-    font-weight: 500;
+  .hero-h1 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.75rem, 7.4vw + 0.5rem, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
     color: var(--fg);
   }
 
-  .other-blurb {
-    font-family: var(--font-sans);
-    font-size: 13px;
+  .hero-h1 em {
     color: var(--dim);
-    margin-top: 4px;
   }
 
-  /* ── CONTACT ──────────────────────────────────────────────────────── */
-  .contact-section {
-    margin-top: 96px;
-    padding-top: 28px;
+  .hero-meta {
+    margin-top: 36px;
+  }
+
+  .hero-note {
+    margin: 0 0 18px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+
+  .hero-avail {
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* Full-width link rows: label left, arrow right. Used across the page. */
+  .line-link,
+  :global(.line-link) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
     border-top: 1px solid var(--rule);
-    scroll-margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: color 120ms ease;
   }
 
-  .contact-grid {
+  :global(.line-link-last) {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .line-link .arrow {
+    color: var(--accent);
+  }
+
+  :global(.line-link .key) {
+    color: var(--dim);
+  }
+
+  @media (hover: hover) {
+    .line-link:hover,
+    :global(.line-link:hover) {
+      color: var(--accent);
+    }
+  }
+
+  /* ── TELEMETRY ───────────────────────────────────────────────────── */
+  .stats-strip {
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    padding: 16px 16px 4px;
+  }
+
+  .tele-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--dim);
+  }
+
+  .tele-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .tele-cell {
     display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: 12px;
+    row-gap: 4px;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .tele-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .tele-value {
+    font-family: var(--font-serif);
+    font-size: 36px;
+    line-height: 1;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tele-sub {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faint);
+  }
+
+  /* ── SYSTEMS ─────────────────────────────────────────────────────── */
+  .systems {
+    padding-top: 80px;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .section-h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1;
+  }
+
+  .section-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  .sys {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 14px;
+    column-gap: 12px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .sys-idx {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+    align-self: center;
+  }
+
+  .sys-role {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    border: 1px solid var(--rule-strong);
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+
+  .sys-name,
+  .sys-blurb,
+  .sys-pipe,
+  .sys-cta {
+    grid-column: 1 / -1;
+  }
+
+  .sys-name {
+    font-family: var(--font-serif);
+    font-size: 38px;
+    line-height: 1;
+    transition: color 120ms ease;
+  }
+
+  .sys-blurb {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+
+  .sys-pipe {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--dim);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    padding: 10px 12px;
+  }
+
+  .sys-pipe b {
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .sys-cta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  @media (hover: hover) {
+    .sys:hover .sys-name {
+      color: var(--accent);
+    }
+  }
+
+  .also {
+    display: grid;
+    gap: 8px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--dim);
+  }
+
+  .also-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  .also :global(.also-link) {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg);
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* ── CONSULTING + CONTACT ────────────────────────────────────────── */
+  .closing {
+    display: grid;
+    gap: 72px;
+    padding-top: 56px;
+  }
+
+  .consult {
+    padding: 28px 20px;
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .consult-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: #4a4843;
+  }
+
+  .consult-text {
+    margin: 14px 0 0;
+    font-family: var(--font-serif);
+    font-size: 32px;
+    line-height: 1.05;
+  }
+
+  .consult :global(.consult-link) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--bg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--bg);
   }
 
   .contact-label {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-  }
-
-  .contact-body {
-    max-width: 720px;
+    color: var(--dim);
   }
 
   .contact-lead {
-    font-family: var(--font-sans);
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.4;
-    color: var(--fg);
-    margin: 0 0 28px;
+    margin: 14px 0 0;
+    font-family: var(--font-serif);
+    font-size: 40px;
+    line-height: 1;
   }
 
-  .contact-email {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 18px;
+  .contact :global(.contact-email) {
+    display: block;
+    margin-top: 28px;
+    padding-bottom: 12px;
+    font-family: var(--font-serif);
+    font-size: clamp(2.25rem, 5vw + 0.5rem, 4rem);
+    line-height: 1.1;
     color: var(--accent);
     text-decoration: none;
-    padding: 10px 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 28px;
-    letter-spacing: -0.01em;
-    width: 100%;
-    box-sizing: border-box;
-    transition: opacity 120ms ease;
-  }
-
-  @media (hover: hover) {
-    .contact-email:hover {
-      opacity: 0.7;
-    }
-  }
-
-  .contact-channels {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .contact-channel {
-    display: grid;
-    grid-template-columns: 110px 1fr 24px;
-    gap: 16px;
-    align-items: baseline;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--dim);
-    text-decoration: none;
-    transition: color 120ms ease;
-  }
-
-  @media (hover: hover) {
-    .contact-channel:hover {
-      color: var(--fg);
-    }
-  }
-
-  .channel-key {
-    color: var(--faint);
-    letter-spacing: 0.06em;
-    font-size: 11px;
-  }
-
-  .channel-handle {
-    color: var(--fg);
-    min-width: 0;
     overflow-wrap: anywhere;
   }
 
-  .channel-arrow {
-    color: var(--accent);
-    text-align: right;
+  .contact-channels {
+    margin-top: 24px;
   }
 
-  /* ── FOOTER ───────────────────────────────────────────────────────── */
+  /* ── FOOTER ──────────────────────────────────────────────────────── */
   .footer {
-    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 72px;
     padding-top: 24px;
     border-top: 1px solid var(--rule);
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--faint);
-  }
-
-  .footer-left {
     color: var(--faint);
   }
 
   .footer-links {
     display: flex;
-    gap: 24px;
-    color: var(--dim);
+    gap: 18px;
   }
 
-  /* ── REVEAL ANIMATIONS ──────────────────────────────────────────── */
-  .reveal-section {
-    overflow: hidden;
+  .footer-links :global(a) {
+    color: var(--faint);
   }
 
-  .reveal-item {
-    opacity: 0;
-  }
-
-  /* ── RESPONSIVE — ≤768px (tablet portrait + mobile) ────────────────── */
-  @media (max-width: 767px) {
+  /* ── ≥ 768px ─────────────────────────────────────────────────────── */
+  @media (min-width: 768px) {
     .page {
-      padding: 20px 16px 40px;
+      padding: 0 48px 56px;
     }
 
-    /* Nav: stack brand + nav on separate lines */
     .topbar {
-      flex-direction: column;
-      gap: 12px;
-      padding-bottom: 16px;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      column-gap: 40px;
+      padding: 18px 0;
     }
 
     .nav {
-      gap: 20px;
+      grid-column: 2;
+      grid-row: 1;
+      gap: 32px;
     }
 
-    /* Hero */
+    .tele-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 24px;
+    }
+
+    .consult {
+      padding: 40px;
+    }
+  }
+
+  /* ── ≥ 1024px ────────────────────────────────────────────────────── */
+  @media (min-width: 1024px) {
+    .page {
+      padding: 0 80px 64px;
+    }
+
     .hero {
-      padding-top: 48px;
-      padding-bottom: 40px;
+      padding: 112px 0 88px;
     }
 
-    .whoami-line {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      column-gap: 80px;
+      align-items: end;
     }
 
-    /* stats-strip: 2-column at ≤768px */
+    .hero-meta {
+      margin-top: 0;
+      padding-bottom: 10px;
+    }
+
     .stats-strip {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 40px;
+      padding: 0;
     }
 
-    /* work section: collapse sidebar label into top of column */
-    .work-section {
-      grid-template-columns: 1fr;
+    .tele-head {
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--rule);
     }
 
-    .work-label {
-      position: static;
-      margin-bottom: 8px;
+    .tele-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 0;
     }
 
-    /* work-row: hide year, stack content */
-    .work-row {
-      grid-template-columns: 36px minmax(0, 1fr);
+    .tele-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 20px 22px;
+      border-top: 0;
+      border-right: 1px solid var(--rule);
     }
 
-    .row-year {
+    .tele-cell:last-child {
+      border-right: 0;
+    }
+
+    .tele-value {
+      font-size: 48px;
+    }
+
+    .systems {
+      padding-top: 128px;
+    }
+
+    .section-h2 {
+      font-size: 72px;
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+    }
+
+    .sys {
+      grid-template-columns: 110px minmax(0, 3fr) minmax(0, 4fr) minmax(0, 3fr) 130px;
+      column-gap: 32px;
+      align-items: baseline;
+      padding: 30px 0;
+    }
+
+    .sys-idx,
+    .sys-name,
+    .sys-blurb,
+    .sys-pipe,
+    .sys-role {
+      grid-row: 1;
+      grid-column: auto;
+    }
+
+    .sys-years {
+      display: block;
+      margin-top: 6px;
+    }
+
+    .sys-dot {
       display: none;
     }
 
-    /* other projects: single column */
-    .other-grid {
-      grid-template-columns: 1fr;
+    .sys-name {
+      font-size: 36px;
     }
 
-    /* contact: collapse sidebar */
-    .contact-grid {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 12px;
+    .sys-blurb {
+      font-size: 15px;
     }
 
-    .contact-channel {
-      grid-template-columns: 80px minmax(0, 1fr) 20px;
-      gap: 8px;
-    }
-
-    /* footer: stack vertically */
-    .footer {
-      flex-direction: column;
-      gap: 8px;
-      align-items: flex-start;
-    }
-
-    .footer-links {
-      gap: 16px;
-    }
-  }
-
-  /* ── RESPONSIVE — ≤480px (phone portrait) ──────────────────────────── */
-  @media (max-width: 479px) {
-    /* stats-strip: single column */
-    .stats-strip {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .stat-value {
-      font-size: 22px;
-    }
-
-    /* nav items: ensure 44px touch targets */
-    .nav {
-      gap: 16px;
-    }
-
-    .whoami-left {
+    .sys-pipe {
+      background: none;
+      border: 0;
+      padding: 0;
       font-size: 11px;
+    }
+
+    .sys-role {
+      justify-self: end;
+    }
+
+    .sys-cta {
+      display: none;
+    }
+
+    .also {
+      grid-template-columns: 110px minmax(0, 1fr) auto;
+      column-gap: 32px;
+      align-items: baseline;
+    }
+
+    .closing {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+      padding-top: 128px;
+    }
+
+    .consult {
+      padding: 48px;
+    }
+
+    .consult-text {
+      font-size: 44px;
+    }
+
+    .contact {
+      padding-top: 48px;
+    }
+
+    .contact-lead {
+      display: none;
     }
   }
 </style>

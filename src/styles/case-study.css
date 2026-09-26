@@ -93,10 +93,11 @@
 
 /* MAJ-3: fluid hero h1 */
 .hero-h1 {
+  font-family: var(--font-serif);
   font-size: var(--text-hero-case);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
   margin: 16px 0 0;
   max-width: 880px;
   text-wrap: pretty;
@@ -105,7 +106,7 @@
 @media (min-width: 768px) {
   .hero-h1 {
     margin: 20px 0 0;
-    line-height: 1.02;
+    line-height: 0.98;
   }
 }
 

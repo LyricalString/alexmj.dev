@@ -494,15 +494,20 @@ const telemetry = [
   }
 
   /* ── SYSTEMS ─────────────────────────────────────────────────────── */
-  .systems {
-    padding-top: 80px;
+  /* Major sections share one boundary: a hairline, fixed space above and below. */
+  .systems,
+  .ai,
+  .closing {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule-strong);
   }
 
+  /* Mobile: title on its own line, meta below. Side by side from 768px. */
   .section-head {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
+    flex-direction: column;
+    gap: 10px;
     margin-bottom: 8px;
   }
 
@@ -599,9 +604,8 @@ const telemetry = [
   .also {
     display: grid;
     gap: 8px;
-    padding: 24px 0;
+    padding: 24px 0 0;
     border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
     font-size: 14px;
     line-height: 1.6;
     color: var(--dim);
@@ -623,10 +627,6 @@ const telemetry = [
   }
 
   /* ── AI SYSTEMS ──────────────────────────────────────────────────── */
-  .ai {
-    padding-top: 80px;
-  }
-
   .ai-lead {
     margin: 12px 0 8px;
     max-width: 640px;
@@ -683,9 +683,8 @@ const telemetry = [
 
   .ai-also {
     margin: 0;
-    padding: 20px 0;
+    padding: 20px 0 0;
     border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
     font-size: 14px;
     line-height: 1.6;
     color: var(--dim);
@@ -695,7 +694,6 @@ const telemetry = [
   .closing {
     display: grid;
     gap: 72px;
-    padding-top: 56px;
   }
 
   .consult {
@@ -864,8 +862,18 @@ const telemetry = [
       font-size: 48px;
     }
 
-    .systems {
-      padding-top: 128px;
+    .systems,
+    .ai,
+    .closing {
+      margin-top: 112px;
+      padding-top: 56px;
+    }
+
+    .section-head {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
     }
 
     .section-h2 {
@@ -930,10 +938,6 @@ const telemetry = [
       align-items: baseline;
     }
 
-    .ai {
-      padding-top: 128px;
-    }
-
     .ai-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -943,7 +947,6 @@ const telemetry = [
     .closing {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 32px;
-      padding-top: 128px;
     }
 
     .consult {

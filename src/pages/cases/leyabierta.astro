@@ -20,7 +20,7 @@ const { laws, commits } = await getLeyAbiertaStats();
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -80,7 +80,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Public law that's practically inaccessible.">
+    <Section tag="THE BRIEF" title="Public law that's practically inaccessible.">
       <p class="body-para">
         Spanish legislation is nominally public: the BOE exposes every law via an XML API. But
         the raw feed is a stream of documents, not a navigable history. No diff between versions,
@@ -90,12 +90,12 @@ const { laws, commits } = await getLeyAbiertaStats();
         is a commit, each jurisdiction a folder, each version a checkable diff. The result is 190
         years of legislation that's queryable and diffable, with full version history.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="BOE to queryable repository in four stages.">
+    <Section tag="ARCHITECTURE" title="BOE to queryable repository in four stages.">
       <pre class="arch-diagram">  BOE open data API  (XML/JSON · no auth required)
           │
           ▼
@@ -138,12 +138,12 @@ const { laws, commits } = await getLeyAbiertaStats();
   Infrastructure: self-hosted Docker · Watchtower · GitHub Actions cron
                   (daily BOE ingestion) · Resend (email alerts)
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that define the project.">
+    <Section tag="DECISIONS" title="Six calls that define the project.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -176,12 +176,12 @@ const { laws, commits } = await getLeyAbiertaStats();
           <p class="decision-body">Public legal infrastructure shouldn't be capturable by a SaaS. AGPL guarantees that any deployment that serves Ley Abierta over a network must publish its modifications. The license matches the project's politics: if public law is a commons, so is the engine that makes it searchable.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="One monorepo, four packages, sole author.">
+    <Section tag="OWNERSHIP" title="One monorepo, four packages, sole author.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>PACKAGE</span>
@@ -220,12 +220,12 @@ const { laws, commits } = await getLeyAbiertaStats();
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="190 years of law, queryable in real time.">
+    <Section tag="OUTCOME" title="190 years of law, queryable in real time.">
       <p class="body-para">
         Ley Abierta turns 190 years of Spanish legislation, technically public and practically
         unusable, into a queryable Git repository with a search layer that holds up on real
@@ -237,7 +237,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         prose. Index size dropped from 7.6 GB to 1.4 GB via the custom int8 SIMD C kernel.
         Queries stay in the EU. The whole stack is AGPL-3.0 and live at leyabierta.es.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->
@@ -266,6 +266,13 @@ const { laws, commits } = await getLeyAbiertaStats();
   .ownership-header,
   .ownership-row {
     grid-template-columns: 2fr 2fr 1fr 1fr;
+  }
+
+  /* commits column is mostly "—"; drop it from the stacked mobile rows */
+  @media (max-width: 767px) {
+    .ownership .ownership-row > :nth-child(3) {
+      display: none;
+    }
   }
 
   /* ── NUMBERS STRIP: leyabierta has 5 cells (overrides shared 6-col) ── */

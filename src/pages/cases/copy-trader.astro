@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -76,7 +76,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
+    <Section tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
       <p class="body-para">
         Copy trading sounds simple: master opens a position, followers open the same position.
         The reality is harder. Each follower has different margin, different leverage, and
@@ -87,12 +87,12 @@ import Base from "../../layouts/Base.astro";
         live API state rather than accumulating from a running counter, so rounding drift across
         multiple position increases doesn't accumulate.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Master → WebSocket → position cache → parallel follower execution.">
+    <Section tag="ARCHITECTURE" title="Master → WebSocket → position cache → parallel follower execution.">
       <pre class="arch-diagram">  ┌─ master account (Bybit only)
   │      WebSocket stream → ExecutionType::Trade events
   │
@@ -117,12 +117,12 @@ import Base from "../../layouts/Base.astro";
   │
   └──▶ notification_pipeline    [ telegram bot · twilio sms · dashboard push ]
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Five calls that define the system.">
+    <Section tag="DECISIONS" title="Five calls that define the system.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -150,12 +150,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">A periodic audit service compares master positions against follower positions via live API calls and detects <code>MissingPosition</code>, <code>ExtraPosition</code>, and <code>SizeMismatch</code> discrepancies. Without deduplication, a persistent 10% mismatch would spam Telegram on every audit cycle. The 1pp re-alert threshold means an alert fires only if deviation changed by at least 1 percentage point since the last notification, and a 60s grace period suppresses alerts while the copy engine catches up on recent trades. The system stays supervisable rather than noisy.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="The full stack: Rust backend, Next.js dashboard, AWS CDK infra.">
+    <Section tag="OWNERSHIP" title="The full stack: Rust backend, Next.js dashboard, AWS CDK infra.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -193,12 +193,12 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="A production copy trading engine that handles real money.">
+    <Section tag="OUTCOME" title="A production copy trading engine that handles real money.">
       <p class="body-para">
         Copy Trader handles the full coordination problem: three exchanges with divergent precision,
         notional, and position-mode rules; WebSocket streams that can disconnect (manual restart
@@ -210,7 +210,7 @@ import Base from "../../layouts/Base.astro";
         from 20s to 4s. That engine runs under Autowealth's CompoundFox subscribers with a periodic
         audit service watching for position drift.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

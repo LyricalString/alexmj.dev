@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -76,19 +76,19 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Make Bitcoin queryable like a database.">
+    <Section tag="THE BRIEF" title="Make Bitcoin queryable like a database.">
       <p class="body-para">
         Bitcoin's RPC is fine for nodes and miserable for applications. Anyone shipping a wallet,
         explorer or DeFi product against BRC-20, Runes or Ordinals ends up writing the same indexer
         twice: once badly, once again with the lessons. Satstream is that indexer, written once,
         operated as infrastructure, exposed as a clean REST API and as an MCP server for AI agents.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
+    <Section tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
       <pre class="arch-diagram">  ┌─ bitcoin node (full archival)
   │
   ├──▶ ss-indexer            [ go · mongo · grpc ]   core blocks · runic / non-runic split
@@ -113,12 +113,12 @@ import Base from "../../layouts/Base.astro";
   sdk · go    sdk · js    sdk · py    sdk · rust    sdk · ts    ss-mcp (bun)
       (5 sdks generated from one openapi spec)               llm-native surface
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that earned their complexity.">
+    <Section tag="DECISIONS" title="Six calls that earned their complexity.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -151,12 +151,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms are now a native tool call. New onramp, same backend, zero additional indexing work.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="Bitcoin infrastructure, built solo.">
+    <Section tag="OUTCOME" title="Bitcoin infrastructure, built solo.">
       <p class="body-para">
         Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec
         including the cursed-inscription edge case, Runestone LEB128 encoding, inscription model) and
@@ -165,7 +165,7 @@ import Base from "../../layouts/Base.astro";
         shard load to tune its own worker pool in real time. The MCP server extends the data layer to
         AI agents. Bitcoin state is a native tool call for any MCP client, no custom integration.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

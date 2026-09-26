@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -84,7 +84,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="A trading strategy with proof.">
+    <Section tag="THE BRIEF" title="A trading strategy with proof.">
       <p class="body-para">
         Most algo strategies are sold on backtests or cherry-picked screenshots. Autowealth publishes
         live performance: full equity curve, Sharpe, drawdown, and TWR pulled from real Bybit trade
@@ -92,12 +92,12 @@ import Base from "../../layouts/Base.astro";
         CompoundFox is the flagship strategy. Autowealth is the platform behind it: copy trading across
         three exchanges, per-community deployment, and on-chain fee invoicing.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Turborepo monorepo: backend, bots, dashboards, mobile, on-chain, infra.">
+    <Section tag="ARCHITECTURE" title="Turborepo monorepo: backend, bots, dashboards, mobile, on-chain, infra.">
       <pre class="arch-diagram">  ┌─ Turborepo monorepo
   │
   ├── apps/
@@ -133,12 +133,12 @@ import Base from "../../layouts/Base.astro";
          ExchangeBotStack per community · shared VPC/cluster via CF exports
          512MB / 0.25 CPU per bot · VPS Docker alternative
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Nine calls that define the platform.">
+    <Section tag="DECISIONS" title="Nine calls that define the platform.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -186,12 +186,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">The notification router fans events out by user preference (Expo push, Telegram, or both), but security-critical events (API key changes, withdrawals, delinquency) always go to both channels regardless of preference. Push tokens flagged as invalid by Expo get deactivated automatically on the next send failure, so dead devices don't accumulate and concurrent sends don't waste retry budget. Critical alerts never depend on a single transport.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="The full stack, built and shipped sole.">
+    <Section tag="OWNERSHIP" title="The full stack, built and shipped sole.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -249,12 +249,12 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">sole</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="Live algo trading with public, auditable performance.">
+    <Section tag="OUTCOME" title="Live algo trading with public, auditable performance.">
       <p class="body-para">
         CompoundFox is running live on Bybit with performance published at stats.autowealth.trade.
         Equity curve, Sharpe, deposit-adjusted drawdown, and TWR are calculated from real position
@@ -268,7 +268,7 @@ import Base from "../../layouts/Base.astro";
         surfaces ship from one monorepo: web dashboard, Expo mobile app, Telegram bot, and an
         in-Telegram mini-app.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -77,7 +77,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
+    <Section tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
       <p class="body-para">
         One product that replaces chat, task management, docs, spreadsheets, video calls, calendar,
         and social media scheduling, connected by a knowledge graph that remembers context across
@@ -88,12 +88,12 @@ import Base from "../../layouts/Base.astro";
         tool access, and a place in the team structure. Trilo was designed from the first commit
         to be AI-native.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Every surface, one backend, one monorepo.">
+    <Section tag="ARCHITECTURE" title="Every surface, one backend, one monorepo.">
       <pre class="arch-diagram">  ┌─ trilo monorepo  (turborepo · bun workspaces · biome)
   │
   ├──▶ apps/web              [ next.js 16 · react 19 · tailwind · zustand · yjs ]
@@ -118,12 +118,12 @@ import Base from "../../layouts/Base.astro";
   │
   └─ packages/db             [ postgres via supabase · drizzle ]
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that shaped the architecture.">
+    <Section tag="DECISIONS" title="Six calls that shaped the architecture.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -156,12 +156,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">Sammy is a Python LiveKit agent that delivers real-time multi-speaker transcription. It is not a conversational voice AI. The interesting work is in infrastructure: per-participant STT stream isolation with a custom 100ms / 5-frame backpressure drop policy, dual-path delivery (Redis WebSocket for authenticated members and a LiveKit data channel for guests), and a 15-second TTL timestamp dedup that survives LiveKit's forked-child dispatcher model where in-memory sets in the parent are invisible to the child.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- scope table -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="SCOPE" title="Every surface I built and shipped.">
+    <Section tag="SCOPE" title="Every surface I built and shipped.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>PLATFORM</span>
@@ -200,12 +200,12 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">in production</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
+    <Section tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
       <p class="body-para">
         Trilo is live at trilo.chat with paid plans, on the App Store, and as a Tauri desktop
         binary, all from a single monorepo, one architect. The technical bets that made this
@@ -216,7 +216,7 @@ import Base from "../../layouts/Base.astro";
         makes the macOS build a native App Store binary. The deploy pipeline
         posts its own status updates into Trilo's chat. The workspace runs itself.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -85,7 +85,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
+    <Section tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
       <p class="body-para">
         When governments seize crypto, the asset doesn't sit in an evidence bag. It needs to be
         transferred into custody, tracked across jurisdictions, approved for disbursement by multiple
@@ -95,12 +95,12 @@ import Base from "../../layouts/Base.astro";
         document trails, and APIs that law enforcement agencies actually integrate with. I joined in
         July 2022 and owned two of the platform's critical subsystems for the next 19 months.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="Multi-sig governance + 12-chain ingestion.">
+    <Section tag="ARCHITECTURE" title="Multi-sig governance + 12-chain ingestion.">
       <pre class="arch-diagram">  ┌─ blockchain layer (12 chains: ETH · BTC · BCH · LTC · DOGE · XRP · SOL · TRON · MATIC · ARB · ERC-20)
   │
   ├──▶ ar-chain-service          [ go workspaces · per-chain monitor modules ]
@@ -140,12 +140,12 @@ import Base from "../../layouts/Base.astro";
                                     seizure wallet flows · portfolio views
                                     external-ID chain-of-custody system
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Six calls that shaped the platform.">
+    <Section tag="DECISIONS" title="Six calls that shaped the platform.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -178,12 +178,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. Without the external-ID layer, correlating an Asset Reality record to a court filing requires manual lookup, an audit failure in a courtroom context.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="Systems and contributions by repo.">
+    <Section tag="OWNERSHIP" title="Systems and contributions by repo.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>SYSTEM / REPO</span>
@@ -221,12 +221,12 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">led effort (dec 2023)</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="What the platform became.">
+    <Section tag="OUTCOME" title="What the platform became.">
       <p class="body-para">
         During my tenure (Jul 2022 – Feb 2024) the platform grew from $200M AUM to $500M, supporting
         seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
@@ -244,7 +244,7 @@ import Base from "../../layouts/Base.astro";
         Fireblocks integration, and Go microservices at production scale are the portable skills;
         the disposition toward correctness is harder to name and more valuable.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

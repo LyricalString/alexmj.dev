@@ -17,7 +17,7 @@ import Base from "../../layouts/Base.astro";
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#case-studies">case studies</Link>
+        <Link href="/#work">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -82,7 +82,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="THE BRIEF" title="Bridges keep getting drained. Threshold signatures fix the root cause.">
+    <Section tag="THE BRIEF" title="Bridges keep getting drained. Threshold signatures fix the root cause.">
       <p class="body-para">
         Most cross-chain bridges are trusted multisigs: a small set of operators hold keys, sign
         withdrawals, and collect $600M into one target every 18 months. The fix is not better
@@ -92,12 +92,12 @@ import Base from "../../layouts/Base.astro";
         Crossflow ships that primitive on a purpose-built Cosmos SDK chain: borrow against
         cross-chain collateral with no custodian and no bridge operator to bribe.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- architecture -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="ARCHITECTURE" title="L1 chain, distributed attester, per-chain observer.">
+    <Section tag="ARCHITECTURE" title="L1 chain, distributed attester, per-chain observer.">
       <pre class="arch-diagram">  Cosmos SDK / CometBFT L1  (CFN_testnet-1 · uCFN)
   ├── x/loan      loan lifecycle · collateral accounting
   ├── x/tss       keygen · resharing · signing coordination
@@ -124,12 +124,12 @@ import Base from "../../layouts/Base.astro";
 
   BandChain  ──[ IBC ]──▶  x/oracle  →  collateral price feeds
 </pre>
-    </section>
+    </Section>
     </div>
 
     <!-- decisions -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="DECISIONS" title="Five calls that shaped the protocol.">
+    <Section tag="DECISIONS" title="Five calls that shaped the protocol.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
@@ -162,12 +162,12 @@ import Base from "../../layouts/Base.astro";
           <p class="decision-body">Bitcoin and EVM chains sign over secp256k1; Solana signs over ed25519. One attester fleet handles both curves from a single keygen ceremony per curve. Two separate fleets would double the operational surface: upgrades, monitoring, and key ceremonies run twice for no security benefit.</p>
         </div>
       </div>
-    </section>
+    </Section>
     </div>
 
     <!-- ownership -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OWNERSHIP" title="The modules and services I built.">
+    <Section tag="OWNERSHIP" title="The modules and services I built.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>MODULE / SERVICE</span>
@@ -210,12 +210,12 @@ import Base from "../../layouts/Base.astro";
           <span class="ownership-dim text-right">sole engineer</span>
         </div>
       </div></div>
-    </section>
+    </Section>
     </div>
 
     <!-- outcome -->
     <div class="reveal-section">
-    <section class="section" data-section-tag="OUTCOME" title="Threshold signatures on a custom L1, built solo.">
+    <Section tag="OUTCOME" title="Threshold signatures on a custom L1, built solo.">
       <p class="body-para">
         Crossflow reached testnet (CFN_testnet-1) with a working keygen, resharing, and
         per-transaction signing ceremony across Bitcoin, EVM, and Solana. The engineering
@@ -225,7 +225,7 @@ import Base from "../../layouts/Base.astro";
         oracle over IBC. That is the primitive stack that bridge security and institutional DeFi
         teams spend years hiring for. Built as one engineer at Hexmount.
       </p>
-    </section>
+    </Section>
     </div>
 
     <!-- next case -->

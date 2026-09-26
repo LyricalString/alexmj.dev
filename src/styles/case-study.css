@@ -361,25 +361,35 @@
 
 /* ── OWNERSHIP TABLE — MAJ-8 ── */
 /*
- * On mobile we switch to a scrollable container so the multi-column
- * table stays scannable. Option (b) from audit recommendation.
+ * On mobile each row stacks into a card: component + role on the first
+ * line, stack (and any extra columns) full-width below. No horizontal
+ * scroll. Per-file column templates only apply from 768px up.
  */
-.ownership-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
 .ownership {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--dim);
   max-width: 920px;
-  min-width: 560px; /* keep columns legible when scrolling */
 }
 
-@media (min-width: 768px) {
-  .ownership {
-    min-width: 0;
+@media (max-width: 767px) {
+  .ownership .ownership-header {
+    display: none;
+  }
+
+  .ownership .ownership-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+
+  .ownership .ownership-row > :last-child {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .ownership .ownership-row > :not(:first-child):not(:last-child) {
+    grid-column: 1 / -1;
+    text-align: left;
   }
 }
 

@@ -8,16 +8,16 @@ import Base from "../../layouts/Base.astro";
 
 <Base
   title="Asset Reality — crypto custody for law enforcement | Alejandro Martínez"
-  description="Engineer at Asset Reality (Jul 2022–Feb 2024). Owned the multi-sig governance engine and the blockchain ingestion service (12 chain monitors) at a crypto custody platform used by law enforcement, which grew from $200M to $500M AUM during my 19-month tenure ($1B+ AUM today)."
+  description="Engineer at Asset Reality (Jul 2022–Feb 2024), a crypto custody platform used by law enforcement. Primary author of the withdrawal-approval engine and the chain-monitoring service. Platform AUM went from $200M to $500M during my 19 months."
 >
-  <div class="page"> 
+  <div class="page">
 
     <!-- top bar -->
     <header class="topbar">
       <Brand />
       <nav class="topbar-nav">
         <Link href="/">← back</Link>
-        <Link href="/#work">case studies</Link>
+        <Link href="/#systems">case studies</Link>
         <EmailLink>contact</EmailLink>
       </nav>
     </header>
@@ -28,15 +28,13 @@ import Base from "../../layouts/Base.astro";
         <div class="hero-tag">CASE STUDY · 05</div>
         <div class="hero-main">
           <div class="hero-meta">CRYPTO CUSTODY FOR LAW ENFORCEMENT &nbsp;·&nbsp; 2022 — 2024 &nbsp;·&nbsp; ENGINEER</div>
-          <h1 class="hero-h1">Multi-sig withdrawal engine and chain ingestion for a crypto custody platform used by law enforcement.</h1>
+          <h1 class="hero-h1">Withdrawal approvals and chain monitoring for a crypto custody platform used by law enforcement.</h1>
           <p class="hero-lead">
-            Asset Reality is the platform governments use to seize, manage, and dispose of
-            digital and physical assets. During 19 months on the engineering team (Jul 2022 – Feb 2024),
-            I owned two load-bearing systems: the multi-signature governance and escrow engine that
-            controls every custody withdrawal, and the blockchain ingestion service whose 12 chain monitors
-            track the network in real time. Platform AUM grew from $200M when I joined to $500M by the time
-            I left, with seizure workflows live across French, Belgian, US, EU, and Caribbean law
-            enforcement. AUM figures are for the whole platform.
+            Asset Reality is the platform governments use to seize, hold and dispose of digital assets.
+            In 19 months on the engineering team (Jul 2022 – Feb 2024) I was primary author of two core
+            systems: the engine that decides whether funds can leave custody, and the service that watches
+            the blockchains the platform holds assets on. Platform AUM went from $200M when I joined to
+            $500M when I left. These figures are for the whole platform.
           </p>
         </div>
         <div class="hero-links">
@@ -49,36 +47,26 @@ import Base from "../../layouts/Base.astro";
     </div>
 
     <!-- numbers strip -->
-    <div class="numbers">
+    <div class="numbers numbers--four">
       <div class="numbers-cell">
         <div class="numbers-key">TENURE</div>
         <div class="numbers-val">19 mo</div>
         <div class="numbers-sub">jul 2022 – feb 2024</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">AUM GROWTH</div>
+        <div class="numbers-key">AUM</div>
         <div class="numbers-val">$200M → $500M</div>
-        <div class="numbers-sub">during tenure · $1B+ AUM post-tenure</div>
+        <div class="numbers-sub">platform, during tenure · $1B+ today</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">CHAIN MONITORS</div>
-        <div class="numbers-val">12</div>
-        <div class="numbers-sub">real-time blockchain indexing</div>
-      </div>
-      <div class="numbers-cell">
-        <div class="numbers-key">JURISDICTIONS</div>
-        <div class="numbers-val">5+</div>
-        <div class="numbers-sub">fr · be · us · eu · caribbean</div>
-      </div>
-      <div class="numbers-cell">
-        <div class="numbers-key">COMMITS</div>
-        <div class="numbers-val">860</div>
-        <div class="numbers-sub">across 25 repos</div>
+        <div class="numbers-key">USERS</div>
+        <div class="numbers-val">Gov</div>
+        <div class="numbers-sub">law enforcement in europe &amp; north america</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
-        <div class="numbers-key">SERVICES OWNED</div>
+        <div class="numbers-key">ROLE</div>
         <div class="numbers-val">2</div>
-        <div class="numbers-sub">governance · chain ingestion</div>
+        <div class="numbers-sub">core systems as primary author</div>
       </div>
     </div>
 
@@ -86,140 +74,39 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <Section tag="THE BRIEF" title="Law enforcement needed rails for seized crypto.">
       <p class="body-para">
-        When governments seize crypto, the asset doesn't sit in an evidence bag. It needs to be
-        transferred into custody, tracked across jurisdictions, approved for disbursement by multiple
-        agencies, and leave an audit trail that will survive courtroom scrutiny. Until recently there
-        was no dedicated infrastructure for any of this. Asset Reality built it: multi-sig governance
-        workflows, escrow state machines, blockchain ingestion, chain-of-custody
-        document trails, and APIs that law enforcement agencies actually integrate with. I joined in
-        July 2022 and owned two of the platform's critical subsystems for the next 19 months.
+        When a government seizes crypto, it doesn't go into an evidence bag. It has to be moved into
+        custody, tracked, approved for release by more than one agency, and leave a record that holds
+        up in court. Asset Reality built the platform that does this, and I joined the engineering team
+        in July 2022.
       </p>
     </Section>
     </div>
 
-    <!-- architecture -->
+    <!-- what I built -->
     <div class="reveal-section">
-    <Section tag="ARCHITECTURE" title="Multi-sig governance and chain ingestion.">
-      <pre class="arch-diagram">  ┌─ blockchain layer (12 monitors: ETH · BTC · BCH · LTC · DOGE · XRP · SOL · TRON · MATIC · ARB · ERC-20)
-  │
-  ├──▶ ar-chain-service          [ go workspaces · per-chain monitor modules ]
-  │      ├── eth-monitor          go-ethereum ws client, real-time block subscription
-  │      ├── btc-monitor          RPC + mempool monitoring
-  │      ├── sol-monitor / trx-monitor / xrp-monitor / …
-  │      ├── chain-broker         RabbitMQ AMQP fanout — normalized tx events
-  │      └── tx-history-service   consumer → MongoDB tx records
-  │
-  ├──▶ ar-custodian-service       [ go · Fireblocks REST API ]
-  │      JWT-signed Fireblocks client — vaults, wallet addresses, balances,
-  │      transactions, exchange accounts
-  │
-  └──▶ ar-governance-service  [ go · MongoDB · WebSocket · RabbitMQ ]
-         │
-         ├── escrow state machine
-         │     PENDING → AWAITING_APPROVAL → APPROVED / DENIED / EXPIRED
-         │     auto-denial when approval threshold becomes unreachable
-         │
-         ├── multi-sig approval engine
-         │     Group A (mandatory approvers) + Group B (configurable threshold)
-         │     any required approver rejection → immediate denial
-         │     real-time WebSocket push to all pending approvers
-         │
-         ├── Fireblocks webhook handler
-         │     SUBMITTED → PENDING_SIGNATURE → BROADCASTING → CONFIRMED
-         │     status propagated to escrow record + downstream notifiers
-         │
-         └── notification pipeline → RabbitMQ → ar-notification-service → email
-                                                │
-                                                ▼
-                              ┌─ ar-account-service  [ PostgreSQL · GORM · Redis ]
-                              │   orgs · users · escrow accounts · RBAC
-                              │
-                              └─ ar-frontends (React 18 · Ant Design · Turborepo)
-                                    custody app · activity app · escrow app
-                                    seizure wallet flows · portfolio views
-                                    external-ID chain-of-custody system
-</pre>
-    </Section>
-    </div>
-
-    <!-- decisions -->
-    <div class="reveal-section">
-    <Section tag="DECISIONS" title="How the systems work.">
+    <Section tag="WHAT I BUILT" title="Two core systems and the apps around them.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
-          <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Configurable multi-sig groups over fixed N-of-M</div>
-          <p class="decision-body">ar-governance-service supports named groups (A and B) with per-group mandatory approvers and configurable thresholds, not a fixed N-of-M scheme. Agencies have different approval hierarchies; the state machine accommodates them without code changes. Mandatory approvers within a group make it impossible to route around specific roles.</p>
+          <div class="decision-tag">01 &nbsp;·&nbsp; PRIMARY AUTHOR</div>
+          <div class="decision-title">Withdrawal approvals</div>
+          <p class="decision-body">Nothing leaves custody without sign-off from the right people. The engine enforces each agency's approval rules, notifies approvers as soon as a request is waiting, denies requests that can no longer be approved instead of leaving funds in limbo, and keeps a full record of who approved what.</p>
         </div>
         <div class="decision reveal-item">
-          <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Auto-denial when threshold becomes unreachable</div>
-          <p class="decision-body">If enough required approvers have denied that the remaining approvals can never reach the threshold, the escrow record is automatically set to DENIED without waiting for a timeout. Government custody workflows can't have funds hanging in limbo.</p>
+          <div class="decision-tag">02 &nbsp;·&nbsp; PRIMARY AUTHOR</div>
+          <div class="decision-title">Chain monitoring</div>
+          <p class="decision-body">A service that follows the platform's addresses across the major chains in real time, so incoming transfers and balance changes appear on the platform without anyone checking a block explorer.</p>
         </div>
         <div class="decision reveal-item">
-          <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Per-chain Go workspace modules for ingestion</div>
-          <p class="decision-body">The 12 chain monitors live as independently deployable Go workspace modules inside ar-chain-service, wired through a chain-broker via RabbitMQ AMQP. Adding a chain means adding a module. Each monitor has its own health endpoint; failures are isolated. ERC-20 contract monitoring is a separate module from the ETH block monitor.</p>
+          <div class="decision-tag">03 &nbsp;·&nbsp; CONTRIBUTOR</div>
+          <div class="decision-title">Case references end to end</div>
+          <p class="decision-body">Agencies track assets by their own case numbers. I carried those references through every asset type on the platform, so a custody record can be matched to a court filing without a manual lookup.</p>
         </div>
         <div class="decision reveal-item">
-          <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">Fireblocks as the custody layer, not a custom HSM</div>
-          <p class="decision-body">ar-custodian-service wraps the Fireblocks REST API with a JWT-signed client (shopspring/decimal for amounts, gorilla/mux routing). Fireblocks provides MPC key management, policy engine, and regulatory audit logs that would take years to build. The custody integration handles vaults, wallet address generation, transaction submission, and exchange accounts.</p>
-        </div>
-        <div class="decision reveal-item">
-          <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">RabbitMQ as the event bus across all services</div>
-          <p class="decision-body">All 15+ microservices communicate via RabbitMQ AMQP: blockchain events, governance state changes, notification triggers. Kafka would have been overengineered for this workload volume. RabbitMQ's per-queue durability and per-message acknowledgement gives the reliability guarantees custody workflows need without operational complexity.</p>
-        </div>
-        <div class="decision reveal-item">
-          <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">External-ID system for chain-of-custody traceability</div>
-          <p class="decision-body">I added an external reference ID field across all asset categories (digital, physical, seizures) on both backend and frontend. Law enforcement agencies have their own case reference numbers that need to follow assets through the platform. With it, an Asset Reality record can be matched to a court filing without a manual lookup.</p>
+          <div class="decision-tag">04 &nbsp;·&nbsp; CONTRIBUTOR</div>
+          <div class="decision-title">Custody apps and valuation</div>
+          <p class="decision-body">Worked across the web apps agencies use to manage seized assets, built the services that value holdings, and led the effort to containerize the platform's services in late 2023.</p>
         </div>
       </div>
-    </Section>
-    </div>
-
-    <!-- ownership -->
-    <div class="reveal-section">
-    <Section tag="OWNERSHIP" title="Systems and contributions by repo.">
-      <div class="ownership-scroll"><div class="ownership">
-        <div class="ownership-header">
-          <span>SYSTEM / REPO</span>
-          <span>STACK</span>
-          <span class="text-right">ROLE</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ar-governance-service</span>
-          <span class="ownership-dim">go · mongodb · rabbitmq · websocket</span>
-          <span class="ownership-dim text-right">primary author</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ar-chain-service (12 monitors)</span>
-          <span class="ownership-dim">go workspaces · go-ethereum · rabbitmq</span>
-          <span class="ownership-dim text-right">primary author</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ar-frontends (8 React apps)</span>
-          <span class="ownership-dim">react 18 · typescript · ant design · vite · turborepo</span>
-          <span class="ownership-dim text-right">primary contributor</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">tokenbalancelambda / portfoliovaluelambda</span>
-          <span class="ownership-dim">typescript · aws lambda · ccxt</span>
-          <span class="ownership-dim text-right">sole author</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">ar-custodian-service</span>
-          <span class="ownership-dim">go · fireblocks api · postgresql · gorm</span>
-          <span class="ownership-dim text-right">contributor</span>
-        </div>
-        <div class="ownership-row">
-          <span class="ownership-repo">platform dockerization (15+ services)</span>
-          <span class="ownership-dim">docker · docker compose · air · aws ecs</span>
-          <span class="ownership-dim text-right">led effort (dec 2023)</span>
-        </div>
-      </div></div>
     </Section>
     </div>
 
@@ -227,12 +114,9 @@ import Base from "../../layouts/Base.astro";
     <div class="reveal-section">
     <Section tag="OUTCOME" title="What the platform became.">
       <p class="body-para">
-        During my tenure (Jul 2022 – Feb 2024) the platform grew from $200M AUM to $500M, supporting
-        seizure workflows for Belgian COAS, the French government's seized-crypto liquidation program,
-        UK law enforcement, and agencies across North America and the Caribbean. The $4.91M seed round
-        closed in January 2023 to hire engineers and expand operations. Since I left, Asset
-        Reality has crossed $1B in AUM and earned FCA VASP registration
-        (July 2025).
+        Platform AUM went from $200M to $500M during my 19 months, with seizure workflows live for
+        agencies in Europe and North America. The company raised a $4.91M seed round in January 2023,
+        has since crossed $1B in AUM, and received FCA VASP registration in July 2025.
       </p>
       <p class="body-para" style="margin-top: 20px;">
         Code that releases seized government funds changes how you write state machines: every
@@ -263,9 +147,10 @@ import Base from "../../layouts/Base.astro";
 <style>
   @import "../../styles/case-study.css";
 
-  /* ── OWNERSHIP TABLE: asset-reality has 3 columns (2fr 3fr 1fr) ── */
-  .ownership-header,
-  .ownership-row {
-    grid-template-columns: 2fr 3fr 1fr;
+  /* ── NUMBERS STRIP: 4 cells here (overrides shared 6-col) ── */
+  @media (min-width: 768px) {
+    .numbers--four {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 </style>

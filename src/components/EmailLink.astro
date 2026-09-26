@@ -6,20 +6,16 @@ interface Props {
 }
 const { class: className, as = "link", withArrow = false } = Astro.props;
 const hasSlot = Astro.slots.has("default");
-const fallback = `alex [at] konar [dot] es${withArrow ? " →" : ""}`;
-const attrs = {
-  "data-email-user": "alex",
-  "data-email-domain": "konar.es",
-  ...(hasSlot ? {} : { "data-email-fill": withArrow ? "arrow" : "true" }),
-};
+const email = "alex@konar.es";
+const fallback = `${email}${withArrow ? " →" : ""}`;
 ---
 
 {as === "link" ? (
-  <a class:list={["link", "email-anchor", className]} href="#" {...attrs}>
+  <a class:list={["link", "email-anchor", className]} href={`mailto:${email}`}>
     {hasSlot ? <slot /> : fallback}
   </a>
 ) : (
-  <span class:list={[className]} {...attrs}>{fallback}</span>
+  <span class:list={[className]}>{fallback}</span>
 )}
 
 <style>

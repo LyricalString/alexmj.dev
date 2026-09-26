@@ -32,8 +32,8 @@
     company: "Asset Reality",
     role: "Engineer",
     dates: "Jul 2022 — Feb 2024",
-    body: "Primary author of two core systems at a crypto custody platform used by law enforcement: the multi-sig governance engine signing off every withdrawal, and the 12-chain blockchain ingestion layer monitoring the network in real time. Platform AUM went from $200M to $500M over my 19 months ($1B+ today).",
-    stack: "Go · TypeScript · React · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks",
+    body: "Primary author of two core systems at a crypto custody platform used by law enforcement: the withdrawal-approval engine that decides whether funds can leave custody, and the service that monitors the chains it holds assets on. Platform AUM went from $200M to $500M over my 19 months ($1B+ today).",
+    stack: "Go · TypeScript · React · MongoDB · Postgres · AWS",
   ),
   (
     company: "Independent",

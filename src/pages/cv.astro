@@ -30,7 +30,7 @@ const { laws, commits } = await getLeyAbiertaStats();
       <div class="hero-tag">CV</div>
       <h1 class="hero-h1">Alejandro Martínez</h1>
       <div class="hero-sub">Software engineer · Valencia · <EmailLink class="email-link" /></div>
-      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin indexing API), Ley Abierta (190 years of Spanish law as Git) and Trilo (multi-platform AI workspace). Previously at Asset Reality, primary author of the multi-sig governance engine and 12-chain ingestion service for a crypto custody platform used by law enforcement.</p>
+      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin indexing API), Ley Abierta (190 years of Spanish law as Git) and Trilo (multi-platform AI workspace). Previously at Asset Reality, primary author of the withdrawal-approval engine and chain monitoring for a crypto custody platform used by law enforcement.</p>
       <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
     </section>
 
@@ -64,7 +64,7 @@ const { laws, commits } = await getLeyAbiertaStats();
           <div class="work-name">
             <Link href="/cases/asset-reality" class="work-link">Asset Reality ↗</Link>
           </div>
-          <div class="work-desc">Engineer at a crypto custody startup used by law enforcement (Jul 2022–Feb 2024). Primary author of the multi-sig governance engine and 12-chain ingestion service. Platform AUM went from $200M to $500M during my 19 months ($1B+ today).</div>
+          <div class="work-desc">Engineer at a crypto custody startup used by law enforcement (Jul 2022–Feb 2024). Primary author of the withdrawal-approval engine and the chain-monitoring service. Platform AUM went from $200M to $500M during my 19 months ($1B+ today).</div>
         </div>
 
         <div class="work-item">
@@ -119,8 +119,8 @@ const { laws, commits } = await getLeyAbiertaStats();
             <div class="exp-role">Software engineer</div>
             <div class="exp-dates">Jul 2022 — Feb 2024</div>
           </div>
-          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary author of: (1) Governance/Escrow Engine: multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform: 12 chain monitors as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200M to $500M during my tenure ($1B+ today).</p>
-          <div class="exp-stack">Go · TypeScript · React · Ant Design · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks</div>
+          <p class="exp-desc">Primary author of the withdrawal-approval engine that decides whether funds can leave custody, and the service that monitors the chains the platform holds assets on. Also: custody apps for agencies, asset valuation services, and platform containerization. Platform AUM grew from $200M to $500M during my tenure ($1B+ today).</p>
+          <div class="exp-stack">Go · TypeScript · React · MongoDB · Postgres · AWS</div>
         </div>
 
         <div class="exp-item reveal-item">
@@ -163,7 +163,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         </div>
         <div class="skill-group">
           <div class="skill-label">OTHER</div>
-          <div class="skill-items">MCP · OpenAPI · Fireblocks · LiveKit · Cosmos SDK · CosmWasm · Hardhat · OpenZeppelin</div>
+          <div class="skill-items">MCP · OpenAPI · LiveKit · Cosmos SDK · CosmWasm · Hardhat · OpenZeppelin</div>
         </div>
       </div>
     </section>

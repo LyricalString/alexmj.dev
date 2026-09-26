@@ -50,8 +50,8 @@ const systems = [
     years: "2022 — 2024",
     role: "primary author",
     blurb:
-      "Multi-sig withdrawal engine and chain ingestion for a crypto custody platform used by law enforcement.",
-    pipeline: ["12 chain monitors", "rabbitmq", "governance engine"],
+      "Withdrawal approvals and chain monitoring for a crypto custody platform used by law enforcement.",
+    pipeline: ["seizure", "custody", "multi-agency approval", "release"],
   },
   {
     href: "/cases/autowealth",
@@ -74,7 +74,7 @@ const systems = [
 const telemetry = [
   { label: "ley abierta", value: laws, sub: "laws as git · 190 years · 18 jurisdictions" },
   { label: "satstream", value: "1B+", sub: "bitcoin transactions indexed · ~3 TB" },
-  { label: "autowealth", value: "5.60", sub: "sharpe · +56% roi since nov 2025" },
+  { label: "autowealth", value: "+4.89%", sub: "avg monthly since nov 2025 · public dashboard ↗", href: "https://stats.autowealth.trade/dashboard/aw-core/4be06b25" },
   { label: "asset reality", value: "$500M", sub: "custody aum, from $200M in my 19 months" },
   { label: "discord bot", value: "3M", sub: "users · 28k servers · 140★" },
 ];
@@ -129,13 +129,16 @@ const telemetry = [
         <span class="tele-live"><span class="live-dot"></span>live</span>
       </div>
       <div class="tele-grid">
-        {telemetry.map((t) => (
-          <div class="tele-cell">
-            <span class="tele-label">{t.label}</span>
-            <span class="tele-value">{t.value}</span>
-            <span class="tele-sub">{t.sub}</span>
-          </div>
-        ))}
+        {telemetry.map((t) => {
+          const Tag = t.href ? "a" : "div";
+          return (
+            <Tag class:list={["tele-cell", t.href && "tele-link"]} href={t.href} target={t.href && "_blank"} rel={t.href && "noopener"}>
+              <span class="tele-label">{t.label}</span>
+              <span class="tele-value">{t.value}</span>
+              <span class="tele-sub">{t.sub}</span>
+            </Tag>
+          );
+        })}
       </div>
     </section>
 
@@ -378,6 +381,18 @@ const telemetry = [
     row-gap: 4px;
     padding: 16px 0;
     border-top: 1px solid var(--rule);
+  }
+
+  .tele-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    .tele-link:hover .tele-value,
+    .tele-link:hover .tele-sub {
+      color: var(--accent);
+    }
   }
 
   .tele-label {

@@ -11,28 +11,28 @@
   linkedin: "linkedin.com/in/lyricalstring",
 )
 
-#let summary = "Software engineer. I build and ship products end to end. Most of what I've worked on has been in places where mistakes cost money or trust: government-grade crypto custody, Bitcoin data infrastructure, AI products in production. Comfortable on my own, faster in a team."
+#let summary = "Software engineer. I build and ship products end to end. Most of what I've worked on has been in places where mistakes cost money or trust: crypto custody for law enforcement, Bitcoin indexing, AI products in production. Comfortable on my own, faster in a team."
 
 #let experience = (
   (
     company: "Trilo",
-    role: "Sole architect",
+    role: "Sole engineer",
     dates: "2025 — present",
-    body: "Sole architect of an AI workspace where 11 role-based coworker AIs join every doc as live peers with persistent memory and tool access. One monorepo ships web, iOS, Android, desktop and a Python transcription agent. Live at trilo.chat.",
+    body: "Sole engineer on an AI workspace where 11 role-based coworker AIs join every doc as live peers with persistent memory and tool access. One monorepo ships web, iOS, Android, desktop and a Python transcription agent. Live at trilo.chat.",
     stack: "TypeScript · Rust · Python · Bun · Elysia · Supabase · Tauri · MCP · LiveKit",
   ),
   (
     company: "Satstream",
     role: "Sole engineer",
     dates: "2024 — 2025",
-    body: "Multi-protocol Bitcoin indexer covering BRC-20, Runes and Ordinals charms. Four indexers write into a 4-database cluster for sub-second queries, exposed through a 14-category REST API, five SDKs, an MCP server and a block explorer. 376 commits across nine production repos.",
+    body: "Multi-protocol Bitcoin indexing API covering ord inscriptions, BRC-20, Runes and Charms. Four indexers write into a 4-database cluster for sub-second queries, exposed through a 14-category REST API, five SDKs, an MCP server and a block explorer. 376 commits across 8 production repos.",
     stack: "Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK",
   ),
   (
     company: "Asset Reality",
     role: "Engineer",
     dates: "Jul 2022 — Feb 2024",
-    body: "Owned two load-bearing systems at a government-grade crypto custody platform: the multi-sig governance engine signing off every withdrawal, and the 12-chain blockchain ingestion layer monitoring the network in real time. Platform AUM grew $200M → $500M over my 19-month tenure ($1B+ today).",
+    body: "Primary author of two core systems at a crypto custody platform used by law enforcement: the multi-sig governance engine signing off every withdrawal, and the 12-chain blockchain ingestion layer monitoring the network in real time. Platform AUM went from $200M to $500M over my 19 months ($1B+ today).",
     stack: "Go · TypeScript · React · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks",
   ),
   (
@@ -48,8 +48,8 @@
   (
     name: "Ley Abierta",
     year: "2026",
-    body: "Made 190 years of Spanish law searchable in plain Spanish. 475,000 articles processed with AI summarisation and embeddings, query latency cut from minutes to under a second.",
-    stack: "Python · Postgres · pgvector",
+    body: "Made 190 years of Spanish law searchable in plain Spanish. 484K embeddings across 18 jurisdictions; BM25 plus int8 vector search on a hand-written SIMD C kernel.",
+    stack: "TypeScript · Bun · SQLite · C SIMD · Qwen",
   ),
   (
     name: "Crossflow Network",
@@ -62,7 +62,7 @@
 #let oss = (
   (name: "Node-Discord-Bot", desc: "Discord bot framework. 140★, 3M users across 28k servers. MIT."),
   (name: "Lovely-Logs", desc: "Type-safe logging library for Node, browser and Lambda. Zero deps. MIT."),
-  (name: "Ley Abierta engine", desc: "Hybrid BM25 + RAG with custom int8 SIMD C kernel. AGPL-3.0."),
+  (name: "Ley Abierta engine", desc: "BM25 plus int8 vector search on a hand-written SIMD C kernel. AGPL-3.0."),
 )
 
 #let skills = (

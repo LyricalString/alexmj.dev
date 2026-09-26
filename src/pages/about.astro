@@ -8,7 +8,7 @@ import Base from "../layouts/Base.astro";
 
 <Base
   title="About — Alejandro Martínez"
-  description="Software engineer based in Valencia. Building production systems across AI, Bitcoin infrastructure, DeFi protocols, and full-stack SaaS since 2019."
+  description="Software engineer based in Valencia. Building production systems since 2021: Bitcoin indexing, AI tooling, custody software for law enforcement."
 >
   <div class="page">
 
@@ -26,7 +26,7 @@ import Base from "../layouts/Base.astro";
     <!-- ── HERO ────────────────────────────────────────────────────── -->
     <section class="hero">
       <div class="hero-tag">ABOUT</div>
-      <h1 class="hero-h1">Software engineer based in Valencia, building production systems since 2019.</h1>
+      <h1 class="hero-h1">Software engineer based in Valencia, building production systems since 2021.</h1>
 
       <div class="status-row">
         <span class="status-inner">
@@ -37,13 +37,10 @@ import Base from "../layouts/Base.astro";
 
       <div class="bio">
         <p>
-          I build full-stack systems across Bitcoin indexers, AI workspaces, government custody platforms, DeFi protocols, and B2B SaaS. Most of my work happens at the system level: schema design, microservice architecture, data pipelines, protocol engineering.
+          Most of my work is backend and infrastructure: schemas, services, data pipelines, and lately protocols and retrieval. I was the sole engineer on Satstream, Trilo and Ley Abierta. At Asset Reality I was primary author of the withdrawal-approval engine and the chain-ingestion service for a custody platform used by law enforcement in Europe and North America.
         </p>
         <p>
-          I prefer self-hosted over managed when the tradeoff is worth it, OSS when sharing costs nothing and benefits others, and depth over breadth. I've been the sole engineer behind Satstream and Trilo, shipped civic infrastructure at Ley Abierta, and owned two critical modules at a platform that handles law enforcement seizures across the EU and North America.
-        </p>
-        <p>
-          Currently: building Trilo (multi-platform AI workspace) and taking select freelance work through Konar Technologies. Based in Valencia, remote-friendly.
+          Now building Trilo and taking freelance work through Konar Technologies. Remote, from Valencia.
         </p>
       </div>
     </section>
@@ -59,16 +56,16 @@ import Base from "../layouts/Base.astro";
           <div class="tl-role">Sole engineer</div>
           <div class="tl-company">Ley Abierta</div>
           <div class="tl-what">
-            190 years of Spanish legislation as Git. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and a Qwen stack on Nan (EU, no-log inference): embeddings, query analyzer, reranker, synthesis. Live at leyabierta.es.
+            190 years of Spanish legislation as Git. Search combines BM25 with int8 vector search on a hand-written SIMD C kernel. Embeddings, reranking and answers run on Qwen through Nan, an EU provider with a no-log policy. Live at leyabierta.es.
           </div>
         </div>
 
         <div class="timeline-row reveal-item">
           <div class="tl-dates">2025 — now</div>
-          <div class="tl-role">Sole architect</div>
+          <div class="tl-role">Sole engineer</div>
           <div class="tl-company">Trilo / Hexmount</div>
           <div class="tl-what">
-            Designing and shipping Trilo: an AI workspace with autonomous coworkers as teammates, a queryable knowledge graph, and a custom DAG workflow orchestrator. Web (Next.js), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit voice agent. Live at trilo.chat.
+            An AI workspace where AI coworkers edit docs alongside people, backed by a queryable knowledge graph and a custom DAG workflow orchestrator. Web (Next.js), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit transcription agent. Live at trilo.chat.
           </div>
         </div>
 
@@ -77,7 +74,7 @@ import Base from "../layouts/Base.astro";
           <div class="tl-role">Sole engineer</div>
           <div class="tl-company">Satstream</div>
           <div class="tl-what">
-            Building and operating Bitcoin's data layer. 9 repos, 4 indexers (Rust/Go/Python), 5-language SDK suite (OpenAPI-generated), MCP server, block explorer, AWS CDK infra. Indexes the full Bitcoin chain (~3 TB) for sub-second queries.
+            Built and ran a Bitcoin indexing API. 8 repos, 4 indexers (Rust/Go/Python), 5-language SDK suite (OpenAPI-generated), MCP server, block explorer, AWS CDK infra. Indexes the full Bitcoin chain (~3 TB) for sub-second queries.
           </div>
         </div>
 
@@ -86,7 +83,7 @@ import Base from "../layouts/Base.astro";
           <div class="tl-role">Software engineer</div>
           <div class="tl-company">Asset Reality</div>
           <div class="tl-what">
-            19 months at a government-grade crypto custody platform. Owned the multi-sig governance/escrow engine (configurable approval groups, mandatory approvers, WebSocket events, Fireblocks webhooks) and the 12-chain blockchain ingestion platform (ETH, BTC, Solana, Tron, XRP, Polygon, Arbitrum, others) wired via RabbitMQ. Also: Fireblocks vault integration, platform containerization (15+ microservices), custody UI. Platform AUM grew from $200–300M to $500M during my tenure ($1B+ today). Stack: Go, TypeScript/React, MongoDB, Postgres, RabbitMQ, AWS, Terraform.
+            19 months at a crypto custody platform used by law enforcement in Europe and North America. Primary author of the multi-sig governance/escrow engine (configurable approval groups, mandatory approvers, WebSocket events, Fireblocks webhooks) and the 12-chain blockchain ingestion platform (ETH, BTC, Solana, Tron, XRP, Polygon, Arbitrum, others) wired via RabbitMQ. Also: Fireblocks vault integration, platform containerization (15+ microservices), custody UI. Platform AUM went from $200M to $500M during my tenure ($1B+ today). Stack: Go, TypeScript/React, MongoDB, Postgres, RabbitMQ, AWS, Terraform.
           </div>
         </div>
 
@@ -95,7 +92,7 @@ import Base from "../layouts/Base.astro";
           <div class="tl-role">Sole engineer</div>
           <div class="tl-company">Tecpar (via Konar Technologies)</div>
           <div class="tl-what">
-            Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS that operates a real electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle. Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking select freelance engineering work.
+            Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS that runs an electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle. Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking freelance engineering work.
           </div>
         </div>
 
@@ -109,15 +106,15 @@ import Base from "../layouts/Base.astro";
       <div class="principles-grid">
         <div class="principle">
           <div class="principle-label">SHIPPING OVER PERFORMING</div>
-          <p class="principle-body">A working system in production beats a perfect one in a PR. Delivery first, with correctness as a hard floor. The interesting engineering problems don't appear in planning. They show up when the thing is running.</p>
+          <p class="principle-body">I ship early and treat correctness as the floor. The hard problems on this site, like Bybit's two-event fills or the Lexical/Yjs init order, only showed up once the thing was running.</p>
         </div>
         <div class="principle">
           <div class="principle-label">SOVEREIGNTY OVER CONVENIENCE</div>
-          <p class="principle-body">I self-host where it matters: Traefik over Vercel for a real business, ScyllaDB instead of a managed service when write throughput demands it, Qwen on own hardware when the data shouldn't leave. Engineering-driven, not ideological.</p>
+          <p class="principle-body">I self-host when it pays: Tecpar runs on Traefik with blue/green deploys instead of Vercel, and Satstream moved hot writes to ScyllaDB for throughput. Ley Abierta sends inference only to an EU provider with a no-log policy.</p>
         </div>
         <div class="principle">
           <div class="principle-label">HONEST NUMBERS</div>
-          <p class="principle-body">CompoundFox publishes its live performance on a public dashboard. Asset Reality AUM figures come with caveats about platform vs personal attribution. Where I claim ownership, I can show the commits. Portfolio claims should survive a code review.</p>
+          <p class="principle-body">CompoundFox publishes its live performance on a public dashboard. Asset Reality AUM figures are for the whole platform. Where I claim ownership, I can show the commits. Portfolio claims should survive a code review.</p>
         </div>
       </div>
     </section>

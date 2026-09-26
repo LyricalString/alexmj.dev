@@ -30,7 +30,7 @@ const { laws, commits } = await getLeyAbiertaStats();
       <div class="hero-tag">CV</div>
       <h1 class="hero-h1">Alejandro Martínez</h1>
       <div class="hero-sub">Software engineer · Valencia · <EmailLink class="email-link" /></div>
-      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin data layer), Ley Abierta (190 years of Spanish law as Git), and Trilo (multi-platform AI workspace). Previously at Asset Reality, owning the multi-sig governance engine and 12-chain ingestion platform for a government-grade crypto custody platform.</p>
+      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin indexing API), Ley Abierta (190 years of Spanish law as Git) and Trilo (multi-platform AI workspace). Previously at Asset Reality, primary author of the multi-sig governance engine and 12-chain ingestion service for a crypto custody platform used by law enforcement.</p>
       <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
     </section>
 
@@ -43,38 +43,33 @@ const { laws, commits } = await getLeyAbiertaStats();
           <div class="work-name">
             <Link href="/cases/trilo" class="work-link">Trilo ↗</Link>
           </div>
-          <div class="work-desc">AI workspace with autonomous coworker AIs, persistent memory and a queryable knowledge graph. Web, backend, mobile, desktop, Python LiveKit voice agent. Custom DAG workflow orchestrator, dual-tier model routing, MCP-native. Live at trilo.chat. 2025–now.</div>
+          <div class="work-desc">AI workspace where AI coworkers edit docs alongside people, with persistent memory and a queryable knowledge graph. Web, backend, mobile, desktop, Python LiveKit transcription agent. Custom DAG workflow orchestrator, two-tier model routing, native MCP server. Live at trilo.chat. 2025–now.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
             <Link href="/cases/satstream" class="work-link">Satstream ↗</Link>
           </div>
-          <div class="work-desc">Bitcoin data layer. 8 production repos, 4 indexers, 5-language SDK, MCP server. Indexes the full chain into a 4-database cluster (MongoDB · ScyllaDB · Postgres · Redis). 2024–2025.</div>
+          <div class="work-desc">Bitcoin indexing API. 8 production repos, 4 indexers, 5-language SDK, MCP server. Indexes the full chain into a 4-database cluster (MongoDB · ScyllaDB · Postgres · Redis). 2024–2025.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
             <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
           </div>
-          <div class="work-desc">190 years of Spanish law as Git. {laws} laws, {commits} commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and a Qwen stack on Nan (EU, no-log inference): embeddings, query analyzer, reranker, synthesis. AGPL-3.0. 2026.</div>
+          <div class="work-desc">190 years of Spanish law as Git. {laws} laws, {commits} commits. BM25 plus int8 vector search on a hand-written SIMD C kernel; inference on Qwen through an EU provider with a no-log policy. AGPL-3.0. 2026.</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">
             <Link href="/cases/asset-reality" class="work-link">Asset Reality ↗</Link>
           </div>
-          <div class="work-desc">Engineer at government-grade crypto custody startup (Jul 2022–Feb 2024). Owned multi-sig governance engine + 12-chain ingestion platform. Platform AUM grew from $200M to $500M during my 19-month tenure ($1B+ today).</div>
-        </div>
-
-        <div class="work-item">
-          <div class="work-name">Chatvue</div>
-          <div class="work-desc">AI persona orchestration on Fanvue. 6-stage subscriber state machine, two-tier compliance routing, autonomous PPV tool calls, whale-judge LLM, non-custodial USDT wallets via HD derivation, Opik observability. 2026.</div>
+          <div class="work-desc">Engineer at a crypto custody startup used by law enforcement (Jul 2022–Feb 2024). Primary author of the multi-sig governance engine and 12-chain ingestion service. Platform AUM went from $200M to $500M during my 19 months ($1B+ today).</div>
         </div>
 
         <div class="work-item">
           <div class="work-name">CompoundFox + Autowealth</div>
-          <div class="work-desc">Algo strategy with a live, public performance dashboard (equity curve, Sharpe, deposit-adjusted drawdown, TWR from real Bybit history). Multi-tenant copy trading across Bybit, Binance, Hyperliquid. Per-community ECS via CDK, on-chain Splitter on BSC + Arbitrum, multi-chain gas station, four user surfaces (web · Expo mobile · Telegram bot · in-Telegram mini-app). 2025–now.</div>
+          <div class="work-desc">Algo strategy with a live, public performance dashboard (equity curve, Sharpe, deposit-adjusted drawdown, TWR from real Bybit history). Multi-tenant copy trading across Bybit, Binance, Hyperliquid. Per-community ECS via CDK, on-chain Splitter on BSC + Arbitrum, multi-chain gas station, shipped as web, Expo mobile, Telegram bot and Telegram mini-app. 2025–now.</div>
         </div>
 
         <div class="work-item">
@@ -101,10 +96,10 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="exp-item reveal-item">
           <div class="exp-meta">
             <div class="exp-company">Trilo / Hexmount</div>
-            <div class="exp-role">Sole architect</div>
+            <div class="exp-role">Sole engineer</div>
             <div class="exp-dates">2025 — present</div>
           </div>
-          <p class="exp-desc">Designed and shipped Trilo: an AI workspace where autonomous coworker AIs participate as teammates, with persistent memory, a queryable knowledge graph and an MCP-native tool surface. Web (Next.js 16), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit voice agent. Custom DAG workflow orchestrator with checkpointing and dual-tier model routing with LLM observability. Live in production at trilo.chat.</p>
+          <p class="exp-desc">Built Trilo, an AI workspace where AI coworkers edit docs alongside people, with persistent memory, a queryable knowledge graph and a native MCP server. Web (Next.js 16), backend (Bun + Elysia), mobile (Expo RN), desktop (Tauri 2) and a Python LiveKit transcription agent. Custom DAG workflow orchestrator with checkpointing and two-tier model routing with LLM observability. Live in production at trilo.chat.</p>
           <div class="exp-stack">TypeScript · Rust · Python · Next.js · Bun · Elysia · Drizzle · Supabase · Redis · Tauri · MCP · LiveKit</div>
         </div>
 
@@ -114,7 +109,7 @@ const { laws, commits } = await getLeyAbiertaStats();
             <div class="exp-role">Sole engineer</div>
             <div class="exp-dates">2024 — 2025</div>
           </div>
-          <p class="exp-desc">Built and operated Bitcoin's data infrastructure. 376 commits across 8 production repos. 4 indexers covering UTXOs, inscriptions, BRC-20, Runes, Ordinals charms. 5 OpenAPI-generated SDKs. MCP server (ss-mcp) for AI agent integration. Block explorer. AWS CDK infra. ScyllaDB migration from MongoDB for write throughput. gRPC microservice for Runestone decoding.</p>
+          <p class="exp-desc">Built and ran a Bitcoin indexing API. 376 commits across 8 production repos. 4 indexers: ord (inscriptions), BRC-20, Runes and Charms. 5 OpenAPI-generated SDKs. MCP server (ss-mcp) for AI agent integration. Block explorer. AWS CDK infra. ScyllaDB migration from MongoDB for write throughput. gRPC microservice for Runestone decoding.</p>
           <div class="exp-stack">Go · Rust · Python · ScyllaDB · MongoDB · Postgres · Redis · gRPC · AWS CDK</div>
         </div>
 
@@ -124,7 +119,7 @@ const { laws, commits } = await getLeyAbiertaStats();
             <div class="exp-role">Software engineer</div>
             <div class="exp-dates">Jul 2022 — Feb 2024</div>
           </div>
-          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary owner of: (1) Governance/Escrow Engine: multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform: 12 chain monitors as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200M to $500M during my tenure ($1B+ today).</p>
+          <p class="exp-desc">860 commits across 25 repos over 19 months. Primary author of: (1) Governance/Escrow Engine: multi-sig withdrawal approval system with configurable groups, mandatory approvers, auto-denial, WebSocket events, Fireblocks webhook integration; (2) Blockchain Ingestion Platform: 12 chain monitors as Go workspace modules via RabbitMQ. Also: Fireblocks vault integration, custody UI (React/Ant Design), full platform containerization (15+ microservices). Platform AUM grew from $200M to $500M during my tenure ($1B+ today).</p>
           <div class="exp-stack">Go · TypeScript · React · Ant Design · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks</div>
         </div>
 
@@ -134,7 +129,7 @@ const { laws, commits } = await getLeyAbiertaStats();
             <div class="exp-role">Sole engineer</div>
             <div class="exp-dates">2021 — present</div>
           </div>
-          <p class="exp-desc">Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS operating a real electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle (emails, repairs, shipping, invoicing). Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking select freelance engineering work.</p>
+          <p class="exp-desc">Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS that runs an electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle (emails, repairs, shipping, invoicing). Also publishing OSS under Konar Technologies (Lovely-Logs, DiffSheets) and taking freelance engineering work.</p>
           <div class="exp-stack">TypeScript · Next.js · Prisma · Bun · Docker · Traefik</div>
         </div>
 
@@ -187,7 +182,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         </div>
         <div class="oss-item">
           <div class="oss-name">Ley Abierta engine</div>
-          <div class="oss-desc">Hybrid BM25 + RAG retrieval with custom int8 SIMD C kernel. {laws} laws, {commits} commits. AGPL-3.0.</div>
+          <div class="oss-desc">BM25 plus int8 vector search on a hand-written SIMD C kernel. {laws} laws, {commits} commits. AGPL-3.0.</div>
         </div>
       </div>
     </section>

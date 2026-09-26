@@ -27,8 +27,8 @@ const { laws, commits } = await getLeyAbiertaStats();
 
     <!-- ── HERO ────────────────────────────────────────────────────── -->
     <section class="hero">
-      <div class="hero-tag">ALL PROJECTS · 10</div>
-      <h1 class="hero-h1">Everything I've shipped.</h1>
+      <div class="hero-tag">ALL PROJECTS · 9</div>
+      <h1 class="hero-h1">Selected work, grouped by domain.</h1>
       <p class="hero-lead">
         Bitcoin indexers, AI workspaces, cross-chain protocols, trading engines, civic infrastructure, and OSS tools. Mostly sole engineer.
       </p>
@@ -45,17 +45,8 @@ const { laws, commits } = await getLeyAbiertaStats();
             <Link href="/cases/trilo" class="item-name item-name--linked">Trilo</Link>
             <Link href="/cases/trilo" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">An AI workspace where autonomous coworkers participate as teammates, with persistent memory, a queryable knowledge graph and a native MCP server. Custom DAG workflow orchestrator and dual-tier model routing inside. Live at trilo.chat across web, mobile and a Python voice agent.</p>
+          <p class="item-blurb">An AI workspace where AI coworkers edit docs alongside people, with persistent memory, a queryable knowledge graph and a native MCP server. Custom DAG workflow orchestrator and two-tier model routing. Live at trilo.chat on web and mobile, plus a Python transcription agent.</p>
           <div class="item-stack">TypeScript · Rust · Python · Bun · Elysia · Drizzle · Supabase · Redis · Tauri · MCP</div>
-        </div>
-
-        <div class="grid-item">
-          <div class="item-header">
-            <div class="item-idx">02</div>
-            <div class="item-name">Chatvue</div>
-          </div>
-          <p class="item-blurb">AI persona SaaS for Fanvue creators. Autonomous subscriber engagement: a 6-stage state machine drives conversation, a whale-judge LLM ranks high-value subs, and the AI itself decides when to send PPV content. Two-tier compliance routing (regex → Gemini Flash) and non-custodial USDT wallets via HD derivation.</p>
-          <div class="item-stack">TypeScript · Next.js · tRPC · Drizzle · OpenRouter · Opik · Tauri</div>
         </div>
 
       </div>
@@ -68,11 +59,11 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">03</div>
+            <div class="item-idx">02</div>
             <Link href="/cases/satstream" class="item-name item-name--linked">Satstream</Link>
             <Link href="/cases/satstream" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">Bitcoin's data layer. 8 production repos, 4 indexers, 5-language SDK, MCP server, block explorer. Indexes the full Bitcoin chain into a MongoDB + ScyllaDB + Postgres + Redis cluster for sub-second queries.</p>
+          <p class="item-blurb">Bitcoin indexing API. 8 production repos, 4 indexers, 5-language SDK, MCP server, block explorer. Indexes the full Bitcoin chain into a MongoDB + ScyllaDB + Postgres + Redis cluster for sub-second queries.</p>
           <div class="item-stack">Rust · Go · Python · MongoDB · ScyllaDB · Postgres · Redis · gRPC · AWS CDK</div>
         </div>
 
@@ -86,7 +77,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">04</div>
+            <div class="item-idx">03</div>
             <Link href="/cases/crossflow" class="item-name item-name--linked">Crossflow Network</Link>
             <Link href="/cases/crossflow" class="case-badge">→ case study</Link>
           </div>
@@ -104,17 +95,19 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">05</div>
-            <div class="item-name">Autowealth + CompoundFox</div>
+            <div class="item-idx">04</div>
+            <Link href="/cases/autowealth" class="item-name item-name--linked">Autowealth + CompoundFox</Link>
+            <Link href="/cases/autowealth" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">Algo strategy with a live, public performance dashboard: equity curve, Sharpe, deposit-adjusted drawdown, and TWR calculated from real Bybit trade history. Multi-tenant copy trading across Bybit, Binance and Hyperliquid. Per-community ECS via CDK, on-chain fee Splitter on BSC + Arbitrum, multi-chain gas station, zero-touch HD wallet provisioning. Four surfaces: web dashboard, Expo mobile, Telegram bot, in-Telegram mini-app.</p>
+          <p class="item-blurb">Algo strategy with a live, public performance dashboard: equity curve, Sharpe, deposit-adjusted drawdown, and TWR calculated from real Bybit trade history. Multi-tenant copy trading across Bybit, Binance and Hyperliquid. Per-community ECS via CDK, on-chain fee Splitter on BSC + Arbitrum, multi-chain gas station, zero-touch HD wallet provisioning. Ships as a web dashboard, an Expo mobile app, a Telegram bot and a Telegram mini-app.</p>
           <div class="item-stack">TypeScript · Bun · Drizzle · PostgreSQL · ethers v6 · Solidity · Hardhat · Expo · AWS CDK</div>
         </div>
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">06</div>
-            <div class="item-name">Copy Trader</div>
+            <div class="item-idx">05</div>
+            <Link href="/cases/copy-trader" class="item-name item-name--linked">Copy Trader</Link>
+            <Link href="/cases/copy-trader" class="case-badge">→ case study</Link>
           </div>
           <p class="item-blurb">Production copy trading engine in Rust. Master-to-follower trade replication via WebSocket streams across Bybit, Binance and Hyperliquid. Parallel per-follower fanout with tokio::spawn cut the copy cycle from ~20s to ~4s. BigDecimal quantity math, idempotent execution, periodic audit service with alert deduplication.</p>
           <div class="item-stack">Rust · Axum · Tokio · Diesel · PostgreSQL · AWS CDK · Prometheus · Telegram Bot</div>
@@ -130,17 +123,17 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">07</div>
+            <div class="item-idx">06</div>
             <Link href="/cases/leyabierta" class="item-name item-name--linked">Ley Abierta</Link>
             <Link href="/cases/leyabierta" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">190 years of Spanish legislation as Git: {laws} laws, {commits} commits. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C kernel and a Qwen stack on Nan (EU, no-log inference): embeddings, query analyzer, reranker, synthesis. Live at leyabierta.es.</p>
+          <p class="item-blurb">190 years of Spanish legislation as Git: {laws} laws, {commits} commits. Search combines BM25 with int8 vector search on a hand-written SIMD C kernel; inference runs on Qwen through an EU provider with a no-log policy. Live at leyabierta.es.</p>
           <div class="item-stack">TypeScript · Bun · SQLite + FTS5 · C SIMD · Qwen · AGPL-3.0</div>
         </div>
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">08</div>
+            <div class="item-idx">07</div>
             <div class="item-name">Tecpar</div>
           </div>
           <p class="item-blurb">Sole engineer behind Tecpar's full platform, a B2B SaaS for an industrial electronics repair workshop (elevator boards). Internal admin for technicians, client portal, online shop, and public site: four Next.js apps sharing one Postgres database, fully self-hosted with blue/green deploys. The system handles the entire order lifecycle: emails, repairs, shipping, invoicing. Live at tecpar.es.</p>
@@ -149,7 +142,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">09</div>
+            <div class="item-idx">08</div>
             <div class="item-name">LEB — Local Expats Bali</div>
           </div>
           <p class="item-blurb">Client project: events and membership platform for the expat community in Bali. Turborepo monorepo with four apps: Expo React Native, Next.js admin, member zone, and landing. Membership tiers, partner discount system, and Mapbox venue discovery.</p>
@@ -158,11 +151,11 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="grid-item">
           <div class="item-header">
-            <div class="item-idx">10</div>
+            <div class="item-idx">09</div>
             <Link href="/cases/asset-reality" class="item-name item-name--linked">Asset Reality</Link>
             <Link href="/cases/asset-reality" class="case-badge">→ case study</Link>
           </div>
-          <p class="item-blurb">19 months as engineer at a government-grade crypto custody startup. Owned the multi-sig governance/escrow engine and the 12-chain blockchain ingestion platform. Platform AUM grew $200M → $500M during tenure ($1B+ today).</p>
+          <p class="item-blurb">19 months at a crypto custody startup used by law enforcement in Europe and North America. Primary author of the multi-sig governance/escrow engine and the 12-chain blockchain ingestion service. Platform AUM went from $200M to $500M during my tenure ($1B+ today).</p>
           <div class="item-stack">Go · TypeScript · MongoDB · RabbitMQ · Fireblocks · AWS · Terraform</div>
         </div>
 

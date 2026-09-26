@@ -11,7 +11,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
 <Base
   title="Alejandro Martínez — Software Engineer"
-  description="Production systems across AI, Bitcoin infrastructure, DeFi protocols and full-stack SaaS."
+  description="Software engineer. Sole engineer behind a Bitcoin indexer, an AI workspace and 190 years of Spanish law as Git."
 >
   <div class="page">
 
@@ -50,16 +50,15 @@ const { laws, commits } = await getLeyAbiertaStats();
 
       <!-- H1 -->
       <h1 class="hero-h1">
-        End-to-end production systems<br>
-        across <span class="dim">AI</span>, <span class="dim">Bitcoin infrastructure</span>,<br>
-        <span class="dim">DeFi</span> and full-stack SaaS.
+        Sole engineer behind a <span class="dim">Bitcoin indexer</span>, an <span class="dim">AI workspace</span>
+        and <span class="dim">190 years of Spanish law</span> as Git.
       </h1>
 
       <!-- meta sub-line -->
       <div class="hero-meta">
         <span>en · es</span>
         <span>remote</span>
-        <span>fulltime + select freelance</span>
+        <span>full-time + select freelance</span>
       </div>
 
       <!-- numbers strip -->
@@ -67,17 +66,17 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="stat reveal-item">
           <div class="stat-label">bitcoin chain</div>
           <div class="stat-value">1B+</div>
-          <div class="stat-sub">transactions indexed · ~3 TB · 9 repos</div>
+          <div class="stat-sub">transactions indexed · ~3 TB · 8 repos</div>
         </div>
         <div class="stat reveal-item">
           <div class="stat-label">laws indexed</div>
           <div class="stat-value">{laws}</div>
-          <div class="stat-sub">190 years · 484K embeddings · 17 jurisdictions</div>
+          <div class="stat-sub">190 years · 484K embeddings · 18 jurisdictions</div>
         </div>
         <div class="stat reveal-item">
           <div class="stat-label">sharpe (live)</div>
           <div class="stat-value">5.60</div>
-          <div class="stat-sub">+56% roi · 137 days · public dashboard</div>
+          <div class="stat-sub">+56% roi · since nov 2025 · public dashboard</div>
         </div>
         <div class="stat reveal-item">
           <div class="stat-label">discord users</div>
@@ -87,7 +86,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="stat reveal-item">
           <div class="stat-label">custody aum</div>
           <div class="stat-value">$200M → $500M</div>
-          <div class="stat-sub">grew 2× in 19 months · sole owner of 2 core modules</div>
+          <div class="stat-sub">platform aum during my 19 months · primary author of 2 core services</div>
         </div>
       </div>
     </section>
@@ -108,10 +107,9 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              An AI workspace where autonomous coworkers participate as teammates, with persistent
-              memory, a queryable knowledge graph and a native MCP server. Custom DAG workflow
-              orchestrator and dual-tier model routing inside. Live at trilo.chat across web, mobile
-              and a Python voice agent.
+              AI workspace where AI coworkers edit docs alongside people and run multi-step workflows.
+              Web, iOS, Android and desktop, a Python transcription agent, and a 77-tool MCP server
+              published in Anthropic's registry. Live at trilo.chat.
             </p>
             <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp; Rust&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; Bun · Elysia&nbsp;&nbsp;·&nbsp; Supabase&nbsp;&nbsp;·&nbsp; Tauri&nbsp;&nbsp;·&nbsp; MCP</div>
           </div>
@@ -126,9 +124,9 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              Bitcoin's data layer. Sole engineer across 9 repos: 4 indexers, 5-language SDK, MCP server,
-              block explorer, AWS CDK. Indexes the full Bitcoin chain (~3 TB) into a MongoDB + ScyllaDB +
-              Postgres + Redis cluster for sub-second queries.
+              Bitcoin indexing API. Sole engineer across 8 repos, from the indexers and a 5-language SDK
+              to the block explorer and AWS infra. Indexes the full chain (~3 TB) into MongoDB, ScyllaDB,
+              Postgres and Redis for sub-second queries.
             </p>
             <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp; Go&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; ScyllaDB&nbsp;&nbsp;·&nbsp; MongoDB&nbsp;&nbsp;·&nbsp; gRPC&nbsp;&nbsp;·&nbsp; AWS CDK</div>
           </div>
@@ -143,10 +141,9 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              Decentralised cross-chain loan protocol on a custom Cosmos SDK / CometBFT L1. Threshold
-              signatures (Gennaro-Goldfeder MPC-ECDSA) replace the trusted multisig: a quorum of attesters
-              co-sign Bitcoin, EVM and Solana outbound transactions without any single node holding the
-              full key. Sole engineer at Hexmount.
+              Cross-chain loan protocol on a custom Cosmos SDK L1. Instead of a trusted multisig, a quorum
+              of attesters co-signs Bitcoin, EVM and Solana transactions with threshold signatures, and no
+              single node ever holds the full key. Sole engineer at Hexmount.
             </p>
             <div class="row-stack">Go&nbsp;&nbsp;·&nbsp; Cosmos SDK&nbsp;&nbsp;·&nbsp; CometBFT&nbsp;&nbsp;·&nbsp; TSS/MPC-ECDSA&nbsp;&nbsp;·&nbsp; secp256k1 + ed25519&nbsp;&nbsp;·&nbsp; IBC</div>
           </div>
@@ -161,12 +158,11 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              190 years of Spanish legislation as a Git repository: {laws} laws, {commits} commits dated
-              to their official publication. Hybrid BM25 + RAG retrieval with a custom int8 SIMD C
-              kernel and a Qwen stack on Nan (EU, no-log inference): embeddings, query analyzer,
-              reranker, synthesis. Live at leyabierta.es.
+              {laws} Spanish laws since 1835 as a Git repo, {commits} commits dated to their official
+              publication. Search combines BM25 with int8 vector search on a hand-written SIMD C kernel
+              (index 7.6 GB → 1.4 GB), with Qwen models on an EU no-log provider. Live at leyabierta.es.
             </p>
-            <div class="row-stack">TypeScript · Bun&nbsp;&nbsp;·&nbsp; SQLite + FTS5&nbsp;&nbsp;·&nbsp; C SIMD&nbsp;&nbsp;·&nbsp; Qwen self-host&nbsp;&nbsp;·&nbsp; AGPL-3.0</div>
+            <div class="row-stack">TypeScript · Bun&nbsp;&nbsp;·&nbsp; SQLite + FTS5&nbsp;&nbsp;·&nbsp; C SIMD&nbsp;&nbsp;·&nbsp; Qwen (EU, no-log)&nbsp;&nbsp;·&nbsp; AGPL-3.0</div>
           </div>
           <div class="row-year">2026</div>
         </a>
@@ -179,10 +175,9 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              19 months as engineer at a government-grade crypto custody startup. Owned the multi-sig
-              governance/escrow engine and the 12-chain ingestion platform. Platform AUM grew from
-              $200M to $500M during my tenure ($1B+ today), with seizure workflows live
-              across French, Belgian, US, EU and Caribbean law enforcement.
+              19 months at a crypto custody platform used by law enforcement. Primary author of the
+              multi-sig withdrawal-approval engine and the chain-ingestion service. Platform AUM went
+              from $200M to $500M while I was there ($1B+ today).
             </p>
             <div class="row-stack">Go&nbsp;&nbsp;·&nbsp; TypeScript&nbsp;&nbsp;·&nbsp; MongoDB&nbsp;&nbsp;·&nbsp; Postgres&nbsp;&nbsp;·&nbsp; RabbitMQ&nbsp;&nbsp;·&nbsp; AWS · Terraform&nbsp;&nbsp;·&nbsp; Fireblocks</div>
           </div>
@@ -198,13 +193,13 @@ const { laws, commits } = await getLeyAbiertaStats();
             </div>
             <p class="row-blurb">
               Algorithmic trading platform with a live, public performance dashboard. CompoundFox is the
-              flagship strategy, with a full equity curve, Sharpe and drawdown updated in real time. Autowealth is
-              the SaaS distribution layer: Turborepo monorepo with backend, Telegram bot, Next dashboards,
-              React Native, and AWS CDK.
+              flagship strategy, with equity curve, Sharpe and drawdown updated daily. Autowealth is the
+              SaaS that distributes it: backend, Telegram bot, dashboards and mobile app in one Turborepo,
+              deployed with AWS CDK.
             </p>
             <div class="row-stack">TypeScript&nbsp;&nbsp;·&nbsp; Bun&nbsp;&nbsp;·&nbsp; Python&nbsp;&nbsp;·&nbsp; Jesse&nbsp;&nbsp;·&nbsp; Bybit API&nbsp;&nbsp;·&nbsp; AWS CDK</div>
           </div>
-          <div class="row-year">2024 — now</div>
+          <div class="row-year">2025 — now</div>
         </a>
 
         <a href="/cases/copy-trader" class="work-row">
@@ -215,13 +210,13 @@ const { laws, commits } = await getLeyAbiertaStats();
               <span class="case-badge">CASE STUDY ↗</span>
             </div>
             <p class="row-blurb">
-              Multi-exchange copy trading engine in Rust: copies trades from a master Bybit account to
-              follower accounts on Bybit, Binance and Hyperliquid via WebSocket. Position-based quantity
-              math with BigDecimal precision, idempotent execution and smart reduction fallback.
+              Copy trading engine in Rust. Mirrors a master Bybit account to follower accounts on Bybit,
+              Binance and Hyperliquid over WebSocket, sizing by position with BigDecimal math and
+              idempotent execution.
             </p>
             <div class="row-stack">Rust&nbsp;&nbsp;·&nbsp; Axum&nbsp;&nbsp;·&nbsp; PostgreSQL&nbsp;&nbsp;·&nbsp; AWS CDK&nbsp;&nbsp;·&nbsp; Telegram Bot&nbsp;&nbsp;·&nbsp; Twilio</div>
           </div>
-          <div class="row-year">2024 — 2025</div>
+          <div class="row-year">2024 — 2026</div>
         </a>
 
       </div>
@@ -268,7 +263,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="contact-label">CONTACT</div>
         <div class="contact-body">
           <p class="contact-lead">
-            Open to fulltime roles and select freelance now.<br>
+            Open to full-time roles and select freelance now.<br>
             Best reached by email. I read every message.
           </p>
           <EmailLink class="contact-email" withArrow />
@@ -389,6 +384,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
   .status-text {
     color: var(--fg);
+    white-space: nowrap;
   }
 
   .status-arrow {
@@ -796,11 +792,6 @@ const { laws, commits } = await getLeyAbiertaStats();
       flex-direction: column;
       align-items: flex-start;
       gap: 8px;
-    }
-
-    .status-inner {
-      max-width: calc(100% - 2rem);
-      overflow: hidden;
     }
 
     /* stats-strip: 2-column at ≤768px */

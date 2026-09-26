@@ -7,7 +7,7 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base
-  title="Autowealth + CompoundFox — Algo trading platform with live performance dashboard | Alejandro Martínez"
+  title="Autowealth + CompoundFox — algo trading platform | Alejandro Martínez"
   description="Built CompoundFox algorithmic trading strategy and Autowealth, its SaaS distribution platform. Live performance dashboard at stats.autowealth.trade: deposit-adjusted drawdown, Sharpe, TWR and Sortino calculated from real Bybit trade history. Per-community ECS via CDK, on-chain fee settlement, AUM circuit breaker. Sole engineer."
 >
   <div class="page">
@@ -28,16 +28,14 @@ import Base from "../../layouts/Base.astro";
         <div class="hero-tag">CASE STUDY · 06</div>
         <div class="hero-main">
           <div class="hero-meta">ALGORITHMIC TRADING · DISTRIBUTION PLATFORM &nbsp;·&nbsp; 2025 — NOW &nbsp;·&nbsp; SOLE ENGINEER</div>
-          <h1 class="hero-h1">CompoundFox: live algo trading with a public, defensible performance record.</h1>
+          <h1 class="hero-h1">A live trading strategy with a public track record.</h1>
           <p class="hero-lead">
             Autowealth is a SaaS platform that distributes algorithmic trading strategies to followers
             across Bybit, Binance, and Hyperliquid. CompoundFox is the flagship strategy, live since
-            November 2025 with a logic revision shipped in February 2026 and a risk-per-trade
-            increase currently rolling out. Live performance is published at stats.autowealth.trade:
-            equity curve, Sharpe, deposit-adjusted drawdown, and TWR calculated in real time from
-            actual Bybit trade history. No backtest, no screenshot. Per-community ECS containers,
-            an on-chain fee Splitter, and an AUM circuit breaker make the platform multi-tenant and
-            production-grade.
+            November 2025. Its equity curve, Sharpe, deposit-adjusted drawdown and TWR are published
+            at stats.autowealth.trade, updated daily from actual Bybit trade history. Each community
+            runs in its own ECS container, fees settle on-chain through a Splitter contract, and an
+            AUM circuit breaker isolates dead API keys.
           </p>
         </div>
         <div class="hero-links">
@@ -66,7 +64,7 @@ import Base from "../../layouts/Base.astro";
         <div class="numbers-sub">bybit · binance · hyperliquid</div>
       </div>
       <div class="numbers-cell">
-        <div class="numbers-key">ON-CHAIN BILLING</div>
+        <div class="numbers-key">BILLING</div>
         <div class="numbers-val">on-chain</div>
         <div class="numbers-sub">solidity splitter · bsc + arbitrum · hd wallets</div>
       </div>
@@ -97,7 +95,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- architecture -->
     <div class="reveal-section">
-    <Section tag="ARCHITECTURE" title="Turborepo monorepo: backend, bots, dashboards, mobile, on-chain, infra.">
+    <Section tag="ARCHITECTURE" title="One Turborepo monorepo for every surface.">
       <pre class="arch-diagram">  ┌─ Turborepo monorepo
   │
   ├── apps/
@@ -138,17 +136,17 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <Section tag="DECISIONS" title="Nine calls that define the platform.">
+    <Section tag="DECISIONS" title="Performance math, tenancy, on-chain fees.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Deposit-adjusted drawdown with 3-day attribution</div>
-          <p class="decision-body">Raw AUM drawdown inflates whenever a deposit lands: AUM spikes, then the strategy looks like it immediately lost capital. The performance engine walks a 3-day attribution window to match transaction amounts to AUM jumps before computing peak-to-trough. The window exists because of a production failure: late-day deposits landing after the daily snapshot produced phantom -100% drawdowns until the attribution logic was added.</p>
+          <p class="decision-body">Raw AUM drawdown inflates whenever a deposit lands: AUM spikes, then the strategy looks like it immediately lost capital. The performance engine walks a 3-day attribution window to match transaction amounts to AUM jumps before computing peak-to-trough. It was added after late-day deposits landing after the daily snapshot produced phantom -100% drawdowns in production.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Reliability tiers: hide numbers that can't be defended</div>
-          <p class="decision-body">The performance API returns a <code>startBalanceReliable</code> flag when there is no AUM snapshot before the first trade. When the flag is false, the UI hides annualized return and average monthly return entirely. The dashboard doesn't fill in a guess; it shows fewer numbers. Accounts that connected mid-strategy get a smaller metrics set until a full pre-trade snapshot exists.</p>
+          <p class="decision-body">The performance API returns a <code>startBalanceReliable</code> flag when there is no AUM snapshot before the first trade. When the flag is false, the UI hides annualized return and average monthly return entirely. Accounts that connected mid-strategy get a smaller metrics set until a full pre-trade snapshot exists.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
@@ -158,7 +156,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Position deduplication via 8-decimal-place PnL fingerprint</div>
-          <p class="decision-body">Not all exchange APIs return stable order IDs across paginated history endpoints. Bybit's position history in particular doesn't guarantee idempotent IDs. The closed-position worker uses a 5-field composite key: exchange + account UID + symbol + side + timestamp + PnL formatted to 8 decimal places via <code>formatToPrecision8()</code>, matching the <code>decimal(18,8)</code> DB column. The fingerprint check in <code>positionExists()</code> runs before every write. Positions are fetched in 7-day chunks with 100ms rate-limit delays to stay within Bybit's pagination limits.</p>
+          <p class="decision-body">Not all exchange APIs return stable order IDs across paginated history endpoints. Bybit's position history in particular doesn't guarantee idempotent IDs. The closed-position worker uses a 6-field composite key: exchange + account UID + symbol + side + timestamp + PnL formatted to 8 decimal places via <code>formatToPrecision8()</code>, matching the <code>decimal(18,8)</code> DB column. The fingerprint check in <code>positionExists()</code> runs before every write. Positions are fetched in 7-day chunks with 100ms rate-limit delays to stay within Bybit's pagination limits.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -168,7 +166,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">On-chain fee settlement via Solidity Splitter</div>
-          <p class="decision-body">Trading fees invoiced to followers go into a Hardhat-tested Solidity Splitter contract on BSC and Arbitrum that distributes to provider, platform, and referral wallets atomically. Each trader's wallet is derived deterministically via <code>BSCWalletService.deriveTraderWallet(traderId, communityId)</code>, so wallets don't need manual provisioning per follower. The pipeline runs fully automated: position close triggers invoice, invoice triggers on-chain sweep. Coverage data shows 40+ contract statements exercised in tests.</p>
+          <p class="decision-body">Trading fees invoiced to followers go into a Hardhat-tested Solidity Splitter contract on BSC and Arbitrum that distributes to provider, platform, and referral wallets atomically. Each trader's wallet is derived deterministically via <code>BSCWalletService.deriveTraderWallet(traderId, communityId)</code>, so wallets don't need manual provisioning per follower. The pipeline runs fully automated: position close triggers invoice, invoice triggers on-chain sweep.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">07 &nbsp;·&nbsp; DECISION</div>
@@ -183,7 +181,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">09 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Dual-channel notifications for security-critical events</div>
-          <p class="decision-body">The notification router fans events out by user preference (Expo push, Telegram, or both), but security-critical events (API key changes, withdrawals, delinquency) always go to both channels regardless of preference. Push tokens flagged as invalid by Expo get deactivated automatically on the next send failure, so dead devices don't accumulate and concurrent sends don't waste retry budget. Critical alerts never depend on a single transport.</p>
+          <p class="decision-body">The notification router fans events out by user preference (Expo push, Telegram, or both), but security-critical events (API key changes, withdrawals, delinquency) always go to both channels regardless of preference. Push tokens flagged as invalid by Expo get deactivated automatically on the next send failure, so dead devices don't accumulate and concurrent sends don't waste retry budget.</p>
         </div>
       </div>
     </Section>
@@ -191,7 +189,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- ownership -->
     <div class="reveal-section">
-    <Section tag="OWNERSHIP" title="The full stack, built and shipped sole.">
+    <Section tag="OWNERSHIP" title="Component ownership.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -254,19 +252,11 @@ import Base from "../../layouts/Base.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <Section tag="OUTCOME" title="Live algo trading with public, auditable performance.">
+    <Section tag="OUTCOME" title="Live on Bybit, published daily.">
       <p class="body-para">
-        CompoundFox is running live on Bybit with performance published at stats.autowealth.trade.
-        Equity curve, Sharpe, deposit-adjusted drawdown, and TWR are calculated from real position
-        history by a metrics engine built from scratch. The numbers on the dashboard are
-        either defensible or hidden: the <code>startBalanceReliable</code> flag suppresses
-        annualized return on accounts without a pre-trade AUM snapshot. Autowealth as a platform
-        handles multi-tenant copy trading across three exchanges, per-community ECS deployment via
-        CDK, on-chain fee settlement with a multi-chain gas station keeping operational wallets
-        funded, zero-touch HD wallet provisioning when a community is created, and a notification
-        router that fans security-critical events to push and Telegram in parallel. Four user
-        surfaces ship from one monorepo: web dashboard, Expo mobile app, Telegram bot, and an
-        in-Telegram mini-app.
+        CompoundFox is live on Bybit, with performance published daily at stats.autowealth.trade
+        by a metrics engine built from scratch. Four user surfaces ship from one monorepo: web
+        dashboard, Expo mobile app, Telegram bot and an in-Telegram mini-app.
       </p>
     </Section>
     </div>

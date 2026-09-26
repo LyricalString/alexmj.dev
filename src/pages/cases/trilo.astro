@@ -8,7 +8,7 @@ import Base from "../../layouts/Base.astro";
 
 <Base
   title="Trilo — multi-platform AI workspace | Alejandro Martínez"
-  description="Sole architect behind Trilo: an AI workspace where AI coworkers join every doc as live Yjs peers, an AI-planned DAG agent runtime executes work, and a 77-tool MCP server lets external agents operate it natively. Live at trilo.chat across web, iOS, Android and desktop."
+  description="Sole engineer behind Trilo, an AI workspace where AI coworkers join every doc as live Yjs peers, an AI-planned DAG agent runtime executes work, and a 77-tool MCP server lets external agents operate it natively. Live at trilo.chat across web, iOS, Android and desktop."
 >
   <div class="page"> 
 
@@ -27,14 +27,13 @@ import Base from "../../layouts/Base.astro";
       <div class="hero-grid">
         <div class="hero-tag">CASE STUDY · 01</div>
         <div class="hero-main">
-          <div class="hero-meta">MULTI-PLATFORM AI WORKSPACE &nbsp;·&nbsp; 2025 — NOW &nbsp;·&nbsp; SOLE ARCHITECT</div>
-          <h1 class="hero-h1">An AI workspace with coworkers, not chatbots.</h1>
+          <div class="hero-meta">MULTI-PLATFORM AI WORKSPACE &nbsp;·&nbsp; 2025 — NOW &nbsp;·&nbsp; SOLE ENGINEER</div>
+          <h1 class="hero-h1">AI coworkers that edit the same doc you're in.</h1>
           <p class="hero-lead">
             Trilo is an AI workspace for chat, projects, workflows, meetings and a knowledge
             graph, with 11 role-based AI coworker templates (copywriter, devops engineer, data
-            analyst, project manager, support agent, and seven more) that join every doc as
-            live peers. They sit inside the doc with persistent memory and tool access, the way
-            a teammate does. One monorepo ships web, iOS, Android and desktop clients, plus a
+            analyst, project manager, support agent, and six more) that join every doc as
+            live peers, with persistent memory and tool access. One monorepo ships web, iOS, Android and desktop clients, plus a
             Python real-time transcription agent. Live at trilo.chat.
           </p>
         </div>
@@ -77,16 +76,15 @@ import Base from "../../layouts/Base.astro";
 
     <!-- the brief -->
     <div class="reveal-section">
-    <Section tag="THE BRIEF" title="Build the AI workspace nobody else is building.">
+    <Section tag="THE BRIEF" title="One workspace, with AI as a member of it.">
       <p class="body-para">
         One product that replaces chat, task management, docs, spreadsheets, video calls, calendar,
         and social media scheduling, connected by a knowledge graph that remembers context across
-        all of them. The differentiator isn't the feature list; it's the AI layer. The 11 starter
+        all of them. The 11 starter
         coworker templates (copywriter, devops engineer, data analyst, content strategist, frontend
         engineer, marketing advisor, project manager, SEO specialist, social media manager, support
         agent, e-commerce analyst) ship as full members of the workspace with persistent memory,
-        tool access, and a place in the team structure. Trilo was designed from the first commit
-        to be AI-native.
+        tool access, and a place in the team structure.
       </p>
     </Section>
     </div>
@@ -123,32 +121,32 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <Section tag="DECISIONS" title="Six calls that shaped the architecture.">
+    <Section tag="DECISIONS" title="Agent runtime, live editing, billing.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AI-planned DAG agent runtime</div>
-          <p class="decision-body">Off-the-shelf workflow tools (Temporal, Inngest, LangGraph) assume human-authored linear sequences. Trilo's runtime in <code>workflowOrchestrator.ts</code> uses an LLM as the planner: it generates the dependency graph from natural language, dispatches each step to a different AI coworker by capability, enforces workspace-scoped pinned tool parameters, and gates progress through three-way review (approve / reject / regenerate-with-feedback). A 200K-token completion budget caps cost per workflow, and a real safety guard force-serializes when the planner returns zero <code>dependsOn</code> annotations (a check that exists because it failed in production).</p>
+          <p class="decision-body">Off-the-shelf workflow tools (Temporal, Inngest, LangGraph) assume human-authored linear sequences. Trilo's runtime in <code>workflowOrchestrator.ts</code> uses an LLM as the planner: it generates the dependency graph from natural language, dispatches each step to a different AI coworker by capability, enforces workspace-scoped pinned tool parameters, and gates progress through three-way review (approve / reject / regenerate-with-feedback). A 200K-token completion budget caps cost per workflow, and a real safety guard force-serializes when the planner returns zero <code>dependsOn</code> annotations (added after the planner did exactly that in production).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AI coworkers as live Yjs peers</div>
-          <p class="decision-body">Coworker templates connect to every Lexical page as server-side Yjs peers via Hocuspocus, appearing in awareness with a shimmer effect on the exact blocks they're editing. They sit inside the doc with persistent memory and tool access, the way a teammate does. Initialization order is load-bearing: the Yjs binding has to register before the WebSocket connects, and the Lexical → Yjs writeback listener has to register after sync. Get it wrong and Lexical's normalization permanently accumulates phantom paragraphs across every user's view.</p>
+          <p class="decision-body">Coworker templates connect to every Lexical page as server-side Yjs peers via Hocuspocus, appearing in awareness with a shimmer effect on the exact blocks they're editing. Initialization order is load-bearing: the Yjs binding has to register before the WebSocket connects, and the Lexical → Yjs writeback listener has to register after sync. Get it wrong and Lexical's normalization permanently accumulates phantom paragraphs across every user's view.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">77-tool MCP server in the Anthropic registry</div>
-          <p class="decision-body">Trilo ships a spec-compliant MCP server (built on <code>@modelcontextprotocol/sdk</code>, live at <code>api.trilo.chat/mcp</code>) and is published in the Anthropic MCP Registry. 77 tools across 14 domain modules: boards, tasks, messages, meetings, knowledge graph, pages (26 alone), spreadsheets and more. Auth supports PAT, bot tokens, and OAuth 2.1 with workspace-level isolation enforced on every call. Schemas are hand-authored Zod, used as the single source of truth shared with internal coworkers. Distribution by protocol, not by integration.</p>
+          <p class="decision-body">Trilo ships a spec-compliant MCP server (built on <code>@modelcontextprotocol/sdk</code>, live at <code>api.trilo.chat/mcp</code>) and is published in the Anthropic MCP Registry. 77 tools across 14 domain modules: boards, tasks, messages, meetings, knowledge graph, pages (26 alone), spreadsheets and more. Auth supports PAT, bot tokens, and OAuth 2.1 with workspace-level isolation enforced on every call. Schemas are hand-authored Zod, used as the single source of truth shared with internal coworkers.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Rust ↔ Swift FFI for native StoreKit</div>
-          <p class="decision-body">The desktop app is Tauri 2, but the desktop story isn't "Tauri over Electron". The Rust shell calls Swift directly via <code>extern "C"</code> for StoreKit 2 (five IPC functions covering fetch, purchase, entitlements, restore and the transaction listener) plus Sign in with Apple. <code>objc2</code> reaches into <code>NSApplication.dockTile</code> for badge counts where Tauri's API was broken, and tweaks <code>WKWebView</code> compositing to fix scroll artifacts in virtualized lists. The result is a native macOS App Store build that ships from the same Rust workspace as Linux and Windows.</p>
+          <p class="decision-body">The desktop app is Tauri 2. The Rust shell calls Swift directly via <code>extern "C"</code> for StoreKit 2 (five IPC functions covering fetch, purchase, entitlements, restore and the transaction listener) plus Sign in with Apple. <code>objc2</code> reaches into <code>NSApplication.dockTile</code> for badge counts where Tauri's API was broken, and tweaks <code>WKWebView</code> compositing to fix scroll artifacts in virtualized lists. The result is a native macOS App Store build that ships from the same Rust workspace as Linux and Windows.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Unified credit ledger across 5 billing surfaces</div>
-          <p class="decision-body">Stripe subscriptions, Stripe Billing Meters (metered AI overage), Stripe Connect (referral payouts), Apple IAP (8 product IDs across iOS + Mac App Store) and partner/promo plans all flow into a single Postgres credit ledger via a consistent <code>resetCreditsForNewPeriod()</code> regardless of which provider triggered the event. Referral commissions enforce a 30-day hold with atomic <code>eligible → processing</code> transitions before generating a Stripe Transfer with a deterministic idempotency key derived from sorted commission IDs. Full marketplace-payout correctness with deterministic idempotency.</p>
+          <p class="decision-body">Stripe subscriptions, Stripe Billing Meters (metered AI overage), Stripe Connect (referral payouts), Apple IAP (8 product IDs across iOS + Mac App Store) and partner/promo plans all flow into a single Postgres credit ledger via a consistent <code>resetCreditsForNewPeriod()</code> regardless of which provider triggered the event. Referral commissions enforce a 30-day hold with atomic <code>eligible → processing</code> transitions before generating a Stripe Transfer with a deterministic idempotency key derived from sorted commission IDs.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
@@ -161,7 +159,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- scope table -->
     <div class="reveal-section">
-    <Section tag="SCOPE" title="Every surface I built and shipped.">
+    <Section tag="SCOPE" title="Every surface, one engineer.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>PLATFORM</span>
@@ -172,31 +170,31 @@ import Base from "../../layouts/Base.astro";
         <div class="ownership-row">
           <span class="ownership-repo">web</span>
           <span class="ownership-dim">next.js 16 · react 19 · tailwind · zustand · yjs · lexical</span>
-          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim">sole engineer</span>
           <span class="ownership-dim text-right">in production</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">backend</span>
           <span class="ownership-dim">bun · elysia · supabase · postgres · redis · drizzle</span>
-          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim">sole engineer</span>
           <span class="ownership-dim text-right">in production</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">mobile</span>
           <span class="ownership-dim">expo · react native · ios + android · apple IAP</span>
-          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim">sole engineer</span>
           <span class="ownership-dim text-right">shipped</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">desktop</span>
           <span class="ownership-dim">tauri 2 · rust · shared react frontend</span>
-          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim">sole engineer</span>
           <span class="ownership-dim text-right">shipped</span>
         </div>
         <div class="ownership-row">
           <span class="ownership-repo">agent</span>
           <span class="ownership-dim">python · livekit · real-time transcription pipeline</span>
-          <span class="ownership-dim">sole architect</span>
+          <span class="ownership-dim">sole engineer</span>
           <span class="ownership-dim text-right">in production</span>
         </div>
       </div></div>
@@ -205,16 +203,11 @@ import Base from "../../layouts/Base.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <Section tag="OUTCOME" title="A live, multi-platform AI product shipped solo.">
+    <Section tag="OUTCOME" title="Live on web, App Store and desktop.">
       <p class="body-para">
-        Trilo is live at trilo.chat with paid plans, on the App Store, and as a Tauri desktop
-        binary, all from a single monorepo, one architect. The technical bets that made this
-        possible: an AI-planned DAG runtime where the planner is itself an LLM and capability dispatch
-        routes steps to different coworker models; AI coworkers that connect to every Lexical page as
-        live Yjs peers (they don't wait behind a slash command); a 77-tool MCP server in the Anthropic
-        registry that lets external agents operate Trilo natively; and a Rust ↔ Swift FFI layer that
-        makes the macOS build a native App Store binary. The deploy pipeline
-        posts its own status updates into Trilo's chat. The workspace runs itself.
+        Trilo is live at trilo.chat with paid plans, on the App Store, and as a desktop binary
+        for macOS, Linux and Windows, all from one monorepo and one engineer. The deploy pipeline
+        posts its own status updates into Trilo's chat.
       </p>
     </Section>
     </div>
@@ -223,7 +216,7 @@ import Base from "../../layouts/Base.astro";
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
       <Link href="/cases/satstream" class="next-case-link">
-        02 &nbsp; Satstream — Bitcoin's data layer →
+        02 &nbsp; Satstream — Bitcoin indexing API →
       </Link>
     </div>
 

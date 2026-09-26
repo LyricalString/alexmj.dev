@@ -7,8 +7,8 @@ import Base from "../../layouts/Base.astro";
 ---
 
 <Base
-  title="Satstream — Bitcoin's data layer | Alejandro Martínez"
-  description="Sole engineer behind Satstream: a multi-protocol Bitcoin indexer covering Ordinals, BRC-20, Runes, and Charms across 9 repos and 376 commits, with a 4-database cluster, 5 SDKs, and an MCP server for AI-native access."
+  title="Satstream — Bitcoin indexing API | Alejandro Martínez"
+  description="Sole engineer behind Satstream, a multi-protocol Bitcoin indexer covering Ordinals, BRC-20, Runes and Charms across 8 repos and 376 commits, with a 4-database cluster, 5 SDKs and an MCP server for AI agents."
 >
   <div class="page">
 
@@ -28,14 +28,14 @@ import Base from "../../layouts/Base.astro";
         <div class="hero-tag">CASE STUDY · 02</div>
         <div class="hero-main">
           <div class="hero-meta">BITCOIN DATA INFRASTRUCTURE &nbsp;·&nbsp; 2024 — 2025 &nbsp;·&nbsp; SOLE ENGINEER</div>
-          <h1 class="hero-h1">Nine repositories. Four protocols. One engineer.</h1>
+          <h1 class="hero-h1">A Bitcoin indexer and API, built and run by one engineer.</h1>
           <p class="hero-lead">
-            Satstream indexes the Bitcoin chain into a queryable API. Four protocol indexers
-            (BRC-20, Runestones, Charms, and a Delta state engine) write into a 4-database
+            Satstream indexes the Bitcoin chain into a queryable API. Indexers for BRC-20, Runes,
+            Ordinals and Charms write into a 4-database
             cluster for sub-second queries, exposed through a 14-category API surface, five SDKs,
             an MCP server, and a block explorer. The BRC-20 indexer handles the cursed-inscription
             edge case where UniSat, Hiro and OKX each diverge from the spec in different ways.
-            376 commits across nine production repos.
+            376 commits across eight production repos.
           </p>
         </div>
         <div class="hero-links">
@@ -50,7 +50,7 @@ import Base from "../../layouts/Base.astro";
       <div class="numbers-cell">
         <div class="numbers-key">COMMITS</div>
         <div class="numbers-val">376</div>
-        <div class="numbers-sub">9 production repos</div>
+        <div class="numbers-sub">8 production repos</div>
       </div>
       <div class="numbers-cell">
         <div class="numbers-key">PROTOCOLS</div>
@@ -88,7 +88,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- architecture -->
     <div class="reveal-section">
-    <Section tag="ARCHITECTURE" title="Nine repos, four datastores, one API surface.">
+    <Section tag="ARCHITECTURE" title="Four indexers feeding one API.">
       <pre class="arch-diagram">  ┌─ bitcoin node (full archival)
   │
   ├──▶ ss-indexer            [ go · mongo · grpc ]   core blocks · runic / non-runic split
@@ -118,17 +118,17 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <Section tag="DECISIONS" title="Six calls that earned their complexity.">
+    <Section tag="DECISIONS" title="Protocol edge cases and uptime.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Cursed-inscription edge case in BRC-20</div>
-          <p class="decision-body">Most indexers treat a transaction with a cursed inscription as dead and skip the BRC-20 op. The BRC-20 spec says otherwise: a cursed inscription still carries a valid <code>transfer</code> of an existing active inscribe-transfer. The Rust indexer tracks an <code>all_inscriptions_cursed</code> flag per transaction, loads a <code>HashSet</code> of known cursed TXIDs at startup, and continues to dispatch transfer operations when every inscription in a TX is cursed. Getting this wrong produces divergent user balances. UniSat, Hiro, and OKX have all shipped different interpretations of the same spec.</p>
+          <p class="decision-body">Most indexers treat a transaction with a cursed inscription as dead and skip the BRC-20 op. The BRC-20 spec says otherwise: a cursed inscription still carries a valid <code>transfer</code> of an existing active inscribe-transfer. The Rust indexer tracks an <code>all_inscriptions_cursed</code> flag per transaction, loads a <code>HashSet</code> of known cursed TXIDs at startup, and continues to dispatch transfer operations when every inscription in a TX is cursed. Skipping them produces wrong balances, and UniSat, Hiro and OKX each read the spec differently.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">LEB128/big.Int Runestone decoder with dual-path parser</div>
-          <p class="decision-body">The Runes protocol encodes amounts as little-endian base-128 varints (LEB128) with values up to 2^128. The Go decoder uses <code>big.Int</code> throughout, not uint64, because the UNCOMMONGOODS cap is <code>340282366920938463463374607431768211455</code>. It also handles dual-path input: Bitcoin Core returns either raw hex (<code>6a5d...</code>) or asm-tokenized (<code>OP_RETURN 13 &lt;hex&gt;</code>) depending on node version and verbosity level, and the parser falls back to hex when asm decoding fails. The UNCOMMONGOODS genesis rune is hard-coded at block 840,000 with exact cap, height range, turbo, and spacers. If that initialization is wrong, every downstream Runes balance is wrong.</p>
+          <p class="decision-body">The Runes protocol encodes amounts as little-endian base-128 varints (LEB128) with values up to 2^128. The Go decoder uses <code>big.Int</code> throughout, not uint64, because the UNCOMMONGOODS cap is <code>340282366920938463463374607431768211455</code>. It also handles dual-path input: Bitcoin Core returns either raw hex (<code>6a5d...</code>) or asm-tokenized (<code>OP_RETURN 13 &lt;hex&gt;</code>) depending on node version and verbosity level, and the parser falls back to hex when asm decoding fails. The UNCOMMONGOODS genesis rune is hard-coded at block 840,000 with exact cap, height range, turbo, and spacers.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
@@ -138,7 +138,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Full partial-block rollback on sync resumption</div>
-          <p class="decision-body">The BRC-20 indexer does not resume by simply appending. On startup it detects the last completed block height, then deletes every record at or above that height across 6 collections (deploys, mints, transfers, invalids, tickers, user balance entries), resets <code>total_minted</code> for affected tickers, and rebuilds user balances from the remaining entries. The delta indexer adds a gap scan: <code>verify_block_continuity()</code> walks every height from 0 to max as a <code>BTreeSet</code> and re-processes any missing blocks before the live tail starts. Without this, an interrupted sync leaves gaps that silently produce wrong UTXO balances.</p>
+          <p class="decision-body">The BRC-20 indexer does not resume by simply appending. On startup it detects the last completed block height, then deletes every record at or above that height across 6 collections (deploys, mints, transfers, invalids, tickers, user balance entries), resets <code>total_minted</code> for affected tickers, and rebuilds user balances from the remaining entries. The delta indexer adds a gap scan: <code>verify_block_continuity()</code> walks every height from 0 to max as a <code>BTreeSet</code> and re-processes any missing blocks before the live tail starts.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
@@ -148,7 +148,7 @@ import Base from "../../layouts/Base.astro";
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">MCP server exposes the full API surface to AI agents</div>
-          <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms are now a native tool call. New onramp, same backend, zero additional indexing work.</p>
+          <p class="decision-body">Shipped <code>ss-mcp</code> alongside the SDKs. The complete 14-category API is callable by Claude, Cursor, and any MCP-aware agent without a custom integration. UTXOs, inscriptions, BRC-20 ops, Runes, and Charms are now a native tool call.</p>
         </div>
       </div>
     </Section>
@@ -156,14 +156,12 @@ import Base from "../../layouts/Base.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <Section tag="OUTCOME" title="Bitcoin infrastructure, built solo.">
+    <Section tag="OUTCOME" title="Protocol internals and distributed systems.">
       <p class="body-para">
-        Satstream required simultaneous depth in Bitcoin protocol internals (UTXO model, BRC-20 spec
-        including the cursed-inscription edge case, Runestone LEB128 encoding, inscription model) and
-        production distributed systems (ScyllaDB write throughput, gRPC service boundaries, Prometheus
-        instrumentation, AWS CDK). The adaptive concurrency controller in ss-indexer reads live MongoDB
-        shard load to tune its own worker pool in real time. The MCP server extends the data layer to
-        AI agents. Bitcoin state is a native tool call for any MCP client, no custom integration.
+        Satstream needed Bitcoin protocol internals (the UTXO model, the BRC-20 spec, Runestone
+        encoding, inscriptions) and production distributed systems (ScyllaDB write throughput, gRPC
+        service boundaries, Prometheus, AWS CDK) in the same codebase. Through ss-mcp, any MCP client
+        can query Bitcoin state without a custom integration.
       </p>
     </Section>
     </div>

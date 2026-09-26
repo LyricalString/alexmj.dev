@@ -79,7 +79,7 @@ import Base from "../../layouts/Base.astro";
     <Section tag="THE BRIEF" title="Copy trading that doesn't lose money on rounding errors.">
       <p class="body-para">
         Copy trading sounds simple: master opens a position, followers open the same position.
-        The reality is harder. Each follower has different margin, different leverage, and
+        But each follower has different margin, different leverage, and
         different position sizes. A naive ratio-based approach breaks on partial closes, leverage
         mismatches, and exchange precision requirements. Copy Trader solves this with position-based
         math: calculate each follower's quantity from their current position relative to the master's,
@@ -122,32 +122,32 @@ import Base from "../../layouts/Base.astro";
 
     <!-- decisions -->
     <div class="reveal-section">
-    <Section tag="DECISIONS" title="Five calls that define the system.">
+    <Section tag="DECISIONS" title="Sizing, fills, concurrency.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Position-based math over ratio-based</div>
-          <p class="decision-body">A fixed ratio breaks on partial closes and leverage changes. The formula is: <code>follower_target = master_position × (follower_equity × margin_pct / master_IM)</code>, then subtract the follower's current position to get the incremental order. The subtraction step is the key insight. It makes the formula self-correcting. Each event recalculates from live API state instead of accumulating from a running counter, so rounding errors on partial closes and leverage adjustments don't compound over a session.</p>
+          <p class="decision-body">A fixed ratio breaks on partial closes and leverage changes. The formula is: <code>follower_target = master_position × (follower_equity × margin_pct / master_IM)</code>, then subtract the follower's current position to get the incremental order. Subtracting the current position makes the formula self-correcting: each event recalculates from live API state instead of accumulating from a running counter, so rounding errors on partial closes and leverage adjustments don't compound over a session.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Bybit two-event cache for correct margin data</div>
-          <p class="decision-body">Bybit fires two events for every fill: <code>OrderUpdate</code> arrives first with fill qty and price but no margin data, then <code>PositionUpdate</code> arrives with the confirmed initial margin (IM). The engine parks the order in an in-memory <code>pending_orders_cache</code> keyed by <code>symbol:position_idx</code> and only processes followers when the position event delivers the real IM. Estimating IM from price × qty × leverage is wrong in cross-margin, fractional leverage, and hedge mode. This architecture eliminates that class of error.</p>
+          <p class="decision-body">Bybit fires two events for every fill: <code>OrderUpdate</code> arrives first with fill qty and price but no margin data, then <code>PositionUpdate</code> arrives with the confirmed initial margin (IM). The engine parks the order in an in-memory <code>pending_orders_cache</code> keyed by <code>symbol:position_idx</code> and only processes followers when the position event delivers the real IM. Estimating IM from price × qty × leverage is wrong in cross-margin, fractional leverage, and hedge mode.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">tokio::spawn per follower, join_all at the end</div>
-          <p class="decision-body">The original sequential model ran each follower's pipeline (leverage sync → equity fetch → position fetch → quantity calc → execute) one after another. With per-follower exchange API calls of 1–9s each, that compounded to ~20s per copy cycle. Moving every per-follower call inside a <code>tokio::spawn</code> and collecting results with <code>join_all</code> brought the cycle to ~4s. The tradeoff is that DB connection handling had to be restructured to avoid pool exhaustion under concurrent tasks.</p>
+          <p class="decision-body">The original sequential model ran each follower's pipeline (leverage sync → equity fetch → position fetch → quantity calc → execute) one after another. With per-follower exchange API calls of 3–9s each, that compounded to ~20s per copy cycle. Moving every per-follower call inside a <code>tokio::spawn</code> and collecting results with <code>join_all</code> brought the cycle to ~4s. The tradeoff is that DB connection handling had to be restructured to avoid pool exhaustion under concurrent tasks.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Scoped DB connections to survive async fanout</div>
-          <p class="decision-body">With 15+ concurrent <code>tokio::spawn</code> tasks each holding an r2d2 <code>PooledConnection</code> through a 3–9s exchange API call, a 5-connection Supabase pool deadlocked. In async Rust, connections are held as long as the struct stays in scope. Crossing into HTTP territory while holding a connection blocks every other task waiting on the pool. The fix: acquire connection → idempotency check → drop connection (explicit <code>{}</code> scope) → exchange API call → acquire new connection → write result. Pool timing instrumentation was added afterward to detect regressions (warns if <code>pool.get()</code> exceeds 500ms).</p>
+          <p class="decision-body">With 15+ concurrent <code>tokio::spawn</code> tasks each holding an r2d2 <code>PooledConnection</code> through a 3–9s exchange API call, a 5-connection Supabase pool deadlocked. Each task kept its connection checked out for the whole HTTP call, which blocked every other task waiting on the pool. The fix: acquire connection → idempotency check → drop connection (explicit <code>{}</code> scope) → exchange API call → acquire new connection → write result. Pool timing instrumentation was added afterward to detect regressions (warns if <code>pool.get()</code> exceeds 500ms).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Audit service with alert deduplication</div>
-          <p class="decision-body">A periodic audit service compares master positions against follower positions via live API calls and detects <code>MissingPosition</code>, <code>ExtraPosition</code>, and <code>SizeMismatch</code> discrepancies. Without deduplication, a persistent 10% mismatch would spam Telegram on every audit cycle. The 1pp re-alert threshold means an alert fires only if deviation changed by at least 1 percentage point since the last notification, and a 60s grace period suppresses alerts while the copy engine catches up on recent trades. The system stays supervisable rather than noisy.</p>
+          <p class="decision-body">A periodic audit service compares master positions against follower positions via live API calls and detects <code>MissingPosition</code>, <code>ExtraPosition</code>, and <code>SizeMismatch</code> discrepancies. Without deduplication, a persistent 10% mismatch would spam Telegram on every audit cycle. The 1pp re-alert threshold means an alert fires only if deviation changed by at least 1 percentage point since the last notification, and a 60s grace period suppresses alerts while the copy engine catches up on recent trades.</p>
         </div>
       </div>
     </Section>
@@ -155,7 +155,7 @@ import Base from "../../layouts/Base.astro";
 
     <!-- ownership -->
     <div class="reveal-section">
-    <Section tag="OWNERSHIP" title="The full stack: Rust backend, Next.js dashboard, AWS CDK infra.">
+    <Section tag="OWNERSHIP" title="Rust backend, Next.js dashboard, CDK infra.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>COMPONENT</span>
@@ -198,17 +198,12 @@ import Base from "../../layouts/Base.astro";
 
     <!-- outcome -->
     <div class="reveal-section">
-    <Section tag="OUTCOME" title="A production copy trading engine that handles real money.">
+    <Section tag="OUTCOME" title="Built for CompoundFox subscribers.">
       <p class="body-para">
-        Copy Trader handles the full coordination problem: three exchanges with divergent precision,
-        notional, and position-mode rules; WebSocket streams that can disconnect (manual restart
-        required, alerted via the audit service); and followers with different margin sizes that need
-        proportional exposure across partial closes without accumulating residuals. The engineering
-        breakthroughs are concrete: a two-event Bybit cache that waits for confirmed IM rather than
-        estimating it; a DB connection scoping fix that kept a 5-connection pool alive under 15+
-        concurrent followers; and a <code>tokio::spawn</code> parallelization that cut the copy cycle
-        from 20s to 4s. That engine runs under Autowealth's CompoundFox subscribers with a periodic
-        audit service watching for position drift.
+        Copy Trader handles three exchanges with divergent precision, notional and position-mode
+        rules, and followers with different margin sizes that need proportional exposure across
+        partial closes without accumulating residuals. It was built for Autowealth's CompoundFox
+        subscribers, with a periodic audit service watching for position drift.
       </p>
     </Section>
     </div>

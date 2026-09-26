@@ -35,10 +35,9 @@ const { laws, commits } = await getLeyAbiertaStats();
           <p class="hero-lead">
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
             Git commit dated to its official BOE publication: {laws} laws, {commits} commits,
-            18 jurisdictions. On top of the repository lives a hybrid retrieval engine with a
-            hand-rolled int8 SIMD C kernel and a Qwen stack on Nan (EU servers, no-log
-            policy): embeddings, query analyzer, reranker and synthesis. AGPL-3.0. Live at
-            leyabierta.es.
+            18 jurisdictions. Search combines BM25 with int8 vector search on a hand-written
+            SIMD C kernel, and every model call goes to Qwen on Nan (EU servers, no-log policy).
+            AGPL-3.0. Live at leyabierta.es.
           </p>
         </div>
         <div class="hero-links">
@@ -69,7 +68,7 @@ const { laws, commits } = await getLeyAbiertaStats();
       <div class="numbers-cell">
         <div class="numbers-key">RETRIEVAL</div>
         <div class="numbers-val">hybrid</div>
-        <div class="numbers-sub">bm25 + rag · llm rerank · synthesis</div>
+        <div class="numbers-sub">bm25 + vectors · llm rerank · synthesis</div>
       </div>
       <div class="numbers-cell numbers-cell--last">
         <div class="numbers-key">INFERENCE</div>
@@ -83,10 +82,10 @@ const { laws, commits } = await getLeyAbiertaStats();
     <Section tag="THE BRIEF" title="Public law that's practically inaccessible.">
       <p class="body-para">
         Spanish legislation is nominally public: the BOE exposes every law via an XML API. But
-        the raw feed is a stream of documents, not a navigable history. No diff between versions,
+        the raw feed is a stream of documents with no navigable history. No diff between versions,
         no graph of which reform amended which article, no way to ask "what changed in labor law
         in 2018?" and get a useful answer. The official search returns keyword matches in legal
-        prose, not structured documents. Ley Abierta treats the law as source code. Each reform
+        prose. Ley Abierta treats the law as source code. Each reform
         is a commit, each jurisdiction a folder, each version a checkable diff. The result is 190
         years of legislation that's queryable and diffable, with full version history.
       </p>
@@ -115,7 +114,7 @@ const { laws, commits } = await getLeyAbiertaStats();
   │                                                                    │
   │   BM25 full-text search (FTS5)                                    │
   │         +                                                         │
-  │   semantic search  — 486k int8 vectors                            │
+  │   semantic search  — 484K int8 vectors                            │
   │   ┌────────────────────────────────────┐                          │
   │   │  C SIMD int8 cosine kernel          │                          │
   │   │  -81% index size (7.6 GB → 1.4 GB)  │                          │
@@ -143,22 +142,22 @@ const { laws, commits } = await getLeyAbiertaStats();
 
     <!-- decisions -->
     <div class="reveal-section">
-    <Section tag="DECISIONS" title="Six calls that define the project.">
+    <Section tag="DECISIONS" title="Storage, search, license.">
       <div class="decisions-grid">
         <div class="decision reveal-item">
           <div class="decision-tag">01 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Git as the storage layer</div>
-          <p class="decision-body">Laws are versioned documents. Git is the right tool: <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only). The repo is the product.</p>
+          <p class="decision-body">Laws are versioned documents. Git is the right tool: <code>git log -- Codigo_Penal.md</code> is a meaningful civic interface, <code>git diff</code> between two commits is a legislative audit trail. Pre-1970 laws are clamped to <code>1970-01-02</code> with the real publication date preserved in the YAML frontmatter (Git's commit timestamp is Unix-epoch only).</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom int8 SIMD C kernel</div>
-          <p class="decision-body">Off-the-shelf vector libraries were too slow at 486k vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU and no managed vector DB.</p>
+          <p class="decision-body">Off-the-shelf vector libraries were too slow at 484K vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU and no managed vector DB.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>
-          <div class="decision-title">The BM25 regression that taught the stack</div>
-          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em> on real citizen queries: FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix wasn't tuning BM25 weights. It was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. A reproducible eval harness against citizen and omnibus question sets caught the regression before it reached prod.</p>
+          <div class="decision-title">BM25 regressed on citizen queries</div>
+          <p class="decision-body">BM25 looked obvious for legal text. The early hybrid (BM25 + RRF over Gemini dense embeddings) actually <em>regressed</em> on real citizen queries: FTS5 OR-expansion on "horas extras que no me pagan" matched noise across centuries of legal prose. The fix was a modern-bias prompt on Qwen embeddings that biases retrieval toward recent statutes over 19th-century codes. A reproducible eval harness against citizen and omnibus question sets caught the regression before it reached prod.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">04 &nbsp;·&nbsp; DECISION</div>
@@ -168,12 +167,12 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="decision reveal-item">
           <div class="decision-tag">05 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Self-hosted Opik per-span RAG tracing</div>
-          <p class="decision-body">Every <code>/v1/ask</code> call creates an Opik trace with spans for <code>embed_query</code>, <code>bm25</code>, <code>vector_knn</code>, <code>aggregate_pool</code>, <code>rrf_fusion</code>, <code>rerank</code>, and <code>synthesis</code>. Tracing is fail-safe. Span failures never break the pipeline. Opik runs self-hosted in the same VM (full backend + frontend + Python OSS stack), so per-stage latency is debuggable in prod without exfiltrating queries to a SaaS. The catch that justified the work: the BM25 OR-explosion bug was identified at the <code>bm25</code> span before it tanked recall.</p>
+          <p class="decision-body">Every <code>/v1/ask</code> call creates an Opik trace with spans for <code>embed_query</code>, <code>bm25</code>, <code>vector_knn</code>, <code>aggregate_pool</code>, <code>rrf_fusion</code>, <code>rerank</code>, and <code>synthesis</code>. Tracing is fail-safe. Span failures never break the pipeline. Opik runs self-hosted in the same VM (full backend + frontend + Python OSS stack), so per-stage latency is debuggable in prod without exfiltrating queries to a SaaS.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">06 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">AGPL-3.0</div>
-          <p class="decision-body">Public legal infrastructure shouldn't be capturable by a SaaS. AGPL guarantees that any deployment that serves Ley Abierta over a network must publish its modifications. The license matches the project's politics: if public law is a commons, so is the engine that makes it searchable.</p>
+          <p class="decision-body">Public legal infrastructure shouldn't be capturable by a SaaS. AGPL guarantees that any deployment that serves Ley Abierta over a network must publish its modifications.</p>
         </div>
       </div>
     </Section>
@@ -181,7 +180,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
     <!-- ownership -->
     <div class="reveal-section">
-    <Section tag="OWNERSHIP" title="One monorepo, four packages, sole author.">
+    <Section tag="OWNERSHIP" title="One monorepo, sole author.">
       <div class="ownership-scroll"><div class="ownership">
         <div class="ownership-header">
           <span>PACKAGE</span>
@@ -227,15 +226,9 @@ const { laws, commits } = await getLeyAbiertaStats();
     <div class="reveal-section">
     <Section tag="OUTCOME" title="190 years of law, queryable in real time.">
       <p class="body-para">
-        Ley Abierta turns 190 years of Spanish legislation, technically public and practically
-        unusable, into a queryable Git repository with a search layer that holds up on real
-        citizen language. A structured A/B program replaced every Gemini and Cohere component
-        (embeddings, query analyzer, reranker, and synthesis) with Qwen on Nan, an EU-based
-        inference provider with a no-log policy, measured in isolation against citizen and
-        omnibus question sets. An early hybrid regression was caught by the eval harness before
-        prod, when BM25 OR-expansion on citizen Spanish matched noise across centuries of legal
-        prose. Index size dropped from 7.6 GB to 1.4 GB via the custom int8 SIMD C kernel.
-        Queries stay in the EU. The whole stack is AGPL-3.0 and live at leyabierta.es.
+        Ley Abierta is live at leyabierta.es under AGPL-3.0: {laws} laws with full version history,
+        and a search layer that holds up on real citizen language without sending queries outside
+        the EU.
       </p>
     </Section>
     </div>
@@ -244,7 +237,7 @@ const { laws, commits } = await getLeyAbiertaStats();
     <div class="next-case">
       <span class="next-case-label">NEXT CASE STUDY</span>
       <Link href="/cases/asset-reality" class="next-case-link">
-        05 &nbsp; Asset Reality — multi-sig engine for a custody platform that 2× AUM →
+        05 &nbsp; Asset Reality — withdrawal engine for a law-enforcement custody platform →
       </Link>
     </div>
 

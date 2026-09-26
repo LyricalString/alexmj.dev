@@ -37,7 +37,7 @@ import Base from "../layouts/Base.astro";
 
       <div class="bio">
         <p>
-          Most of my work is backend and infrastructure: schemas, services, data pipelines, and lately protocols and retrieval. I was the sole engineer on Satstream, Trilo and Ley Abierta. At Asset Reality I was primary author of the withdrawal-approval engine and the chain-ingestion service for a custody platform used by law enforcement in Europe and North America.
+          Most of my work is backend and infrastructure: schemas, services, data pipelines, and more and more applied AI: document extraction, speech-to-text and retrieval, self-hosted when the data can't leave. I was the sole engineer on Satstream, Trilo and Ley Abierta. At Asset Reality I was primary author of the withdrawal-approval engine and the chain-ingestion service for a custody platform used by law enforcement in Europe and North America.
         </p>
         <p>
           Now building Trilo, taking freelance work, and consulting: clients bring a technical problem, I scope it and lay out the options and tradeoffs. Remote, from Valencia.
@@ -56,7 +56,7 @@ import Base from "../layouts/Base.astro";
           <div class="tl-role">Sole engineer</div>
           <div class="tl-company">Ley Abierta</div>
           <div class="tl-what">
-            190 years of Spanish legislation as Git. Search combines BM25 with int8 vector search on a hand-written SIMD C kernel. Embeddings, reranking and answers run on Qwen through Nan, an EU provider with a no-log policy. Live at leyabierta.es.
+            190 years of Spanish legislation as Git. Search combines BM25 with int8 vector search on a custom SIMD C kernel. Embeddings, reranking and answers run on Qwen through Nan, an EU provider with a no-log policy. Live at leyabierta.es.
           </div>
         </div>
 
@@ -90,9 +90,9 @@ import Base from "../layouts/Base.astro";
         <div class="timeline-row reveal-item">
           <div class="tl-dates">2021 — now</div>
           <div class="tl-role">Sole engineer</div>
-          <div class="tl-company">Tecpar (freelance)</div>
+          <div class="tl-company">Freelance</div>
           <div class="tl-what">
-            Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS that runs an electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle. Also publishing OSS (Lovely-Logs, DiffSheets).
+            Custom, ERP-style systems for industrial companies, built around how each one actually works: orders, repairs, stock and invoicing in one place, so every job has an owner, a status and a paper trail. AI where it removes manual work: supplier orders and payment receipts read straight from PDFs, and a WhatsApp assistant that answers order questions, with a person approving every reply. Also AI systems for clients: invoice extraction and on-premise meeting transcription, both in production.
           </div>
         </div>
 
@@ -110,7 +110,7 @@ import Base from "../layouts/Base.astro";
         </div>
         <div class="principle">
           <div class="principle-label">SOVEREIGNTY OVER CONVENIENCE</div>
-          <p class="principle-body">I self-host when it pays: Tecpar runs on Traefik with blue/green deploys instead of Vercel, and Satstream moved hot writes to ScyllaDB for throughput. Ley Abierta sends inference only to an EU provider with a no-log policy.</p>
+          <p class="principle-body">I self-host when it pays: the operations platforms run on Traefik with blue/green deploys instead of Vercel, speech-to-text runs on the client's own hardware, and Satstream moved hot writes to ScyllaDB for throughput. Ley Abierta sends inference only to an EU provider with a no-log policy.</p>
         </div>
         <div class="principle">
           <div class="principle-label">HONEST NUMBERS</div>

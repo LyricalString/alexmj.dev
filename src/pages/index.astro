@@ -41,7 +41,7 @@ const systems = [
     name: "Ley Abierta",
     years: "2026",
     role: "sole author",
-    blurb: `190 years of Spanish law as a Git repo, one commit per BOE publication. Search on a hand-written SIMD C kernel.`,
+    blurb: `190 years of Spanish law as a Git repo, one commit per BOE publication. Search on a custom SIMD C kernel.`,
     pipeline: ["boe", "git", "bm25 + int8 vectors", "api"],
   },
   {
@@ -62,12 +62,59 @@ const systems = [
     pipeline: ["bybit", "strategy", "daily public dashboard"],
   },
   {
+    href: "/projects",
+    name: "Operations software",
+    years: "2021 — now",
+    role: "sole engineer",
+    blurb:
+      "Custom, ERP-style systems for industrial SMEs: orders, repairs, stock and invoicing in one place, so every job has an owner, a status and a paper trail.",
+    pipeline: ["order", "job", "invoice"],
+  },
+  {
     href: "/cases/copy-trader",
     name: "Copy Trader",
     years: "2024 — 2026",
     role: "sole engineer",
     blurb: "Rust copy-trading engine. Copy cycle down from 20s to 4s with parallel order dispatch.",
     pipeline: ["master ws", "position cache", "parallel orders"],
+  },
+];
+
+const aiSystems = [
+  {
+    status: "in production",
+    name: "Document extraction",
+    blurb:
+      "Utility invoices and emissions reports turned into validated JSON for a compliance platform. A self-hosted 8B vision model gets 99.2% of invoice fields right (132 of 133) in 1–2 s per document; measurement tables come out 100% correct from native PDFs. A new document type is a config file, not code.",
+    pipeline: ["pdf", "text or ocr", "llm · json schema", "validators"],
+  },
+  {
+    status: "in production",
+    name: "Meeting transcription",
+    blurb:
+      "Speech-to-text on the company's own hardware, so recordings never leave the building. 5.2× real time on CPU, speaker diarization, and a glossary pulled from the ERP so internal jargon comes out right.",
+    pipeline: ["audio", "whisper", "alignment", "speakers"],
+  },
+  {
+    status: "in production",
+    name: "Operations assistants",
+    blurb:
+      "Supplier purchase orders and payment receipts read from PDFs through an EU-only LLM endpoint. A WhatsApp assistant looks up orders with tool calls, and a person approves every draft before it goes out.",
+    pipeline: ["pdf", "docling", "llm", "schema check"],
+  },
+  {
+    status: "live",
+    name: "Legal retrieval",
+    blurb:
+      "Hybrid BM25 and vector search over Spanish law with reranking and citation checks, scored on 678 questions (recall@10 0.76). Qwen3-Embedding-8B fine-tuned with QLoRA on hard negatives filtered by an LLM judge.",
+    pipeline: ["query", "bm25 + vectors", "rerank", "cited answer"],
+  },
+  {
+    status: "built",
+    name: "Visual inspection",
+    blurb:
+      "Defect detection trained only on good parts, exported to ONNX for edge devices. AUROC ≥ 0.99 on 7 of 12 categories of public industrial benchmarks.",
+    pipeline: ["camera", "patchcore", "heatmap", "defect class"],
   },
 ];
 
@@ -112,7 +159,7 @@ const telemetry = [
         </h1>
 
         <div class="hero-meta">
-          <p class="hero-note">Sole engineer on six of the seven systems below.</p>
+          <p class="hero-note">Sole engineer on seven of the eight systems below, plus the AI systems behind them.</p>
           <div class="hero-links">
             <a href="#systems" class="line-link"><span>see the systems</span><span class="arrow">↓</span></a>
             <EmailLink class="line-link line-link-last" withArrow />
@@ -146,7 +193,7 @@ const telemetry = [
     <section id="systems" class="systems reveal-section">
       <div class="section-head">
         <h2 class="section-h2">Systems</h2>
-        <span class="section-meta">2022 — 2026 · 07</span>
+        <span class="section-meta">2021 — 2026 · 08</span>
       </div>
 
       <div class="sys-list">
@@ -169,11 +216,41 @@ const telemetry = [
       <div class="also">
         <span class="also-label">also</span>
         <span class="also-body">
-          Tecpar, B2B SaaS for an electronics repair workshop · LEB, events platform for expats in Bali ·
-          Node-Discord-Bot, 3M users
+          LEB, events platform for expats in Bali · Node-Discord-Bot, 3M users · Lovely-Logs, typed
+          logging library
         </span>
         <Link href="/projects" class="also-link">all projects →</Link>
       </div>
+    </section>
+
+    <!-- ── AI SYSTEMS ───────────────────────────────────────────────── -->
+    <section id="ai" class="ai reveal-section">
+      <div class="section-head">
+        <h2 class="section-h2">AI systems</h2>
+        <span class="section-meta">self-hosted where the data can't leave</span>
+      </div>
+      <p class="ai-lead">
+        Applied AI inside the systems above and for clients: extraction, speech, retrieval and vision,
+        measured against hand-checked answers before anything ships.
+      </p>
+      <div class="ai-grid">
+        {aiSystems.map((a) => (
+          <div class="ai-card reveal-item">
+            <span class:list={["ai-status", a.status !== "built" && "ai-status--live"]}>{a.status}</span>
+            <span class="ai-name">{a.name}</span>
+            <span class="ai-blurb">{a.blurb}</span>
+            <span class="sys-pipe">
+              {a.pipeline.map((step, j) => (
+                <>{j > 0 && <b> → </b>}<span class="nowrap">{step}</span></>
+              ))}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p class="ai-also">
+        Also: vision-model bake-offs across Qwen, Gemma and Mistral; ModernBERT fine-tunes for issue
+        triage; coding-agent orchestration with isolated worktrees.
+      </p>
     </section>
 
     <!-- ── CONSULTING + CONTACT ─────────────────────────────────────── -->
@@ -545,6 +622,75 @@ const telemetry = [
     align-items: center;
   }
 
+  /* ── AI SYSTEMS ──────────────────────────────────────────────────── */
+  .ai {
+    padding-top: 80px;
+  }
+
+  .ai-lead {
+    margin: 12px 0 8px;
+    max-width: 640px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+
+  .ai-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .ai-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .ai-status--live {
+    color: var(--accent);
+  }
+
+  .ai-status--live::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .ai-name {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    line-height: 1;
+  }
+
+  .ai-blurb {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body);
+  }
+
+  .ai .sys-pipe {
+    align-self: stretch;
+  }
+
+  .ai-also {
+    margin: 0;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--dim);
+  }
+
   /* ── CONSULTING + CONTACT ────────────────────────────────────────── */
   .closing {
     display: grid;
@@ -782,6 +928,16 @@ const telemetry = [
       grid-template-columns: 110px minmax(0, 1fr) auto;
       column-gap: 32px;
       align-items: baseline;
+    }
+
+    .ai {
+      padding-top: 128px;
+    }
+
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 48px;
     }
 
     .closing {

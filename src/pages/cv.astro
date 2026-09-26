@@ -30,7 +30,7 @@ const { laws, commits } = await getLeyAbiertaStats();
       <div class="hero-tag">CV</div>
       <h1 class="hero-h1">Alejandro Martínez</h1>
       <div class="hero-sub">Software engineer · Valencia · <EmailLink class="email-link" /></div>
-      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin indexing API), Ley Abierta (190 years of Spanish law as Git) and Trilo (multi-platform AI workspace). Previously at Asset Reality, primary author of the withdrawal-approval engine and chain monitoring for a crypto custody platform used by law enforcement.</p>
+      <p class="hero-summary">Sole engineer behind Satstream (Bitcoin indexing API), Ley Abierta (190 years of Spanish law as Git) and Trilo (multi-platform AI workspace). Freelance, I build operations software and AI systems for industrial SMEs, with document extraction and on-premise transcription in production. Previously at Asset Reality, primary author of the withdrawal-approval engine and chain monitoring for a crypto custody platform used by law enforcement.</p>
       <Link href="/cv.pdf" class="pdf-btn">[ Download PDF ↓ ]</Link>
     </section>
 
@@ -57,7 +57,7 @@ const { laws, commits } = await getLeyAbiertaStats();
           <div class="work-name">
             <Link href="/cases/leyabierta" class="work-link">Ley Abierta ↗</Link>
           </div>
-          <div class="work-desc">190 years of Spanish law as Git. {laws} laws, {commits} commits. BM25 plus int8 vector search on a hand-written SIMD C kernel; inference on Qwen through an EU provider with a no-log policy. AGPL-3.0. 2026.</div>
+          <div class="work-desc">190 years of Spanish law as Git. {laws} laws, {commits} commits. BM25 plus int8 vector search on a custom SIMD C kernel; inference on Qwen through an EU provider with a no-log policy. AGPL-3.0. 2026.</div>
         </div>
 
         <div class="work-item">
@@ -73,8 +73,8 @@ const { laws, commits } = await getLeyAbiertaStats();
         </div>
 
         <div class="work-item">
-          <div class="work-name">Tecpar</div>
-          <div class="work-desc">B2B SaaS for an electronics-repair shop, built solo. Internal admin for technicians, client portal, online shop, and public site: 4 Next.js apps, blue/green self-hosted deploys. Live at tecpar.es.</div>
+          <div class="work-name">Operations software</div>
+          <div class="work-desc">Custom, ERP-style systems for industrial SMEs, built solo: orders, repairs, stock and invoicing in one place, with LLM extraction of supplier PDFs and a WhatsApp assistant. Self-hosted, blue/green deploys.</div>
         </div>
 
         <div class="work-item">
@@ -125,12 +125,12 @@ const { laws, commits } = await getLeyAbiertaStats();
 
         <div class="exp-item reveal-item">
           <div class="exp-meta">
-            <div class="exp-company">Tecpar (freelance)</div>
-            <div class="exp-role">Sole engineer</div>
+            <div class="exp-company">Freelance</div>
+            <div class="exp-role">Engineer · consultant</div>
             <div class="exp-dates">2021 — present</div>
           </div>
-          <p class="exp-desc">Sole engineer behind Tecpar S.L.'s full platform, a B2B SaaS that runs an electronics repair workshop (tecpar.es). Built the internal admin for technicians, the client portal, the online shop, and the public site; the system handles the entire order lifecycle (emails, repairs, shipping, invoicing). Also publishing OSS (Lovely-Logs, DiffSheets).</p>
-          <div class="exp-stack">TypeScript · Next.js · Prisma · Bun · Docker · Traefik</div>
+          <p class="exp-desc">Operations software and AI systems for industrial SMEs. ERP-style platforms covering orders, repairs, stock and invoicing. In production: invoice and emissions-report extraction with a self-hosted 8B vision model (99.2% of invoice fields correct), on-premise meeting transcription at 5.2× real time on CPU, and LLM extraction of supplier orders with an EU-only endpoint. Also: defect detection for visual inspection, and technical consulting.</p>
+          <div class="exp-stack">TypeScript · Python · Next.js · Prisma · FastAPI · vLLM · faster-whisper · Docker · Traefik</div>
         </div>
 
       </div>
@@ -143,11 +143,15 @@ const { laws, commits } = await getLeyAbiertaStats();
       <div class="skills-grid">
         <div class="skill-group">
           <div class="skill-label">LANGUAGES</div>
-          <div class="skill-items">TypeScript · Go · Rust · Python · Solidity · SQL · C (SIMD)</div>
+          <div class="skill-items">TypeScript · Go · Rust · Python · Solidity · SQL</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-label">AI / ML</div>
+          <div class="skill-items">LLM extraction · RAG · evals · QLoRA / PEFT · vLLM · Ollama · MLX · faster-whisper · pyannote · docling · anomalib · ONNX</div>
         </div>
         <div class="skill-group">
           <div class="skill-label">BACKEND</div>
-          <div class="skill-items">Bun · Elysia · Express · Go Chi · Fiber · gRPC · RabbitMQ · WebSocket · tRPC</div>
+          <div class="skill-items">Bun · Elysia · Express · Go (chi, Fiber) · gRPC · RabbitMQ · WebSocket · tRPC</div>
         </div>
         <div class="skill-group">
           <div class="skill-label">FRONTEND</div>
@@ -182,7 +186,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         </div>
         <div class="oss-item">
           <div class="oss-name">Ley Abierta engine</div>
-          <div class="oss-desc">BM25 plus int8 vector search on a hand-written SIMD C kernel. {laws} laws, {commits} commits. AGPL-3.0.</div>
+          <div class="oss-desc">BM25 plus int8 vector search on a custom SIMD C kernel. {laws} laws, {commits} commits. AGPL-3.0.</div>
         </div>
       </div>
     </section>

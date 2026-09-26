@@ -35,7 +35,7 @@ const { laws, commits } = await getLeyAbiertaStats();
           <p class="hero-lead">
             Ley Abierta reconstructs every Spanish law since 1835 as a Markdown file with a
             Git commit dated to its official BOE publication: {laws} laws, {commits} commits,
-            18 jurisdictions. Search combines BM25 with int8 vector search on a hand-written
+            18 jurisdictions. Search combines BM25 with int8 vector search on a custom
             SIMD C kernel, and every model call goes to Qwen on Nan (EU servers, no-log policy).
             AGPL-3.0. Live at leyabierta.es.
           </p>
@@ -152,7 +152,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="decision reveal-item">
           <div class="decision-tag">02 &nbsp;·&nbsp; DECISION</div>
           <div class="decision-title">Custom int8 SIMD C kernel</div>
-          <p class="decision-body">Off-the-shelf vector libraries were too slow at 484K vectors on a single VM. A hand-rolled int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU and no managed vector DB.</p>
+          <p class="decision-body">Off-the-shelf vector libraries were too slow at 484K vectors on a single VM. A custom int8 cosine kernel with SIMD intrinsics (dual path AVX2+FMA for x86_64 and NEON for arm64, two-way unrolled accumulator) cut the index from 7.6 GB to 1.4 GB (-81%) and brought the vector-search stage p50 from 2.1s to 0.8s. A <code>SharedArrayBuffer</code> worker pool ensures the index lives once in memory across 4 Bun Workers. No GPU and no managed vector DB.</p>
         </div>
         <div class="decision reveal-item">
           <div class="decision-tag">03 &nbsp;·&nbsp; DECISION</div>

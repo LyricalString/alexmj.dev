@@ -11,7 +11,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
 <Base
   title="Alejandro Martínez — Software Engineer"
-  description="Software engineer. Sole engineer behind a Bitcoin indexer, an AI workspace and 190 years of Spanish law as Git."
+  description="Production systems across AI, Bitcoin infrastructure, DeFi protocols and full-stack SaaS."
 >
   <div class="page">
 
@@ -50,15 +50,16 @@ const { laws, commits } = await getLeyAbiertaStats();
 
       <!-- H1 -->
       <h1 class="hero-h1">
-        Sole engineer behind a <span class="dim">Bitcoin indexer</span>, an <span class="dim">AI workspace</span>
-        and <span class="dim">190 years of Spanish law</span> as Git.
+        End-to-end production systems
+        across <span class="dim">AI</span>, <span class="dim">Bitcoin infrastructure</span>,
+        <span class="dim">DeFi</span> and <span class="nowrap">full-stack</span> SaaS.
       </h1>
 
       <!-- meta sub-line -->
       <div class="hero-meta">
         <span>en · es</span>
         <span>remote</span>
-        <span>full-time + select freelance</span>
+        <span>full-time · freelance · consulting</span>
       </div>
 
       <!-- numbers strip -->
@@ -263,7 +264,7 @@ const { laws, commits } = await getLeyAbiertaStats();
         <div class="contact-label">CONTACT</div>
         <div class="contact-body">
           <p class="contact-lead">
-            Open to full-time roles and select freelance now.<br>
+            Open to full-time roles, freelance and consulting.<br>
             Best reached by email. I read every message.
           </p>
           <EmailLink class="contact-email" withArrow />
@@ -290,7 +291,7 @@ const { laws, commits } = await getLeyAbiertaStats();
 
     <!-- ── FOOTER ────────────────────────────────────────────────────── -->
     <footer class="footer">
-      <span class="footer-left">alejandro martinez · @lyricalstring · oss under konar technologies</span>
+      <span class="footer-left">alejandro martinez · @lyricalstring</span>
       <span class="footer-links">
         <Link href="/about">about</Link>
         <Link href="/cv">cv</Link>
@@ -380,6 +381,10 @@ const { laws, commits } = await getLeyAbiertaStats();
     color: var(--fg);
     max-width: calc(100vw - 2rem);
     overflow: hidden;
+  }
+
+  .nowrap {
+    white-space: nowrap;
   }
 
   .status-text {

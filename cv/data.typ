@@ -36,10 +36,10 @@
     stack: "Go · TypeScript · React · MongoDB · Postgres · RabbitMQ · AWS · Terraform · Fireblocks",
   ),
   (
-    company: "Konar Technologies",
-    role: "Founder · sole engineer",
+    company: "Independent",
+    role: "Freelance engineer · consultant",
     dates: "2021 — present",
-    body: "My independent engineering studio. Built and run tecpar.es, the B2B SaaS behind an electronics workshop with daily users. Also publish OSS and freelance.",
+    body: "Built and run tecpar.es, the B2B SaaS behind an electronics workshop with daily users. Technical consulting: scoping clients' problems and proposing architectures and options. Also publish OSS.",
     stack: "TypeScript · Next.js · Prisma · Rust · Bun · Docker · Traefik",
   ),
 )
